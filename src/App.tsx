@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Inicio from './paginas/Inicio';
-import Servicos from './paginas/servicos';
-import HistoricoServicos from './paginas/HistoricoServicos';
-import NovoVeiculo from './paginas/NovoVeiculo';
-import VeiculosSalvos from './paginas/VeiculoSalvo';
+import Inicio from './routes/Inicio';
+import Servicos from './routes/servicos';
+import HistoricoServicos from './routes/HistoricoServicos';
+import NovoVeiculo from './routes/NovoVeiculo';
+import VeiculosSalvos from './routes/VeiculoSalvo';
 import BarraLateral from './Components/BarraLateral';
 
 function App() {
