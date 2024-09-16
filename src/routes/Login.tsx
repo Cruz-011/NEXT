@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import '../assets/LoginCadastro.css';
+import styled, { createGlobalStyle } from 'styled-components';
 
-const LoginCadastro: React.FC = () => {
+export default function LoginCadastro(){
   const [isLogin, setIsLogin] = useState(true);
 
   const [emailOuTelefone, setEmailOuTelefone] = useState('');
@@ -26,6 +27,8 @@ const LoginCadastro: React.FC = () => {
     setIsLogin(!isLogin);
   };
 
+  
+
   return (
     <div className="login-cadastro-container">
       <div className="toggle-form">
@@ -46,7 +49,7 @@ const LoginCadastro: React.FC = () => {
                 value={emailOuTelefone}
                 onChange={(e) => setEmailOuTelefone(e.target.value)}
                 required
-              />
+                />
             </div>
             <div className="form-group">
               <label htmlFor="senhaLogin">Senha:</label>
@@ -56,7 +59,7 @@ const LoginCadastro: React.FC = () => {
                 value={senhaLogin}
                 onChange={(e) => setSenhaLogin(e.target.value)}
                 required
-              />
+                />
             </div>
             <button type="submit" className="botao-submit">Entrar</button>
           </form>
@@ -73,7 +76,7 @@ const LoginCadastro: React.FC = () => {
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
                 required
-              />
+                />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email:</label>
@@ -83,7 +86,7 @@ const LoginCadastro: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-              />
+                />
             </div>
             <div className="form-group">
               <label htmlFor="telefone">Telefone:</label>
@@ -93,7 +96,7 @@ const LoginCadastro: React.FC = () => {
                 value={telefone}
                 onChange={(e) => setTelefone(e.target.value)}
                 required
-              />
+                />
             </div>
             <div className="form-group">
               <label htmlFor="senhaCadastro">Criar Senha:</label>
@@ -103,7 +106,7 @@ const LoginCadastro: React.FC = () => {
                 value={senhaCadastro}
                 onChange={(e) => setSenhaCadastro(e.target.value)}
                 required
-              />
+                />
             </div>
             <button type="submit" className="botao-submit">Cadastrar</button>
           </form>
@@ -112,5 +115,3 @@ const LoginCadastro: React.FC = () => {
     </div>
   );
 };
-
-export default LoginCadastro;

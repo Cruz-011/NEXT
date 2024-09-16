@@ -6,6 +6,7 @@ import HistoricoServicos from './routes/HistoricoServicos';
 import NovoVeiculo from './routes/NovoVeiculo';
 import VeiculosSalvos from './routes/VeiculoSalvo';
 import BarraLateral from './Components/BarraLateral';
+import LoginCadastro from './routes/Login';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <BarraLateral />
         
         <Routes>
+          <Route path="/login">{<LoginCadastro/>}</Route>
           <Route path="/" element={<Inicio />} />
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/historico" element={<HistoricoServicos />} />
