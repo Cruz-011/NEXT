@@ -16,7 +16,7 @@ function App() {
         <BarraLateral />
         
         <Routes>
-          <Route path="/login">{<LoginCadastro/>}</Route>
+          <Route path="/login" element={<LoginCadastro />} />
           <Route path="/" element={<Inicio />} />
           <Route path="/servicos" element={<Servicos />} />
           <Route path="/historico" element={<HistoricoServicos />} />

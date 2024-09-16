@@ -1,117 +1,114 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../assets/LoginCadastro.css';
-import styled, { createGlobalStyle } from 'styled-components';
 
-export default function LoginCadastro(){
-  const [isLogin, setIsLogin] = useState(true);
-
-  const [emailOuTelefone, setEmailOuTelefone] = useState('');
-  const [senhaLogin, setSenhaLogin] = useState('');
-
-  const [nome, setNome] = useState('');
+function LoginCadastro() {
+  const [isRegistering, setIsRegistering] = useState(false); 
   const [email, setEmail] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [senhaCadastro, setSenhaCadastro] = useState('');
-
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); 
+  const navigate = useNavigate();
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    console.log({ emailOuTelefone, senhaLogin });
-  };
 
-  const handleCadastroSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log({ nome, email, telefone, senhaCadastro });
+    if (isRegistering) {
+      if (password !== confirmPassword) {
+        alert('As senhas não coincidem');
+        return;
+      }
+      alert('Registro realizado com sucesso!');
+    } else {
+      alert('Login realizado com sucesso!');
+    }
+    navigate('/');
   };
-
-  const toggleForm = () => {
-    setIsLogin(!isLogin);
-  };
-
-  
 
   return (
-    <div className="login-cadastro-container">
-      <div className="toggle-form">
-        <button onClick={toggleForm}>
-          {isLogin ? 'Ir para Cadastro' : 'Ir para Login'}
-        </button>
+    <div className="container">
+      <div className="left-side">
+        <img src="public\imagens\carchek sem fundo.png" alt="Carcheck login" className="img_login_ck"/>
       </div>
+      <div className="right-side">
+        <div className="login-container">
+          <h2>{isRegistering ? 'Registrar' : 'Entrar'}</h2>
+          <form onSubmit={handleSubmit}>
+            {isRegistering && (
+              <div className="form-group">
+                <label htmlFor="username">Nome de Usuário</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+            )}
 
-      {isLogin ? (
-        <div className="login-form">
-          <h2>Login</h2>
-          <form onSubmit={handleLoginSubmit}>
             <div className="form-group">
-              <label htmlFor="emailOuTelefone">Email ou Telefone:</label>
-              <input
-                type="text"
-                id="emailOuTelefone"
-                value={emailOuTelefone}
-                onChange={(e) => setEmailOuTelefone(e.target.value)}
-                required
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="senhaLogin">Senha:</label>
-              <input
-                type="password"
-                id="senhaLogin"
-                value={senhaLogin}
-                onChange={(e) => setSenhaLogin(e.target.value)}
-                required
-                />
-            </div>
-            <button type="submit" className="botao-submit">Entrar</button>
-          </form>
-        </div>
-      ) : (
-        <div className="cadastro-form">
-          <h2>Cadastrar</h2>
-          <form onSubmit={handleCadastroSubmit}>
-            <div className="form-group">
-              <label htmlFor="nome">Nome:</label>
-              <input
-                type="text"
-                id="nome"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                required
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="email">E-mail</label>
               <input
                 type="email"
                 id="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                />
+              />
             </div>
+
             <div className="form-group">
-              <label htmlFor="telefone">Telefone:</label>
-              <input
-                type="tel"
-                id="telefone"
-                value={telefone}
-                onChange={(e) => setTelefone(e.target.value)}
-                required
-                />
-            </div>
-            <div className="form-group">
-              <label htmlFor="senhaCadastro">Criar Senha:</label>
+              <label htmlFor="password">Senha</label>
               <input
                 type="password"
-                id="senhaCadastro"
-                value={senhaCadastro}
-                onChange={(e) => setSenhaCadastro(e.target.value)}
+                id="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
-                />
+              />
             </div>
-            <button type="submit" className="botao-submit">Cadastrar</button>
+
+            {isRegistering && (
+              <div className="form-group">
+                <label htmlFor="confirmPassword">Confirmar Senha</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+            )}
+
+            <button type="submit">{isRegistering ? 'Registrar' : 'Entrar'}</button>
           </form>
+
+          <p>
+            {isRegistering ? (
+              <>
+                Já tem uma conta?{' '}
+                <button onClick={() => setIsRegistering(false)} className="toggle-button">
+                  Entrar
+                </button>
+              </>
+            ) : (
+              <>
+                Não tem uma conta?{' '}
+                <button onClick={() => setIsRegistering(true)} className="toggle-button">
+                  Registrar
+                </button>
+              </>
+            )}
+          </p>
         </div>
-      )}
+      </div>
     </div>
   );
-};
+}
+
+export default LoginCadastro;
