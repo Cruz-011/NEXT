@@ -11,7 +11,7 @@ interface ServicoAndamento {
   pecas: string[];
   previsaoConclusao: string;
   telefoneContato: string;
-  pdfOrcamento: string; // URL do PDF
+  pdfOrcamento: string; 
 }
 
 const servicosEmAndamento: ServicoAndamento[] = [
@@ -23,7 +23,7 @@ const servicosEmAndamento: ServicoAndamento[] = [
     pecas: ['Disco de freio - R$ 300', 'Pastilhas de freio - R$ 150'],
     previsaoConclusao: '20/09/2024',
     telefoneContato: '(11) 99999-9999',
-    pdfOrcamento: './public/', 
+    pdfOrcamento: './public/ordem de serviço.pdf', 
   },
   
 ];
