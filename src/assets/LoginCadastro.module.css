@@ -1,0 +1,93 @@
+/* LoginCadastro.module.css */
+
+/* Define o layout principal */
+.container {
+  display: flex;
+  height: 100vh; /* Altura total da viewport */
+}
+
+.leftSide {
+  width: 50%; /* Metade da tela */
+  background-color: #07396e; /* Cor azul */
+}
+
+.imgLoginCk {
+  padding-top: 32%;
+}
+
+/* Estilo da parte direita onde está o formulário */
+.rightSide {
+  width: 50%; /* Metade da tela */
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  background-color: #f8f9fa; /* Cor de fundo branco/cinza claro */
+}
+
+.loginContainer {
+  width: 100%;
+  max-width: 400px; /* Define a largura máxima do formulário */
+  padding: 20px;
+  background-color: #fff; /* Fundo branco */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra ao redor do formulário */
+  border-radius: 8px; /* Bordas arredondadas */
+  text-align: center; /* Centraliza o texto */
+  color: #000; /* Cor do texto preta */
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #000; /* Cor do texto preta */
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  text-align: left; /* Alinha os rótulos e campos à esquerda */
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #000; /* Cor do texto preta */
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #6f42c1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #5a31a8;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  color: #6f42c1;
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: underline;
+}
+
+.toggleButton:hover {
+  text-decoration: none;
+}
+
+p {
+  margin-top: 20px;
+}

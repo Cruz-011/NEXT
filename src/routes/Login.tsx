@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../assets/LoginCadastro.css';
+import styles from '../assets/LoginCadastro.module.css'; // Importa o CSS Module
 
 function LoginCadastro() {
-  const [isRegistering, setIsRegistering] = useState(false); 
+  const [isRegistering, setIsRegistering] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); 
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
+
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
@@ -25,16 +26,16 @@ function LoginCadastro() {
   };
 
   return (
-    <div className="container">
-      <div className="left-side">
-        <img src="public\imagens\carchek sem fundo.png" alt="Carcheck login" className="img_login_ck"/>
+    <div className={styles.container}>
+      <div className={styles.leftSide}>
+        <img src="public/imagens/carchek sem fundo.png" alt="Carcheck login" className={styles.imgLoginCk}/>
       </div>
-      <div className="right-side">
-        <div className="login-container">
+      <div className={styles.rightSide}>
+        <div className={styles.loginContainer}>
           <h2>{isRegistering ? 'Registrar' : 'Entrar'}</h2>
           <form onSubmit={handleSubmit}>
             {isRegistering && (
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label htmlFor="username">Nome de Usuário</label>
                 <input
                   type="text"
@@ -47,7 +48,7 @@ function LoginCadastro() {
               </div>
             )}
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <label htmlFor="email">E-mail</label>
               <input
                 type="email"
@@ -59,7 +60,7 @@ function LoginCadastro() {
               />
             </div>
 
-            <div className="form-group">
+            <div className={styles.formGroup}>
               <label htmlFor="password">Senha</label>
               <input
                 type="password"
@@ -72,7 +73,7 @@ function LoginCadastro() {
             </div>
 
             {isRegistering && (
-              <div className="form-group">
+              <div className={styles.formGroup}>
                 <label htmlFor="confirmPassword">Confirmar Senha</label>
                 <input
                   type="password"
@@ -92,14 +93,14 @@ function LoginCadastro() {
             {isRegistering ? (
               <>
                 Já tem uma conta?{' '}
-                <button onClick={() => setIsRegistering(false)} className="toggle-button">
+                <button onClick={() => setIsRegistering(false)} className={styles.toggleButton}>
                   Entrar
                 </button>
               </>
             ) : (
               <>
                 Não tem uma conta?{' '}
-                <button onClick={() => setIsRegistering(true)} className="toggle-button">
+                <button onClick={() => setIsRegistering(true)} className={styles.toggleButton}>
                   Registrar
                 </button>
               </>
