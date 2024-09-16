@@ -1,0 +1,72 @@
+.form-container {
+    padding: 20px;
+    background-color: #1a1725; 
+    border-radius: 9px;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+form input, form select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #272933;
+    color: #fff;
+}
+
+form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+#message {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#message p {
+    font-size: 18px;
+    color: #4CAF50;
+}
+
+#message button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #0078ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#message button:hover {
+    background-color: #005bb5;
+}

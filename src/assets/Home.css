@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
+body {
+    --theme-color: #0078ff;
+    font-family: 'Arial', sans-serif;
+    background-color: #141217;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    border: 1px solid white;
+    background-color: rgba(0, 148, 255, 80%);
+}
+
+.card p {
+    margin-left: px;
+}
+.texto_card {
+    margin-top: 0px;
+    margin-top: 10px;
+}
+
+.utilizacao-image {
+    margin-top: 0px;
+}
+
+.container {
+    display: flex;
+    margin-left: 250px;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    text-align: center;
+}
+
+.container section {
+    flex: 200px;
+    margin: 15px; 
+    max-width: 200px; 
+}
+
+.container img {
+    margin-bottom: 10px; 
+}
+
+.container h1 {
+    font-size: 18px; 
+    margin: 10px 0; 
+}
+
+.container p {
+    font-size: 14px; 
+    margin: 5px 0; 
+}
+
+section {
+    flex: 1;
+    margin-left: 200px;
+}
+
+section:last-child {
+    margin-right: 0;
+    margin-bottom: 50px;
+}
+
+.botao-principal {
+    display: inline-block;
+    text-decoration: none;
+    padding: 20px 400px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    background: rgba(0, 148, 255, 80%);
+    margin-left: 140px;
+}
+
+.botoes-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.botao {
+    padding: 20px 40px;
+    margin-right: 10px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 360px;
+    background: rgba(0, 148, 255, 50%);
+    width: 200px;
+    height: 70px;
+}
+
+.problemas {
+    margin-left: 10px;
+    text-align: center;
+}
+
+.btp {
+    margin-left: -2%;
+    text-align: center;
+}
+
+
+
+
+
