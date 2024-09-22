@@ -10,6 +10,8 @@
     max-height: 380px;
     margin-top: -40px;
     margin-left: 300px;
+    box-sizing: border-box;
+    transition: all 0.3s ease; 
 }
 
 button {
@@ -24,7 +26,6 @@ button {
     margin: 25px auto; 
     font-size: 22px;
     text-align: center;
-
 }
 
 .texto_card {
@@ -41,6 +42,7 @@ button {
     width: 100%; 
     max-width: 850px;
     height: auto;
+    transition: all 0.3s ease; /* Adiciona transição suave */
 }
 
 .container {
@@ -72,6 +74,7 @@ button {
     flex: 1 0 200px; 
     margin: 15px; 
 }
+
 .btp {
     margin-left: 200px;
     text-align: center;
@@ -94,16 +97,74 @@ button {
     max-height: 380px;
     height: auto; 
 }
+@media (max-width: 1366px) {
+    .card {
+        max-width: 1000px;
+        width: 100%;
+        height: 263px;
+    }
+
+    .texto_card{
+        margin-left: -25px;
+    }
+
+    .utilizacao-image img {
+        width: 400px;
+        height: auto;
+        margin-left: 20px;
+    }
+
+    button {
+        max-width: 700px; 
+        padding: 15px;
+        font-size: 20px;
+    }
+
+}
 
 @media (max-width: 1200px) {
     .container section {
         flex: 1 0 30%; 
+    }
+    .card {
+        max-width: 90%; /* Ajuste proporcional */
+        padding: 30px; 
+        margin-left: auto;
+        margin-right: auto; /* Centraliza o card */
+    }
+
+    .utilizacao-image img {
+        max-width: 600px; /* Ajusta para o tamanho da tela */
+        margin-left: 0;
+    }
+
+    button {
+        max-width: 800px; /* Ajuste para o botão */
+        padding: 15px;
+        font-size: 18px;
     }
 }
 
 @media (max-width: 900px) {
     .container section {
         flex: 1 0 45%; 
+    }
+    .card {
+        max-width: 80%; /* Ajuste proporcional */
+        padding: 20px;
+        margin-left: auto;
+        margin-right: auto; /* Centraliza o card */
+    }
+
+    .utilizacao-image img {
+        max-width: 400px; /* Ajusta para o tamanho da tela */
+        margin-left: 0;
+    }
+
+    button {
+        max-width: 600px; /* Ajuste para o botão */
+        padding: 10px;
+        font-size: 16px;
     }
 }
 
@@ -112,7 +173,23 @@ button {
         flex: 1 0 100%; 
     }
 
+    .card {
+        max-width: 100%; 
+        padding: 15px;
+        margin-left: auto;
+        margin-right: auto; /* Centraliza o card */
+        margin-top: 10px;
+    }
+
+    .utilizacao-image img {
+        max-width: 90%; /* Ajuste proporcional para a tela menor */
+        margin-left: 0;
+    }
+
     button {
         width: 90%; 
+        max-width: 400px; /* Ajuste para o botão */
+        padding: 8px;
+        font-size: 14px;
     }
 }
