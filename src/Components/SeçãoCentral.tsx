@@ -64,7 +64,7 @@ const SeçãoCentral: React.FC = () => {
 
 
         <div className="btp">
-        <h1>NÃO SABE QUAL O PROBLEMA? NÓS TE AJUDAMOS.</h1>
+        <h1>NÃO SABE QUAL É O PROBLEMA E PRECISA DE UM ORÇAMENTO?<br /> NÓS TE AJUDAMOS.</h1>
             <button>INICIAR CHAT</button>
         </div>
       </div>
