@@ -3,9 +3,9 @@
     align-items: center;
     border: 1px solid white;
     background-color: rgba(0, 148, 255, 80%);
-    padding: 20px; 
+    padding: 50px; 
     width: 100%;
-    max-width: 1540px; 
+    max-width: 1500px; 
     height: auto; 
     max-height: 380px;
     margin-top: -40px;
@@ -37,7 +37,9 @@ button {
 }
 
 .utilizacao-image img {
+    margin-left: 50px;
     width: 100%; 
+    max-width: 850px;
     height: auto;
 }
 
