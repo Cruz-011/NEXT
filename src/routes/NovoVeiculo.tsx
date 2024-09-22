@@ -28,7 +28,7 @@ const NovoVeiculo: React.FC = () => {
         {veiculoSalvo ? (
           <div id="message">
             <p>Veículo salvo com sucesso!</p>
-            <button onClick={() => window.location.href = '/veiculossalvos'}>
+            <button className="botao-novo"onClick={() => window.location.href = '/veiculossalvos'}>
               Ver Veículos Salvos
             </button>
           </div>
@@ -58,7 +58,7 @@ const NovoVeiculo: React.FC = () => {
             <label htmlFor="chassis">Chassis:</label>
             <input type="text" id="chassis" name="chassis" required />
             
-            <button type="submit">Salvar</button>
+            <button className='botao-novo' type="submit">Salvar</button>
           </form>
         )}
       </div>

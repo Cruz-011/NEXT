@@ -1,3 +1,18 @@
+/* src/assets/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
+body {
+    --theme-color: #0078ff;
+    font-family: 'Arial', sans-serif;
+    background-color: #141217;
+    color: #fff;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .menu-links {
     width: 250px;
     background-color: #333;
@@ -9,34 +24,134 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
-  }
-  
-  .menu-links ul {
+}
+
+.menu-links ul {
     list-style-type: none;
     padding: 0;
-  }
-  
-  .nav-item {
+}
+
+.nav-item {
     margin-bottom: 20px;
-  }
-  
-  .nav-link {
+}
+
+.nav-link {
     color: white;
     text-decoration: none;
     display: flex;
     align-items: center;
     padding: 10px;
     transition: background 0.3s;
-  }
-  
-  .nav-link:hover {
+}
+
+.nav-link:hover {
     background-color: #555;
-  }
-  
-  .nav-icon {
+}
+
+.nav-icon {
     width: 24px;
     height: 24px;
     margin-right: 10px;
-  }
-  
+}
+
+.header-inner {
+    width: 100%;
+}
+
+.header-content {
+    width: 100%;
+}
+
+.header-content form {
+    width: 85%;
+    display: flex;
+    align-items: center;
+}
+
+.header-content form input[type="search"] {
+    color: white;
+    height: 42px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: none;
+}
+
+.header-content .profile {
+    margin: 0 20px;
+}
+
+.profile img {
+    border-radius: 50%;
+    border: 2px solid white;
+    width: 50px;
+}
+
+.sair input[type="button"] {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+.navbar {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-light .navbar-brand {
+    font-size: 26px;
+    color: white;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: white;
+}
+
+/* Tipografia */
+h1 {
+    font-size: 32px;
+    line-height: 40px;
+}
+
+h2 {
+    font-size: 26px;
+    line-height: 34px;
+}
+
+h3 {
+    font-size: 24px;
+    line-height: 32px;
+}
+
+h4 {
+    font-size: 14px;
+    line-height: 22px;
+}
+
+h5 {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.search-icon {
+  position: relative;
+  width: 85%;
+}
+
+.header-content form input[type="search"]::-webkit-input-placeholder {
+  color: white;
+}

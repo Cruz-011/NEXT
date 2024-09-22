@@ -7,6 +7,7 @@ const FooterContainer = styled.footer`
   padding: 20px;
   width: 100%;
   bottom: 0;
+  margin-left: 80px;
 `;
 
 function Rodape() {

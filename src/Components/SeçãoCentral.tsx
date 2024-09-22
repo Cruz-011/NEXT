@@ -1,6 +1,7 @@
 import React from 'react';
+import '../assets/Home.css'
 import '../assets/global.css';
-import '../assets/Home.css';
+
 
 const SeçãoCentral: React.FC = () => {
   return (
@@ -60,25 +61,12 @@ const SeçãoCentral: React.FC = () => {
           </section>
         </div>
 
-        <section className="problemas">
-          <h1>PROBLEMAS JÁ IDENTIFICADOS</h1>
-          <div className="botoes-container">
-            <button className="botao">Ar Condicionado</button>
-            <button className="botao">Arrefecimento</button>
-            <button className="botao">Balanceamento</button>
-            <button className="botao">Freio</button>
-            <button className="botao">Embreagens</button>
-            <button className="botao">Correias</button>
-            <button className="botao">Ignição</button>
-          </div>
-        </section>
 
-        <section className="btp">
-          <h1>NÃO SABE QUAL O PROBLEMA? NÓS TE AJUDAMOS.</h1>
-          <div className="btn-container">
-            <button className="botao-principal">CLIQUE AQUI</button>
-          </div>
-        </section>
+
+        <div className="btp">
+        <h1>NÃO SABE QUAL O PROBLEMA? NÓS TE AJUDAMOS.</h1>
+            <button>INICIAR CHAT</button>
+        </div>
       </div>
     </div>
   );

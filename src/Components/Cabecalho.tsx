@@ -1,6 +1,6 @@
 import React from 'react';
 import '../assets/Siderbar.css'; 
-
+import '../assets/global.css';
 
 const Cabecalho: React.FC = () => {
   return (

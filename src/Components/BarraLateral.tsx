@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/Header.css'; 
+import '../assets/global.css';
+
 
 const BarraLateral: React.FC = () => {
   return (
