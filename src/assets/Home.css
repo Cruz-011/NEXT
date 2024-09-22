@@ -4,10 +4,10 @@
     border: 1px solid white;
     background-color: rgba(0, 148, 255, 80%);
     padding: 20px; 
-    width: auto;
-    max-width: 1000px; 
+    width: 100%;
+    max-width: 1540px; 
     height: auto; 
-    max-height: 310px;
+    max-height: 380px;
     margin-top: -40px;
     margin-left: 300px;
 }
@@ -32,6 +32,7 @@ button {
 }
 
 .utilizacao-image {
+    flex: 1;
     max-width: 100%; 
 }
 
