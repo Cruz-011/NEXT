@@ -1,6 +1,7 @@
 import React from 'react';
 import Cabecalho from '../Components/Cabecalho'; 
 import '../assets/historicoservicos.css';
+import BarraLateral from '../Components/BarraLateral';
 
 interface Servico {
   descricao: string;
@@ -22,13 +23,15 @@ const historicoServicos: Servico[] = [
     veiculo: 'Toyota Corolla 2019',
     data: '16/09/2024',
   },
-  // Adicione mais itens conforme necessário
+
 ];
 
 const HistoricoServicos: React.FC = () => {
   return (
     <div>
       <Cabecalho />
+      <BarraLateral />
+
       <div className="historico-servicos">
         <h1>Histórico de Serviços</h1>
         <table>

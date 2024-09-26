@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../Components/Cabecalho'
 import styles from '../assets/VeiculosSalvos.module.css'; 
 import Cabecalho from '../Components/Cabecalho';
+import BarraLateral from '../Components/BarraLateral';
 
 interface Vehicle {
   marca: string;
@@ -24,6 +25,9 @@ const VeiculosSalvos: React.FC = () => {
   return (
     <div>
       <Cabecalho/>
+      <BarraLateral />
+
+
 
     <div className={styles.vehiclesContainer}>
       <h2>Veículos Salvos</h2>

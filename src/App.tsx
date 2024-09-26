@@ -4,16 +4,13 @@ import Servicos from './routes/servicos';
 import HistoricoServicos from './routes/HistoricoServicos';
 import NovoVeiculo from './routes/NovoVeiculo';
 import VeiculosSalvos from './routes/VeiculoSalvo';
-import BarraLateral from './Components/BarraLateral';
 import LoginCadastro from './routes/Login';
 
 function App() {
   return (
     <Router>
 
-      <div className="app-container">
-        <BarraLateral />
-        
+      <div className="app-container"> 
         <Routes>
           <Route path="/login" element={<LoginCadastro />} />
           <Route path="/" element={<Inicio />} />

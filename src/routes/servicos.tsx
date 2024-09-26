@@ -1,7 +1,8 @@
 import React from 'react';
 import Cabecalho from '../Components/Cabecalho'; 
-import '../assets/servicosEmAndamento.css';
 import { Link } from 'react-router-dom';
+import BarraLateral from '../Components/BarraLateral';
+import styles from '../assets/ServicosEmAndamento.module.css';
 
 interface ServicoAndamento {
   veiculo: string;
@@ -25,17 +26,18 @@ const servicosEmAndamento: ServicoAndamento[] = [
     telefoneContato: '(11) 99999-9999',
     pdfOrcamento: './public/ordem de serviço.pdf', 
   },
-  
 ];
 
 const ServicosEmAndamento: React.FC = () => {
   return (
     <div>
       <Cabecalho />
-      <div className="servicos-em-andamento">
+      <BarraLateral />
+
+      <div className={styles.servicosEmAndamento}>
         <h1>Serviços em Andamento</h1>
         {servicosEmAndamento.map((servico, index) => (
-          <div key={index} className="servico-item">
+          <div key={index} className={styles.servicoItem}>
             <h2>Veículo: {servico.veiculo}</h2>
             <p><strong>Oficina:</strong> {servico.oficina}</p>
             <p><strong>Data:</strong> {servico.dia}</p>

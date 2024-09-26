@@ -1,40 +1,40 @@
-.form-container {
+/* NovoVeiculo.module.css */
+.formContainer {
     padding: 20px;
-    background-color: #1a1725; 
+    background-color: #1a1725;
     border-radius: 9px;
-    width: auto;
     max-width: 1000px;
     margin: 0 auto;
     margin-left: 25%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.form-container h2 {
-    align-items: center;
+  }
+  
+  .formContainer h2 {
     text-align: center;
     margin-bottom: 20px;
-}
-
-form {
+  }
+  
+  .form {
     display: flex;
     flex-direction: column;
-}
-
-form label {
+  }
+  
+  .label {
     margin-top: 10px;
     font-size: 16px;
-}
-
-form input, form select {
+  }
+  
+  .input,
+  .select {
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #444;
     border-radius: 4px;
     background-color: #272933;
     color: #fff;
-}
-
-form .botao-novo {
+  }
+  
+  .button {
     margin-top: 20px;
     padding: 10px;
     background-color: #4CAF50;
@@ -43,23 +43,24 @@ form .botao-novo {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-form .botao-novo {
+    max-width: 960px;
+  }
+  
+  .button:hover {
     background-color: #45a049;
-}
-
-#message {
+  }
+  
+  .message {
     text-align: center;
     margin-top: 20px;
-}
-
-#message p {
+  }
+  
+  .message p {
     font-size: 18px;
     color: #4CAF50;
-}
-
-#message .botao-novo {
+  }
+  
+  .messageButton {
     margin-top: 10px;
     padding: 10px;
     background-color: #0078ff;
@@ -68,13 +69,9 @@ form .botao-novo {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
-
-#message button:hover {
+  }
+  
+  .messageButton:hover {
     background-color: #005bb5;
-}
-
-.botao-novo{
-    
-    max-width: 960px;
-}
+  }
+  
