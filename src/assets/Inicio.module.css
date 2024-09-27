@@ -14,7 +14,7 @@
     transition: all 0.3s ease; 
 }
 
-button {
+.button {
     width: 100%; 
     max-width: 1000px; 
     padding: 20px;
@@ -32,17 +32,17 @@ button {
     margin-top: 0px; 
 }
 
-.utilizacao-image {
+.utilizacaoImage {
     flex: 1;
     max-width: 100%; 
 }
 
-.utilizacao-image img {
+.utilizacaoImage img {
     margin-left: 50px;
     width: 100%; 
     max-width: 850px;
     height: auto;
-    transition: all 0.3s ease; /* Adiciona transição suave */
+    transition: all 0.3s ease;
 }
 
 .container {
@@ -80,7 +80,7 @@ button {
     text-align: center;
 }
 
-.section-heading {
+.sectionHeading {
     padding-top: 20px;
 }
 
@@ -89,7 +89,7 @@ button {
     padding-left: 4px;
 }
 
-.img_celular {
+.imgCelular {
     border: 1px solid white;
     margin-top: 7px;
     margin-left: 20px;
@@ -97,6 +97,7 @@ button {
     max-height: 380px;
     height: auto; 
 }
+
 @media (max-width: 1366px) {
     .card {
         max-width: 1000px;
@@ -104,22 +105,21 @@ button {
         height: 263px;
     }
 
-    .texto_card{
+    .texto_card {
         margin-left: -25px;
     }
 
-    .utilizacao-image img {
+    .utilizacaoImage img {
         width: 400px;
         height: auto;
         margin-left: 20px;
     }
 
-    button {
+    .button {
         max-width: 700px; 
         padding: 15px;
         font-size: 20px;
     }
-
 }
 
 @media (max-width: 1200px) {
@@ -127,19 +127,19 @@ button {
         flex: 1 0 30%; 
     }
     .card {
-        max-width: 90%; /* Ajuste proporcional */
+        max-width: 90%;
         padding: 30px; 
         margin-left: auto;
-        margin-right: auto; /* Centraliza o card */
+        margin-right: auto;
     }
 
-    .utilizacao-image img {
-        max-width: 600px; /* Ajusta para o tamanho da tela */
+    .utilizacaoImage img {
+        max-width: 600px;
         margin-left: 0;
     }
 
-    button {
-        max-width: 800px; /* Ajuste para o botão */
+    .button {
+        max-width: 800px;
         padding: 15px;
         font-size: 18px;
     }
@@ -150,19 +150,19 @@ button {
         flex: 1 0 45%; 
     }
     .card {
-        max-width: 80%; /* Ajuste proporcional */
+        max-width: 80%;
         padding: 20px;
         margin-left: auto;
-        margin-right: auto; /* Centraliza o card */
+        margin-right: auto;
     }
 
-    .utilizacao-image img {
-        max-width: 400px; /* Ajusta para o tamanho da tela */
+    .utilizacaoImage img {
+        max-width: 400px;
         margin-left: 0;
     }
 
-    button {
-        max-width: 600px; /* Ajuste para o botão */
+    .button {
+        max-width: 600px;
         padding: 10px;
         font-size: 16px;
     }
@@ -177,18 +177,18 @@ button {
         max-width: 100%; 
         padding: 15px;
         margin-left: auto;
-        margin-right: auto; /* Centraliza o card */
+        margin-right: auto;
         margin-top: 10px;
     }
 
-    .utilizacao-image img {
-        max-width: 90%; /* Ajuste proporcional para a tela menor */
+    .utilizacaoImage img {
+        max-width: 90%;
         margin-left: 0;
     }
 
-    button {
+    .button {
         width: 90%; 
-        max-width: 400px; /* Ajuste para o botão */
+        max-width: 400px;
         padding: 8px;
         font-size: 14px;
     }

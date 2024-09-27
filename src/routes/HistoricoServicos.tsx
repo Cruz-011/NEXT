@@ -1,6 +1,6 @@
 import React from 'react';
 import Cabecalho from '../Components/Cabecalho'; 
-import '../assets/historicoservicos.css';
+import styles from '../assets/historicoservicos.module.css';
 import BarraLateral from '../Components/BarraLateral';
 
 interface Servico {
@@ -23,7 +23,6 @@ const historicoServicos: Servico[] = [
     veiculo: 'Toyota Corolla 2019',
     data: '16/09/2024',
   },
-
 ];
 
 const HistoricoServicos: React.FC = () => {
@@ -32,7 +31,7 @@ const HistoricoServicos: React.FC = () => {
       <Cabecalho />
       <BarraLateral />
 
-      <div className="historico-servicos">
+      <div className={styles.historicoServicos}>
         <h1>Histórico de Serviços</h1>
         <table>
           <thead>

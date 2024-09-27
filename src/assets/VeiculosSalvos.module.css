@@ -41,7 +41,7 @@
   }
   
   .btnAjuda{
-    padding: 8px 1px;
+    padding: 10px 10px;
     border: none;
     color: #fff;
     border-radius: 4px;
@@ -51,7 +51,7 @@
     margin: 5px;
   }
   .btnEditar{    
-    padding: 8px 1px;
+    padding: 10px 10px;
     border: none;
     color: #fff;
     border-radius: 4px;
@@ -64,7 +64,7 @@
 
   
   .btnExcluir {
-    padding: 8px 1px;
+    padding: 10px 8px;
     background-color: #ff0000;
     border: none;
     color: #fff;
