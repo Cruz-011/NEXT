@@ -5,10 +5,12 @@ import HistoricoServicos from './routes/HistoricoServicos';
 import NovoVeiculo from './routes/NovoVeiculo';
 import VeiculosSalvos from './routes/VeiculoSalvo';
 import LoginCadastro from './routes/Login';
+import Rodape from './Components/Rodape';
 
 function App() {
   return (
     <Router>
+    
 
       <div className="app-container"> 
         <Routes>
@@ -20,7 +22,9 @@ function App() {
           <Route path="/veiculossalvos" element={<VeiculosSalvos />} />
         </Routes>
       </div>
+      <Rodape/>
     </Router>
+    
   );
 }
 

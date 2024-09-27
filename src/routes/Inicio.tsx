@@ -73,7 +73,7 @@ const Inicio: React.FC = () => {
       </div>
 
       <WatsonAssistant />
-      <Rodape />
+      
     </>
   );
 };
