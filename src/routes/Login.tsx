@@ -86,21 +86,21 @@ function LoginCadastro() {
               </div>
             )}
 
-            <button className="button-login" type="submit">{isRegistering ? 'Registrar' : 'Entrar'}</button>
+            <button className="button-login" onClick={() => setIsRegistering(false)}>{isRegistering ? 'Registrar' : 'Entrar'}</button>
           </form>
 
           <p>
             {isRegistering ? (
               <>
                 Já tem uma conta?{' '}
-                <button className="button-login" onClick={() => setIsRegistering(false)} className={styles.toggleButton}>
+                <button className="button-login" onClick={() => setIsRegistering(false)}>
                   Entrar
                 </button>
               </>
             ) : (
               <>
                 Não tem uma conta?{' '}
-                <button className="button-login" onClick={() => setIsRegistering(true)} className={styles.toggleButton}>
+                <button className="button-login" onClick={() => setIsRegistering(true)}>
                   Registrar
                 </button>
               </>

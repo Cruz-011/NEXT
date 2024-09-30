@@ -57,7 +57,7 @@ input {
   border-radius: 4px;
 }
 
-.button-login {
+#button-login {
   width: 100%;
   padding: 10px;
   background-color: #6f42c1;
@@ -68,7 +68,7 @@ input {
   margin-top: 10px;
 }
 
-.button-login:hover {
+#button-login:hover {
   background-color: #5a31a8;
 }
 

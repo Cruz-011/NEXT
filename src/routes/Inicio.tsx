@@ -1,11 +1,22 @@
-import React from 'react';
-import WatsonAssistant from '../Components/WatsonAssistant';
+// src/Pages/Inicio.tsx
+import React, { useState } from 'react';
 import Cabecalho from '../Components/Cabecalho';
 import BarraLateral from '../Components/BarraLateral';
 import Rodape from '../Components/Rodape';
+import Chat from '../Components/Chat';
 import styles from '../assets/Inicio.module.css';
 
 const Inicio: React.FC = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const openChat = () => {
+    setIsChatOpen(true);
+  };
+
+  const closeChat = () => {
+    setIsChatOpen(false);
+  };
+
   return (
     <>
       <Cabecalho />
@@ -66,14 +77,17 @@ const Inicio: React.FC = () => {
           </div>
 
           <div className={styles.btp}>
-            <h1>NÃO SABE QUAL É O PROBLEMA E PRECISA DE UM ORÇAMENTO ?<br/><br/>NÓS TE AJUDAMOS.</h1>
-            <button className={styles.button}>INICIAR CHAT</button>
+            <h1>
+              NÃO SABE QUAL É O PROBLEMA E PRECISA DE UM ORÇAMENTO ?
+              <br /><br />
+              NÓS TE AJUDAMOS.
+            </h1>
+            <button className={styles.button} onClick={openChat}>INICIAR CHAT</button>
           </div>
         </div>
       </div>
 
-      <WatsonAssistant />
-      
+      {isChatOpen && <Chat onClose={closeChat} />}
     </>
   );
 };
