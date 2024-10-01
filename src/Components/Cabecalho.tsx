@@ -37,15 +37,17 @@ const SearchIcon = styled.div`
   flex: 1; 
   display: flex;
   align-items: center; 
+  justify-content: center; /* Alinha a barra de pesquisa ao centro */
 `;
 
 const SearchInput = styled.input`
   color: black;
-  height: 35px; /* Ajustado para ficar mais fino */
-  padding: 5px 10px; /* Ajustado para um padding menor */
+  height: 35px; 
+  padding: 5px 10px; 
   border-radius: 50px;
   border: none;
-  width: 100%; 
+  width: 85%; /* Ajusta a largura para um tamanho maior */
+  max-width: 1200px; /* Define um limite máximo para a barra de pesquisa */
   &::placeholder {
     color: black;
   }

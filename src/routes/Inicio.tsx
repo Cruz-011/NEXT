@@ -5,6 +5,7 @@ import BarraLateral from '../Components/BarraLateral';
 import Rodape from '../Components/Rodape';
 import Chat from '../Components/Chat';
 import styles from '../assets/Inicio.module.css';
+import WatsonAssistant from '../Components/WatsonAssistant';
 
 const Inicio: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -21,6 +22,7 @@ const Inicio: React.FC = () => {
     <>
       <Cabecalho />
       <BarraLateral />
+      <WatsonAssistant/>
 
       <div className={styles.content}>
         <div className={styles.sectionContainer}>
