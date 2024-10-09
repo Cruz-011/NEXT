@@ -1,8 +1,9 @@
 import React from 'react';
 import Cabecalho from '../Components/Cabecalho'; 
 import { Link } from 'react-router-dom';
-import BarraLateral from '../Components/BarraLateral';
 import styles from '../assets/ServicosEmAndamento.module.css';
+import styled  from '../assets/global.css';
+
 
 interface ServicoAndamento {
   veiculo: string;
@@ -32,7 +33,6 @@ const ServicosEmAndamento: React.FC = () => {
   return (
     <div>
       <Cabecalho />
-      <BarraLateral />
 
       <div className={styles.servicosEmAndamento}>
         <h1>Serviços em Andamento</h1>

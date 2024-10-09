@@ -1,7 +1,7 @@
 import React from 'react';
 import Cabecalho from '../Components/Cabecalho'; 
 import styles from '../assets/historicoservicos.module.css';
-import BarraLateral from '../Components/BarraLateral';
+import styled  from '../assets/global.css';
 
 interface Servico {
   descricao: string;
@@ -29,7 +29,6 @@ const HistoricoServicos: React.FC = () => {
   return (
     <div>
       <Cabecalho />
-      <BarraLateral />
 
       <div className={styles.historicoServicos}>
         <h1>Histórico de Serviços</h1>

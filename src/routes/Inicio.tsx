@@ -1,7 +1,5 @@
-// src/Pages/Inicio.tsx
 import React, { useState } from 'react';
 import Cabecalho from '../Components/Cabecalho';
-import BarraLateral from '../Components/BarraLateral';
 import Rodape from '../Components/Rodape';
 import Chat from '../Components/Chat';
 import styles from '../assets/Inicio.module.css';
@@ -21,22 +19,20 @@ const Inicio: React.FC = () => {
   return (
     <>
       <Cabecalho />
-      <BarraLateral />
-      <WatsonAssistant/>
-
-      <div className={styles.content}>
+      <WatsonAssistant />
+      <div className={styles.mainContent}>
         <div className={styles.sectionContainer}>
           <section className={styles.section}>
             <div className={styles.card}>
+              <div className={styles.utilizacaoImage}>
+                <img className={styles.imgCelular} src="/imagens/celular.png" alt="Celular" />
+              </div>
               <div className={styles.texto_card}>
                 <h2>Car Check</h2>
                 <h3 className={styles.sectionHeading}>Sua solução a um clique de distância.</h3>
                 <p>
                   Seu diagnóstico e um orçamento em minutos, na sua mão, sem sair de casa.
                 </p>
-              </div>
-              <div className={styles.utilizacaoImage}>
-                <img className={styles.imgCelular} src="/imagens/celular.png" alt="Celular" />
               </div>
             </div>
           </section>
@@ -64,10 +60,7 @@ const Inicio: React.FC = () => {
               </p>
             </section>
             <section className={styles.acessibilidade}>
-              <img
-                src="/imagens/acessibilidade.png"
-                alt="Ícone de acessibilidade"
-              />
+              <img src="/imagens/acessibilidade.png" alt="Ícone de acessibilidade" />
               <h1>ACESSIBILIDADE</h1>
               <p>Nosso sistema é adaptado para todos os tipos de usuários.</p>
             </section>

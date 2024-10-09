@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Cabecalho from '../Components/Cabecalho';
-import BarraLateral from '../Components/BarraLateral';
 import styles from '../assets/NovoVeiculo.module.css';
+import styled  from '../assets/global.css';
+
 
 const NovoVeiculo: React.FC = () => {
   const [veiculoSalvo, setVeiculoSalvo] = useState(false);
@@ -22,7 +23,6 @@ const NovoVeiculo: React.FC = () => {
   return (
     <div>
       <Cabecalho />
-      <BarraLateral />
 
       <div className={styles.formContainer}>
         <h2>Cadastro de Veículo</h2>

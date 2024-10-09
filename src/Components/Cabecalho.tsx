@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Header = styled.header`
   width: 100%;
+  background-color: #333; 
 `;
 
 const ContainerFluid = styled.div`
@@ -12,10 +14,8 @@ const ContainerFluid = styled.div`
 `;
 
 const Navbar = styled.nav`
-  padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 `;
 
 const HeaderInner = styled.div`
@@ -27,30 +27,43 @@ const HeaderInner = styled.div`
 
 const HeaderContent = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between; 
-  width: 100%;
-  flex: 1; 
+  justify-content: center; 
+  flex: 1;
 `;
 
-const SearchIcon = styled.div`
-  flex: 1; 
+const MenuLinks = styled.div`
   display: flex;
-  align-items: center; 
-  justify-content: center; /* Alinha a barra de pesquisa ao centro */
+  align-items: center;
 `;
 
-const SearchInput = styled.input`
-  color: black;
-  height: 35px; 
-  padding: 5px 10px; 
-  border-radius: 50px;
-  border: none;
-  width: 85%; /* Ajusta a largura para um tamanho maior */
-  max-width: 1200px; /* Define um limite máximo para a barra de pesquisa */
-  &::placeholder {
-    color: black;
+const NavItem = styled.div`
+  position: relative;
+  margin: 0 20px; 
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &:hover .tooltip,
+  &:focus .tooltip {
+    display: block;
   }
+`;
+
+const NavIcon = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+
+const Tooltip = styled.div`
+  display: none;
+  position: absolute;
+  top: 35px; /* Ajuste para a posição da tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  padding: 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1;
 `;
 
 const Profile = styled.a`
@@ -74,25 +87,45 @@ const Cabecalho: React.FC = () => {
   return (
     <Header>
       <ContainerFluid>
-        <Navbar className="navbar navbar-expand-lg navbar-light">
+        <Navbar>
           <HeaderInner>
             <a className="navbar-brand flex-shrink-0" href="#">
               <img src="/imagens/carchek sem fundo.png" alt="logo-image" className="img-fluid" width="200px" />
             </a>
             <HeaderContent>
-              <form className="d-flex" style={{ width: '100%' }}> 
-                <SearchIcon>
-                  <i className="fa fa-search" aria-hidden="true"></i>
-                  <SearchInput
-                    type="search"
-                    placeholder="Pesquisar"
-                    aria-label="Search"
-                  />
-                </SearchIcon>
-              </form>
-              <Profile href="#">
-                <img src="/imagens/avatar.png" alt="user-image" />
-              </Profile>
+              <MenuLinks>
+                <NavItem>
+                  <Link to="/">
+                    <NavIcon src="/imagens/home.png" alt="Inicio Icon" />
+                  </Link>
+                  <Tooltip>Inicio</Tooltip>
+                </NavItem>
+                <NavItem>
+                  <Link to="/servicos">
+                    <NavIcon src="/imagens/batepapo.png" alt="Servicos Icon" />
+                  </Link>
+                  <Tooltip>Servicos em andamento</Tooltip>
+                </NavItem>
+                <NavItem>
+                  <Link to="/historico">
+                    <NavIcon src="/imagens/batepapo2.png" alt="Historico Icon" />
+                  </Link>
+                  <Tooltip>Historico de Serviços</Tooltip>
+                </NavItem>
+                <NavItem>
+                  <Link to="/novoveiculo">
+                    <NavIcon src="/imagens/sedan.png" alt="Novo Veiculo Icon" />
+                  </Link>
+                  <Tooltip>Novo Veiculo</Tooltip>
+                </NavItem>
+                <NavItem>
+                  <Link to="/veiculossalvos">
+                    <NavIcon src="/imagens/carro.png" alt="Veiculos Salvos Icon" />
+                  </Link>
+                  <Tooltip>Veiculos Salvos</Tooltip>
+                </NavItem>
+              </MenuLinks>
+
               <div className="sair">
                 <SairButton
                   type="button"
