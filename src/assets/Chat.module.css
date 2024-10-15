@@ -1,91 +1,235 @@
+/* Overlay do Chat */
 .chatOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Fundo semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Container do Chat */
+.chatContainer {
+  background: rgba(255, 255, 255, 0.1); /* Fundo transparente */
+  backdrop-filter: blur(10px); 
+  width: 90%;
+  max-width: 600px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Cabeçalho do Chat */
+.chatHeader {
+  background-color: rgba(0, 198, 255, 0.9); 
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatHeader h2 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.closeButton:hover {
+  transform: rotate(90deg);
+}
+
+/* Área de Mensagens */
+.chatMessages {
+  flex: 1;
+  padding: 16px;
+  background-color: transparent; /* Fundo transparente */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Container das Mensagens com Avatares */
+.userMessageContainer,
+.botMessageContainer {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Avatar */
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Mensagens do Usuário */
+.userMessage {
+  background-color: rgba(0, 198, 255, 0.8); /* Azul com transparência */
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 20px;
+  max-width: 80%;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Mensagens do Bot */
+.botMessage {
+  background-color: rgba(68, 68, 68, 0.8); /* Cinza escuro com transparência */
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 20px;
+  max-width: 80%;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Input de Mensagem */
+.chatInput {
+  display: flex;
+  padding: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.2); /* Fundo semi-transparente */
+}
+
+.chatInput input {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+}
+
+.chatInput input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.chatInput button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: rgba(0, 198, 255, 0.9);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.chatInput button:hover {
+  background-color: rgba(0, 170, 204, 0.9);
+  transform: translateY(-2px);
+}
+
+/* Opções Pré-definidas Integradas */
+.predefinedOptions {
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.2); /* Fundo semi-transparente */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.optionButton {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #00c6ff;
+  border: 2px solid #00c6ff;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 14px;
+}
+
+.optionButton:hover {
+  background-color: #00c6ff;
+  color: #fff;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
   }
-  
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+      transform: translateY(-50px);
+  }
+  to {
+      transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
   .chatContainer {
-    background-color: #fff;
-    width: 90%;
-    max-width: 600px;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
-    border-radius: 8px;
-    overflow: hidden;
+      height: 90%;
   }
-  
-  .chatHeader {
-    background-color: #007bff;
-    color: #fff;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+  .chatHeader h2 {
+      font-size: 18px;
   }
-  
-  .closeButton {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .chatMessages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    background-color: #f1f1f1;
-  }
-  
-  .userMessage {
-    text-align: right;
-    margin: 8px 0;
-    background-color: #007bff;
-    color: #fff;
-    display: inline-block;
-    padding: 8px 12px;
-    border-radius: 16px;
-  }
-  
+
+  .userMessage,
   .botMessage {
-    text-align: left;
-    margin: 8px 0;
-    background-color: #e4e6eb;
-    color: #000;
-    display: inline-block;
-    padding: 8px 12px;
-    border-radius: 16px;
+      max-width: 90%;
+      font-size: 14px;
   }
-  
-  .chatInput {
-    display: flex;
-    padding: 16px;
-    border-top: 1px solid #ccc;
-  }
-  
+
   .chatInput input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+      font-size: 14px;
   }
-  
+
   .chatInput button {
-    margin-left: 8px;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+      font-size: 14px;
+      padding: 8px 16px;
   }
-  
+
+  .optionButton {
+      font-size: 12px;
+      padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .predefinedOptions {
+      flex-direction: column;
+      max-height: none;
+  }
+
+  .optionButton {
+      width: 100%;
+      text-align: center;
+  }
+}

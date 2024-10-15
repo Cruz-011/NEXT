@@ -1,0 +1,139 @@
+.testemunhosSection {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: center;
+    position: relative;
+}
+
+.testemunhosSection h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.testemunhosSection h2::after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background-color: #00c6ff;
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+.carouselContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #00c6ff transparent; /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carousel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background-color: #00c6ff;
+    border-radius: 4px;
+    border: none;
+}
+
+.depoimentoCard {
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 250px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.depoimentoCard:hover {
+    transform: scale(1.05);
+    background-color: #3a3a3a;
+}
+
+.depoimentoCard p {
+    font-size: 16px;
+    color: #b0b0b0;
+    margin-bottom: 15px;
+}
+
+.depoimentoCard h4 {
+    font-size: 14px;
+    color: #00c6ff;
+}
+
+/* Botões de Navegação */
+.navButton {
+    background-color: rgba(0, 198, 255, 0.8);
+    border: none;
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 500px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin: 0 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navButton:hover {
+    background-color: #00c6ff;
+    transform: scale(1.1);
+}
+
+.navButton:active {
+    transform: scale(0.95);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .carousel {
+        gap: 15px;
+    }
+
+    .depoimentoCard {
+        min-width: 200px;
+        padding: 15px;
+    }
+
+    .navButton {
+        padding: 8px 12px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carouselContainer {
+        flex-direction: column;
+    }
+
+    .navButton {
+        margin: 10px 0;
+    }
+
+    .carousel {
+        width: 90%;
+    }
+
+    .depoimentoCard {
+        min-width: 80%;
+    }
+}

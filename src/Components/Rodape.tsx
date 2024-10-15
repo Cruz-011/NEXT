@@ -31,6 +31,7 @@ function Rodape() {
       <p>&copy; 2024 CarCheck - Todos os direitos reservados</p>
       <SupportContainer>
         <p>Apoio Porto Seguro</p>
+        <br />
         <PortoSeguroLogo src="./public/imagens/porto.png"  />
       </SupportContainer>
     </FooterContainer>

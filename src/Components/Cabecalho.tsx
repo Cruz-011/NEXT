@@ -1,142 +1,296 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+// Styled Components
 const Header = styled.header`
   width: 100%;
-  background-color: #333; 
+  background-color: #1a1a1d;
+  border-bottom: 2px solid #007bff; /* Alterado para azul */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  top: 0;
+  z-index: 999;
 `;
 
-const ContainerFluid = styled.div`
+const Container = styled.div`
   width: 100%;
-  padding: 0 15px;
+  max-width: 1850px; /* Limita a largura máxima */
   margin: 0 auto;
-`;
-
-const Navbar = styled.nav`
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Logo à esquerda, menu ao centro e botão à direita */
+  padding: 10px 20px;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
 `;
 
-const HeaderInner = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const Logo = styled.img`
+  width: 180px; /* Ajuste do tamanho do logo */
+  height: auto;
+  cursor: pointer;
+
+  @media (max-width: 480px) {
+    width: 150px;
+  }
 `;
 
-const HeaderContent = styled.div`
+const Menu = styled.nav`
   display: flex;
-  justify-content: center; 
   flex: 1;
-`;
+  justify-content: center;
 
-const MenuLinks = styled.div`
-  display: flex;
-  align-items: center;
+  @media (max-width: 768px) {
+    justify-content: center;
+    margin-top: 10px;
+  }
 `;
 
 const NavItem = styled.div`
-  position: relative;
-  margin: 0 20px; 
+  margin: 0 15px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   cursor: pointer;
-  &:hover .tooltip,
-  &:focus .tooltip {
-    display: block;
+  transition: transform 0.3s ease-in-out;
+  text-decoration: none;
+
+  &:hover {
+    transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 const NavIcon = styled.img`
-  width: 25px;
-  height: 25px;
-`;
+  width: 40px; /* Tamanho maior do ícone */
+  height: 40px;
+  filter: brightness(0.9);
 
-const Tooltip = styled.div`
-  display: none;
-  position: absolute;
-  top: 35px; /* Ajuste para a posição da tooltip */
-  left: 50%;
-  transform: translateX(-50%);
-  color: black;
-  padding: 5px;
-  border-radius: 4px;
-  white-space: nowrap;
-  z-index: 1;
-`;
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+  }
 
-const Profile = styled.a`
-  margin: 0 20px;
-
-  img {
-    border-radius: 50%;
-    border: 2px solid white;
-    width: 50px;
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
   }
 `;
 
-const SairButton = styled.input`
-  background-color: transparent;
-  color: white;
-  border: none;
-  cursor: pointer;
+const NavText = styled.span`
+  color: #f1f1f1;
+  font-size: 12px; /* Tamanho do texto reduzido */
+  margin-top: 8px;
+  text-align: center;
+  text-transform: uppercase; /* Estilo futurista */
+  letter-spacing: 1px; /* Espaçamento entre letras */
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
+// Novo Styled Components para Configuração
+const ConfigContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
+`;
+
+const ConfigIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  filter: brightness(0.9);
+
+  @media (max-width: 768px) {
+    width: 35px;
+    height: 35px;
+  }
+
+  @media (max-width: 480px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const ConfigText = styled.span`
+  color: #f1f1f1;
+  font-size: 12px;
+  margin-top: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
+`;
+
+const DropdownMenu = styled.div`
+  position: absolute;
+  top: 60px; /* Ajuste conforme necessário */
+  right: 0;
+  background-color: rgba(26, 26, 29, 0.95); /* Fundo semi-transparente */
+  border: 1px solid #007bff; /* Alterado para azul */
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  z-index: 1000;
+`;
+
+const DropdownItem = styled.button`
+  background: none;
+  border: none;
+  color: #f1f1f1;
+  padding: 10px 20px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: #007bff; /* Alterado para azul */
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+    background-color: #007bff; /* Alterado para azul */
+    color: #fff;
+  }
+`;
+
+// Componente Cabecalho
 const Cabecalho: React.FC = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [userName, setUserName] = useState<string>('Usuário'); // Estado para o nome do usuário
+  const navigate = useNavigate();
+  const configRef = useRef<HTMLDivElement>(null);
+
+  // Função para alternar o dropdown
+  const toggleDropdown = () => {
+    setIsDropdownOpen(prev => !prev);
+  };
+
+  // Função para mudar o nome do usuário
+  const handleChangeName = () => {
+    const newName = prompt('Digite seu novo nome:', userName);
+    if (newName) {
+      setUserName(newName);
+    }
+  };
+
+  // Função para sair e redirecionar para a página de login
+  const handleLogout = () => {
+    // Aqui você pode adicionar lógica para limpar dados do usuário se necessário
+    navigate('/login'); // Redireciona para a página de login
+  };
+
+  // Fechar o dropdown ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (configRef.current && !configRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
   return (
     <Header>
-      <ContainerFluid>
-        <Navbar>
-          <HeaderInner>
-            <a className="navbar-brand flex-shrink-0" href="#">
-              <img src="/imagens/carchek sem fundo.png" alt="logo-image" className="img-fluid" width="200px" />
-            </a>
-            <HeaderContent>
-              <MenuLinks>
-                <NavItem>
-                  <Link to="/">
-                    <NavIcon src="/imagens/home.png" alt="Inicio Icon" />
-                  </Link>
-                  <Tooltip>Inicio</Tooltip>
-                </NavItem>
-                <NavItem>
-                  <Link to="/servicos">
-                    <NavIcon src="/imagens/batepapo.png" alt="Servicos Icon" />
-                  </Link>
-                  <Tooltip>Servicos em andamento</Tooltip>
-                </NavItem>
-                <NavItem>
-                  <Link to="/historico">
-                    <NavIcon src="/imagens/batepapo2.png" alt="Historico Icon" />
-                  </Link>
-                  <Tooltip>Historico de Serviços</Tooltip>
-                </NavItem>
-                <NavItem>
-                  <Link to="/novoveiculo">
-                    <NavIcon src="/imagens/sedan.png" alt="Novo Veiculo Icon" />
-                  </Link>
-                  <Tooltip>Novo Veiculo</Tooltip>
-                </NavItem>
-                <NavItem>
-                  <Link to="/veiculossalvos">
-                    <NavIcon src="/imagens/carro.png" alt="Veiculos Salvos Icon" />
-                  </Link>
-                  <Tooltip>Veiculos Salvos</Tooltip>
-                </NavItem>
-              </MenuLinks>
+      <Container>
+        <Link to="/">
+          <Logo src="/imagens/carchek sem fundo.png" alt="Logo" />
+        </Link>
 
-              <div className="sair">
-                <SairButton
-                  type="button"
-                  value="Sair/trocar"
-                  onClick={() => (window.location.href = '/login')}
-                />
-              </div>
-            </HeaderContent>
-          </HeaderInner>
-        </Navbar>
-      </ContainerFluid>
+        {/* Menu de Navegação */}
+        <Menu>
+          <NavItem>
+            <Link to="/">
+              <NavIcon src="/imagens/botao-de-inicio.png" alt="Início" />
+              <NavText>Início</NavText>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/servicos">
+              <NavIcon src="/imagens/servico-tecnico.png" alt="Serviços" />
+              <NavText>Serviços</NavText>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/historico">
+              <NavIcon src="/imagens/historico-de-pedidos.png" alt="Histórico" />
+              <NavText>Histórico</NavText>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/novoveiculo">
+              <NavIcon src="/imagens/engarrafamento.png" alt="Novo Veículo" />
+              <NavText>Novo Veículo</NavText>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/veiculossalvos">
+              <NavIcon src="/imagens/carro.png" alt="Veículos Salvos" />
+              <NavText>Veículos Salvos</NavText>
+            </Link>
+          </NavItem>
+        </Menu>
+        {/* Configurações */}
+        <ConfigContainer ref={configRef} onClick={toggleDropdown}>
+          <ConfigIcon src="/imagens/configuracoes.png" alt="Configurações" />
+          <ConfigText>Configurações</ConfigText>
+          {isDropdownOpen && (
+            <DropdownMenu>
+              <span style={{ color: '#f1f1f1', padding: '10px 20px', textAlign: 'center' }}>
+                Olá, {userName}
+              </span>
+              <DropdownItem onClick={handleChangeName}>Mudar Nome</DropdownItem>
+              <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
+            </DropdownMenu>
+          )}
+        </ConfigContainer>
+      </Container>
     </Header>
   );
 };

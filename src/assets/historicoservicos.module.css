@@ -9,7 +9,7 @@
 }
 
 table {
-  background-color: white;
+  background-color: transparent;
   width: 100%;
   border-collapse: collapse;
 }
@@ -25,5 +25,5 @@ th, td {
 }
 
 th {
-  background-color: white;
+  background-color: transparent;
 }

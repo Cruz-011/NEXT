@@ -1,78 +1,87 @@
 /* NovoVeiculo.module.css */
+.container {
+  background-color: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif; /* Fonte moderna */
+}
+
 .formContainer {
-    padding: 20px;
-    background-color: #1a1725;
-    border-radius: 9px;
-    max-width: 1000px;
-    margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .formContainer h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .label {
-    margin-top: 10px;
-    font-size: 16px;
-  }
-  
-  .input,
-  .select {
-    padding: 5px ;
-    margin-top: 5px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    background-color: #272933;
-    color: #fff;
-  }
-  
-  .button {
-    margin: 20px auto; 
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    max-width: 960px; 
-    display: block; 
-    width: 100%;
-  }
-  
-  .button:hover {
-    background-color: #45a049;
-  }
-  
-  .message {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .message p {
-    font-size: 18px;
-    color: #4CAF50;
-  }
-  
-  .messageButton {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #0078ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .messageButton:hover {
-    background-color: #005bb5;
-  }
-  
+  background-color: #ffffff; /* Fundo branco para o formulário */
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
+  padding: 30px;
+  max-width: 500px; /* Largura máxima do formulário */
+  width: 100%; /* Largura total */
+  margin-top: 20px; /* Distância do cabeçalho */
+}
+
+
+h2 {
+  color: #333; /* Título escuro */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.inputGroup {
+  margin-bottom: 15px; /* Espaçamento entre grupos de input */
+}
+
+.label {
+  display: block;
+  font-weight: 600; /* Negrito */
+  margin-bottom: 5px;
+  color: #333; /* Cor escura para as labels */
+}
+
+.input, .select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd; /* Bordas sutis */
+  border-radius: 5px;
+  transition: border 0.3s; /* Transição suave */
+}
+
+.input:focus, .select:focus {
+  border-color: #28a745; /* Verde quando focado */
+  outline: none; /* Remove contorno padrão */
+}
+
+.button {
+  background-color: #28a745; /* Verde para o botão */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Transição suave */
+  font-weight: bold; /* Negrito */
+  width: 100%; /* Botão ocupa toda a largura */
+}
+
+.button:hover {
+  background-color: #218838; /* Verde mais escuro no hover */
+}
+
+.message {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.messageButton {
+  background-color: #007bff; /* Azul para botão de mensagem */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.messageButton:hover {
+  background-color: #0056b3; /* Azul mais escuro no hover */
+}
+
+
