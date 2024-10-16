@@ -1,6 +1,6 @@
 // ../Pages/ServicosEmAndamento.tsx
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Cabecalho from '../Components/Cabecalho';
 import styled from 'styled-components';
 
@@ -119,13 +119,13 @@ const SubmitButton = styled.button`
 // Main Content
 const MainContainer = styled.main`
   padding: 90px 20px 20px 20px; /* padding-top para evitar sobreposição com o cabeçalho fixo */
-  background-color: #f4f4f9;
+  background-color: #1e1e1e; /* Fundo escuro */
   min-height: 100vh;
 `;
 
 // Title
 const Title = styled.h1`
-  color: #003580; /* Azul escuro */
+  color: #ffffff; /* Texto branco */
   text-align: center;
   margin-bottom: 30px;
 `;
@@ -149,12 +149,12 @@ const SearchBar = styled.input`
 
 // Service Card
 const ServicoCard = styled.div`
-  background-color: #ffffff;
-  border: 1px solid #ddd;
+  background-color: #2c2c2c; /* Fundo dos cards */
+  border: 1px solid #444; /* Borda mais escura */
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Sombra mais forte */
 `;
 
 // Service Header
@@ -198,14 +198,14 @@ const ServicoDetails = styled.div`
 // Detail Row
 const DetailRow = styled.p`
   margin: 5px 0;
-  color: #333333;
+  color: #ffffff; /* Texto branco */
 `;
 
 // Parts List
 const PecasList = styled.ul`
   list-style-type: disc;
   padding-left: 20px;
-  color: #333333;
+  color: #ffffff; /* Texto branco */
 `;
 
 // Actions
@@ -305,8 +305,8 @@ const ServicosEmAndamento: React.FC = () => {
   );
 
   // Open PDF in modal
-  const openPdf = (pdfPath: string) => {
-    setSelectedPdf(pdfPath);
+  const openPdf = (pdfUrl: string) => {
+    setSelectedPdf(pdfUrl);
   };
 
   // Close PDF modal
@@ -314,33 +314,23 @@ const ServicosEmAndamento: React.FC = () => {
     setSelectedPdf(null);
   };
 
-  // Handle status change
-  const handleStatusChange = (index: number, newStatus: string) => {
-    const updatedServicos = [...servicos];
-    updatedServicos[index].status = newStatus;
-    setServicos(updatedServicos);
-  };
-
-  // Open Help Modal
-  const openHelpModal = (index: number) => {
-    setSelectedServiceIndex(index);
+  // Open help modal
+  const openHelpModal = () => {
     setIsHelpModalOpen(true);
   };
 
-  // Close Help Modal
+  // Close help modal
   const closeHelpModal = () => {
     setIsHelpModalOpen(false);
     setHelpFeedback('');
     setHelpComment('');
     setHelpContact('');
-    setSelectedServiceIndex(null);
   };
 
-  // Handle Help Form Submission
+  // Handle help form submission
   const handleHelpSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aqui você pode adicionar lógica para enviar os dados para o backend ou processá-los conforme necessário
-    alert('Obrigado pelo seu feedback!');
+    alert(`Feedback: ${helpFeedback}\nComment: ${helpComment}\nContact: ${helpContact}`);
     closeHelpModal();
   };
 
@@ -355,119 +345,72 @@ const ServicosEmAndamento: React.FC = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
-        {filteredServicos.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#333333' }}>Nenhum serviço encontrado.</p>
-        ) : (
-          filteredServicos.map((servico, index) => (
-            <ServicoCard key={index}>
-              <ServicoHeader>
-                <Veiculo>{servico.veiculo}</Veiculo>
-                <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
-              </ServicoHeader>
-              <ServicoDetails>
-                <DetailRow><strong>Oficina:</strong> {servico.oficina}</DetailRow>
-                <DetailRow><strong>Data:</strong> {servico.dia}</DetailRow>
-                <DetailRow><strong>Problema:</strong> {servico.problema}</DetailRow>
-                <DetailRow><strong>Peças:</strong></DetailRow>
-                <PecasList>
-                  {servico.pecas.map((peca, idx) => (
-                    <li key={idx}>{peca}</li>
-                  ))}
-                </PecasList>
-                <DetailRow><strong>Previsão de Conclusão:</strong> {servico.previsaoConclusao}</DetailRow>
-                <DetailRow><strong>Telefone de Contato:</strong> {servico.telefoneContato}</DetailRow>
-                <DetailRow>
-                  <strong>Orçamento:</strong>
-                  <a href={servico.pdfOrcamento} target="_blank" rel="noopener noreferrer" style={{ marginLeft: '5px', color: '#007bff' }}>Ver PDF</a>
-                </DetailRow>
-              </ServicoDetails>
-              <Actions>
-                <ActionButton onClick={() => openPdf(servico.pdfOrcamento)}>Ver Orçamento</ActionButton>
-                <ActionButton
-                  onClick={() => handleStatusChange(index, 'Concluído')}
-                  disabled={servico.status === 'Concluído'}
-                >
-                  Concluir Serviço
-                </ActionButton>
-                <HelpButton onClick={() => openHelpModal(index)}>Ajuda</HelpButton>
-              </Actions>
-            </ServicoCard>
-          ))
+        {filteredServicos.map((servico, index) => (
+          <ServicoCard key={index}>
+            <ServicoHeader>
+              <Veiculo>{servico.veiculo}</Veiculo>
+              <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
+            </ServicoHeader>
+            <ServicoDetails>
+              <DetailRow><strong>Oficina:</strong> {servico.oficina}</DetailRow>
+              <DetailRow><strong>Dia:</strong> {servico.dia}</DetailRow>
+              <DetailRow><strong>Problema:</strong> {servico.problema}</DetailRow>
+              <DetailRow><strong>Previsão de Conclusão:</strong> {servico.previsaoConclusao}</DetailRow>
+              <DetailRow><strong>Telefone de Contato:</strong> {servico.telefoneContato}</DetailRow>
+              <DetailRow><strong>Peças:</strong></DetailRow>
+              <PecasList>
+                {servico.pecas.map((peca, index) => (
+                  <li key={index}>{peca}</li>
+                ))}
+              </PecasList>
+            </ServicoDetails>
+            <Actions>
+              <ActionButton onClick={() => openPdf(servico.pdfOrcamento)}>Visualizar PDF</ActionButton>
+              <HelpButton onClick={openHelpModal}>Ajuda</HelpButton>
+            </Actions>
+          </ServicoCard>
+        ))}
+        {selectedPdf && (
+          <ModalOverlay onClick={closePdf}>
+            <ModalContent onClick={e => e.stopPropagation()}>
+              <CloseButton onClick={closePdf}>×</CloseButton>
+              <iframe src={selectedPdf} width="100%" height="600px" />
+            </ModalContent>
+          </ModalOverlay>
+        )}
+        {isHelpModalOpen && (
+          <HelpModalOverlay onClick={closeHelpModal}>
+            <HelpModalContent onClick={e => e.stopPropagation()}>
+              <CloseButton onClick={closeHelpModal}>×</CloseButton>
+              <HelpTitle>Ajuda</HelpTitle>
+              <HelpForm onSubmit={handleHelpSubmit}>
+                <RadioGroup>
+                  <RadioLabel>
+                    <input type="radio" value="Feedback" checked={helpFeedback === 'Feedback'} onChange={(e) => setHelpFeedback(e.target.value)} />
+                    Feedback
+                  </RadioLabel>
+                  <RadioLabel>
+                    <input type="radio" value="Sugestão" checked={helpFeedback === 'Sugestão'} onChange={(e) => setHelpFeedback(e.target.value)} />
+                    Sugestão
+                  </RadioLabel>
+                  <RadioLabel>
+                    <input type="radio" value="Reclamação" checked={helpFeedback === 'Reclamação'} onChange={(e) => setHelpFeedback(e.target.value)} />
+                    Reclamação
+                  </RadioLabel>
+                </RadioGroup>
+                <TextArea placeholder="Comentário" value={helpComment} onChange={(e) => setHelpComment(e.target.value)} rows={5} />
+                <ContactInfo>Seu contato (e-mail ou telefone):</ContactInfo>
+                <Select value={helpContact} onChange={(e) => setHelpContact(e.target.value)}>
+                  <option value="">Selecione...</option>
+                  <option value="email">E-mail</option>
+                  <option value="telefone">Telefone</option>
+                </Select>
+                <SubmitButton type="submit">Enviar</SubmitButton>
+              </HelpForm>
+            </HelpModalContent>
+          </HelpModalOverlay>
         )}
       </MainContainer>
-      {/* Modal para PDF */}
-      {selectedPdf && (
-        <ModalOverlay onClick={closePdf}>
-          <ModalContent onClick={e => e.stopPropagation()}>
-            <CloseButton onClick={closePdf}>&times;</CloseButton>
-            <iframe
-              src={selectedPdf}
-              width="100%"
-              height="600px"
-              title="Orçamento"
-            />
-          </ModalContent>
-        </ModalOverlay>
-      )}
-      {/* Modal para Ajuda */}
-      {isHelpModalOpen && selectedServiceIndex !== null && (
-        <HelpModalOverlay onClick={closeHelpModal}>
-          <HelpModalContent onClick={e => e.stopPropagation()}>
-            <CloseButton onClick={closeHelpModal}>&times;</CloseButton>
-            <HelpTitle>Ajuda</HelpTitle>
-            <HelpForm onSubmit={handleHelpSubmit}>
-              <RadioGroup>
-                <p>O problema persistiu ou houve defeito na peça trocada?</p>
-                <RadioLabel>
-                  <input
-                    type="radio"
-                    name="feedback"
-                    value="Problema Persistiu"
-                    checked={helpFeedback === 'Problema Persistiu'}
-                    onChange={(e) => setHelpFeedback(e.target.value)}
-                    required
-                  />
-                  Problema Persistiu
-                </RadioLabel>
-                <RadioLabel>
-                  <input
-                    type="radio"
-                    name="feedback"
-                    value="Defeito na Peça"
-                    checked={helpFeedback === 'Defeito na Peça'}
-                    onChange={(e) => setHelpFeedback(e.target.value)}
-                    required
-                  />
-                  Defeito na Peça
-                </RadioLabel>
-              </RadioGroup>
-              <TextArea
-                placeholder="Adicione um comentário sobre o serviço..."
-                value={helpComment}
-                onChange={(e) => setHelpComment(e.target.value)}
-                rows={4}
-                required
-              />
-              <Select
-                value={helpContact}
-                onChange={(e) => setHelpContact(e.target.value)}
-                required
-              >
-                <option value="" disabled>Escolha com quem deseja entrar em contato</option>
-                <option value="Porto Seguro">Porto Seguro</option>
-                <option value="Oficina Mecânica">Oficina Mecânica</option>
-              </Select>
-              {helpContact === 'Porto Seguro' && (
-                <ContactInfoText>Telefone: (11) 4003-4646</ContactInfoText>
-              )}
-              {helpContact === 'Oficina Mecânica' && (
-                <ContactInfoText>Telefone: (11) 1234-5678</ContactInfoText>
-              )}
-              <SubmitButton type="submit">Enviar Feedback</SubmitButton>
-            </HelpForm>
-          </HelpModalContent>
-        </HelpModalOverlay>
-      )}
     </>
   );
 };

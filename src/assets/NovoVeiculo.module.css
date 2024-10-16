@@ -1,5 +1,6 @@
 /* NovoVeiculo.module.css */
 .container {
+  
   background-color: #1e1e1e;
   display: flex;
   flex-direction: column;
@@ -9,7 +10,8 @@
 }
 
 .formContainer {
-  background-color: #ffffff; /* Fundo branco para o formulário */
+  
+  background-color: #5a5a5a;
   border-radius: 15px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Sombra para profundidade */
   padding: 30px;
@@ -18,9 +20,8 @@
   margin-top: 20px; /* Distância do cabeçalho */
 }
 
-
 h2 {
-  color: #333; /* Título escuro */
+  color: whi;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -33,7 +34,7 @@ h2 {
   display: block;
   font-weight: 600; /* Negrito */
   margin-bottom: 5px;
-  color: #333; /* Cor escura para as labels */
+  color: white;
 }
 
 .input, .select {
@@ -66,11 +67,13 @@ h2 {
 }
 
 .message {
+  color: black;
   text-align: center;
   margin-top: 20px;
 }
 
 .messageButton {
+
   background-color: #007bff; /* Azul para botão de mensagem */
   color: white;
   padding: 10px 15px;

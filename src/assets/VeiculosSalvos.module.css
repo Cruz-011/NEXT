@@ -1,102 +1,88 @@
 .vehiclesContainer {
-  margin: 20px;
   padding: 20px;
-  border-radius: 10px;
-  width: auto;
-  margin: 0 auto;
-  color: black;    
-  height: auto;
 }
 
-.vehiclesContainer h2 {
-  text-align: center;
-  margin-bottom: 20px; /* Mantido o espaçamento em baixo do título */
-  font-size: 24px;
-}
-
-.vehicleCardsContainer { /* Novo contêiner para os cartões */
-  display: flex; /* Alinha os cartões em linha */
-  flex-wrap: wrap; /* Permite que os cartões se movam para a próxima linha se não houver espaço */
-  justify-content: center; /* Centraliza os cartões no contêiner */
+.vehicleCardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .vehicleCard {
-  background-color: #ffffff;
-  padding: 10px;
-  border-radius: 6px;
-  margin: 15px; /* Ajuste a margem para espaçamento */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  max-width: 400px;
-  flex: 1 0 200px; /* Permite que os cartões tenham largura mínima de 200px */
-}
-
-.vehicleCard h3 {
-  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  width: calc(33% - 10px); /* 3 cards por linha */
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  color: black;
 }
 
 .vehicleInfo {
-  font-size: 14px;
   margin-bottom: 15px;
 }
 
 .cardActions {
   display: flex;
+  justify-content: space-between;
+}
+
+.btnAjuda, .btnEditar, .btnExcluir, .btnSalvar, .btnFechar {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btnAjuda {
-  padding: 10px 10px;
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-color: rgb(107, 107, 0);
-  margin: 5px;
+  background-color: #007bff;
+  color: white;
 }
 
-.btnEditar {    
-  padding: 10px 10px;
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-color: #005bb5;
-  margin: 5px;
+.btnAjuda:hover {
+  background-color: #0056b3;
+}
+
+.btnEditar {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btnEditar:hover {
+  background-color: #e0a800;
 }
 
 .btnExcluir {
-  padding: 10px 8px;
-  background-color: #ff0000;
-  border: none;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin: 5px;
+  background-color: #dc3545;
+  color: white;
 }
 
-.btnAjuda:hover,
-.btnEditar:hover,
 .btnExcluir:hover {
-  background-color: #00ff0d;
+  background-color: #c82333;
 }
 
-@media (min-width: 768px) {
-  .vehicleCard {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
 
-  .vehicleInfo {
-    flex: 1;
-    margin-left: 20px;
-  }
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
 
-  .cardActions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.modalActions {
+  display: flex;
+  justify-content: space-between;
 }

@@ -4,11 +4,11 @@ import styles from '../assets/Chat.module.css';
 interface Message {
   text: string;
   sender: 'user' | 'bot';
-  options?: string[]; // Opções pré-definidas
+  options?: string[];
 }
 
 const predefinedOptions = [
-  'Suporte a Veículo Reparo',
+  'Suporte a Veículo Reparado',
   'Status do Pedido de Reparo',
   'Já sei qual o problema',
   'Agendar Visita',
@@ -21,10 +21,8 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Impede a rolagem da página de fundo
     document.body.style.overflow = 'hidden';
 
-    // Mensagem de boas-vindas com opções pré-definidas
     const welcomeMessage: Message = {
       text: 'Bem-Vindo ao ChatBot da CarCheck!',
       sender: 'bot',
@@ -37,26 +35,22 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setMessages([welcomeMessage]);
 
     return () => {
-      // Restaura a rolagem da página quando o chat for fechado
       document.body.style.overflow = 'auto';
     };
   }, []);
 
   useEffect(() => {
-    // Scroll automático para a última mensagem
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   const sendMessage = async (message: string) => {
     if (!message.trim()) return;
 
-    // Adiciona a mensagem do usuário à lista de mensagens
     const userMessage: Message = { text: message, sender: 'user' };
     setMessages(prevMessages => [...prevMessages, userMessage]);
-    setInput(''); // Limpa o campo de entrada
+    setInput('');
 
     try {
-      // Envio da mensagem para o Watson Assistant
       const response = await fetch('https://api.us-south.assistant.watson.cloud.ibm.com/v2/assistants/{assistant_id}/sessions/{session_id}/message', {
         method: 'POST',
         headers: {
@@ -72,10 +66,8 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
       const data = await response.json();
 
-      // Verifica se a resposta tem um texto
       if (response.ok && data.output && data.output.generic) {
         const botReply = data.output.generic[0].text || 'Desculpe, não entendi sua mensagem.';
-        // Verifica se o bot deve apresentar opções pré-definidas
         const shouldProvideOptions = ['suporte', 'status', 'problema', 'agendar', 'atendente'].some(keyword =>
           botReply.toLowerCase().includes(keyword)
         );
@@ -85,7 +77,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           sender: 'bot',
           options: shouldProvideOptions ? predefinedOptions : undefined,
         };
-        setMessages(prevMessages => [...prevMessages, botMessage]); 
+        setMessages(prevMessages => [...prevMessages, botMessage]);
       } else {
         const botErrorMessage: Message = {
           text: 'Desculpe, não consegui entender a resposta do assistente.',
@@ -134,7 +126,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             >
               {msg.sender === 'bot' && (
                 <img
-                  src="/imagens/carro.png" 
+                  src="/imagens/carro.png"
                   alt="Bot Avatar"
                   className={styles.avatar}
                 />
@@ -150,7 +142,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               </div>
               {msg.sender === 'user' && (
                 <img
-                  src="/imagens/avatar.png" 
+                  src="/imagens/avatar.png"
                   alt="User Avatar"
                   className={styles.avatar}
                 />

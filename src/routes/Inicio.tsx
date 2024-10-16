@@ -5,6 +5,7 @@ import Testemunhos from '../Components/Testemunhos';
 import FAQ from '../Components/FAQ'; 
 import styles from '../assets/Inicio.module.css';
 import WatsonAssistant from '../Components/WatsonAssistant';
+import Mecanico from './Mecanico';
 
 const Inicio: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -21,6 +22,8 @@ const Inicio: React.FC = () => {
     <>
       <Cabecalho />
       <WatsonAssistant />
+
+
       <div className={styles.mainContent}>
         <div className={styles.heroSection}>
           <h1>Bem-vindo à Car Check</h1>
