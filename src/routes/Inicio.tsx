@@ -22,8 +22,7 @@ const Inicio: React.FC = () => {
     <>
       <Cabecalho />
       <WatsonAssistant />
-
-
+      
       <div className={styles.mainContent}>
         <div className={styles.heroSection}>
           <h1>Bem-vindo à Car Check</h1>
