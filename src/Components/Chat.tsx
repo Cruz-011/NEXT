@@ -58,6 +58,8 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer pAXC5g3S9W1nbibiSeZvaVHEJfBzfe0749BKZG0SK-_V`,
+            'mode': 'no-cors'
+
           },
           body: JSON.stringify({
             input: {
