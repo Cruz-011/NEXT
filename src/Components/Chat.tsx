@@ -51,18 +51,21 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setInput('');
 
     try {
-      const response = await fetch('https://api.us-south.assistant.watson.cloud.ibm.com/v2/assistants/{assistant_id}/sessions/{session_id}/message', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer YOUR_WATSON_ASSISTANT_TOKEN`,
-        },
-        body: JSON.stringify({
-          input: {
-            text: message,
+      const response = await fetch(
+        'https://api.us-south.assistant.watson.cloud.ibm.com/v2/assistants/d6abeeb1-ba72-469f-9e13-0787de218737/sessions/{session_id}/message',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer pAXC5g3S9W1nbibiSeZvaVHEJfBzfe0749BKZG0SK-_V`,
           },
-        }),
-      });
+          body: JSON.stringify({
+            input: {
+              text: message,
+            },
+          }),
+        }
+      );
 
       const data = await response.json();
 

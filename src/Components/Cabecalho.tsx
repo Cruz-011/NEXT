@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+ 
 // Styled Components
 const Header = styled.header`
   width: 100%;
@@ -11,7 +11,7 @@ const Header = styled.header`
   top: 0;
   z-index: 999;
 `;
-
+ 
 const Container = styled.div`
   width: 100%;
   max-width: 1850px; /* Limita a largura máxima */
@@ -20,34 +20,34 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between; /* Logo à esquerda, menu ao centro e botão à direita */
   padding: 10px 20px;
-
+ 
   @media (max-width: 768px) {
     flex-wrap: wrap;
     justify-content: space-around;
   }
 `;
-
+ 
 const Logo = styled.img`
   width: 180px; /* Ajuste do tamanho do logo */
   height: auto;
   cursor: pointer;
-
+ 
   @media (max-width: 480px) {
     width: 150px;
   }
 `;
-
+ 
 const Menu = styled.nav`
   display: flex;
   flex: 1;
   justify-content: center;
-
+ 
   @media (max-width: 768px) {
     justify-content: center;
     margin-top: 10px;
   }
 `;
-
+ 
 const NavItem = styled.div`
   margin: 0 15px;
   display: flex;
@@ -56,11 +56,11 @@ const NavItem = styled.div`
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
   text-decoration: none;
-
+ 
   &:hover {
     transform: scale(1.1); /* Efeito de zoom ao passar o mouse */
   }
-
+ 
   a {
     text-decoration: none;
     color: inherit;
@@ -69,23 +69,23 @@ const NavItem = styled.div`
     align-items: center;
   }
 `;
-
+ 
 const NavIcon = styled.img`
   width: 40px; /* Tamanho maior do ícone */
   height: 40px;
   filter: brightness(0.9);
-
+ 
   @media (max-width: 768px) {
     width: 35px;
     height: 35px;
   }
-
+ 
   @media (max-width: 480px) {
     width: 30px;
     height: 30px;
   }
 `;
-
+ 
 const NavText = styled.span`
   color: #f1f1f1;
   font-size: 12px; /* Tamanho do texto reduzido */
@@ -93,16 +93,16 @@ const NavText = styled.span`
   text-align: center;
   text-transform: uppercase; /* Estilo futurista */
   letter-spacing: 1px; /* Espaçamento entre letras */
-
+ 
   @media (max-width: 768px) {
     font-size: 11px;
   }
-
+ 
   @media (max-width: 480px) {
     font-size: 10px;
   }
 `;
-
+ 
 // Novo Styled Components para Configuração
 const ConfigContainer = styled.div`
   position: relative;
@@ -111,32 +111,32 @@ const ConfigContainer = styled.div`
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-
+ 
   &:hover {
     transform: scale(1.1);
   }
-
+ 
   @media (max-width: 768px) {
     margin-top: 10px;
   }
 `;
-
+ 
 const ConfigIcon = styled.img`
   width: 40px;
   height: 40px;
   filter: brightness(0.9);
-
+ 
   @media (max-width: 768px) {
     width: 35px;
     height: 35px;
   }
-
+ 
   @media (max-width: 480px) {
     width: 30px;
     height: 30px;
   }
 `;
-
+ 
 const ConfigText = styled.span`
   color: #f1f1f1;
   font-size: 12px;
@@ -144,16 +144,16 @@ const ConfigText = styled.span`
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 1px;
-
+ 
   @media (max-width: 768px) {
     font-size: 11px;
   }
-
+ 
   @media (max-width: 480px) {
     font-size: 10px;
   }
 `;
-
+ 
 const DropdownMenu = styled.div`
   position: absolute;
   top: 60px; /* Ajuste conforme necessário */
@@ -168,7 +168,7 @@ const DropdownMenu = styled.div`
   padding: 10px 0;
   z-index: 1000;
 `;
-
+ 
 const DropdownItem = styled.button`
   background: none;
   border: none;
@@ -178,31 +178,31 @@ const DropdownItem = styled.button`
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.2s ease, color 0.2s ease;
-
+ 
   &:hover {
     background-color: #007bff; /* Alterado para azul */
     color: #fff;
   }
-
+ 
   &:focus {
     outline: none;
     background-color: #007bff; /* Alterado para azul */
     color: #fff;
   }
 `;
-
+ 
 // Componente Cabecalho
 const Cabecalho: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [userName, setUserName] = useState<string>('Usuário'); // Estado para o nome do usuário
   const navigate = useNavigate();
   const configRef = useRef<HTMLDivElement>(null);
-
+ 
   // Função para alternar o dropdown
   const toggleDropdown = () => {
     setIsDropdownOpen(prev => !prev);
   };
-
+ 
   // Função para mudar o nome do usuário
   const handleChangeName = () => {
     const newName = prompt('Digite seu novo nome:', userName);
@@ -210,13 +210,17 @@ const Cabecalho: React.FC = () => {
       setUserName(newName);
     }
   };
-
+ 
   // Função para sair e redirecionar para a página de login
   const handleLogout = () => {
     // Aqui você pode adicionar lógica para limpar dados do usuário se necessário
     navigate('/login'); // Redireciona para a página de login
   };
-
+ 
+  const handlemecanico = () => {
+    navigate('/Mecanico');
+  };
+ 
   // Fechar o dropdown ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -224,25 +228,25 @@ const Cabecalho: React.FC = () => {
         setIsDropdownOpen(false);
       }
     };
-
+ 
     if (isDropdownOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.removeEventListener('mousedown', handleClickOutside);
     }
-
+ 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isDropdownOpen]);
-
+ 
   return (
     <Header>
       <Container>
         <Link to="/">
-          <Logo src="/imagens/carchek sem fundo.png" alt="Logo" />
+          <Logo src="/imagens/carchecknovo.png" alt="Logo" />
         </Link>
-
+ 
         {/* Menu de Navegação */}
         <Menu>
           <NavItem>
@@ -282,11 +286,10 @@ const Cabecalho: React.FC = () => {
           <ConfigText>Configurações</ConfigText>
           {isDropdownOpen && (
             <DropdownMenu>
-              <span style={{ color: '#f1f1f1', padding: '10px 20px', textAlign: 'center' }}>
-                Olá, {userName}
-              </span>
-              <DropdownItem onClick={handleChangeName}>Mudar Nome</DropdownItem>
-              <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
+                <span style={{ color: '#f1f1f1', padding: '10px 20px', textAlign: 'center' }}> Olá, {userName}</span>
+                <DropdownItem onClick={handleChangeName}>Mudar Nome</DropdownItem>
+               <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
+               <DropdownItem onClick={handlemecanico}>Acessar como Mecânico</DropdownItem> {/* Aqui */}
             </DropdownMenu>
           )}
         </ConfigContainer>
@@ -294,5 +297,5 @@ const Cabecalho: React.FC = () => {
     </Header>
   );
 };
-
+ 
 export default Cabecalho;

@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 import Cabecalho from '../Components/Cabecalho';
 import Chat from '../Components/Chat';
-import Testemunhos from '../Components/Testemunhos'; 
-import FAQ from '../Components/FAQ'; 
+import Testemunhos from '../Components/Testemunhos';
+import FAQ from '../Components/FAQ';
 import styles from '../assets/Inicio.module.css';
 import WatsonAssistant from '../Components/WatsonAssistant';
-import Mecanico from './Mecanico';
-
+ 
 const Inicio: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
-
+ 
   const openChat = () => {
     setIsChatOpen(true);
   };
-
+ 
   const closeChat = () => {
     setIsChatOpen(false);
   };
-
+ 
   return (
     <>
       <Cabecalho />
       <WatsonAssistant />
-      
+     
       <div className={styles.mainContent}>
         <div className={styles.heroSection}>
           <h1>Bem-vindo à Car Check</h1>
@@ -31,7 +30,7 @@ const Inicio: React.FC = () => {
             INICIAR CHAT
           </button>
         </div>
-
+ 
         <div className={styles.benefitsSection}>
           <h2>Nossos Benefícios</h2>
           <div className={styles.benefitsContainer}>
@@ -62,17 +61,17 @@ const Inicio: React.FC = () => {
             </div>
           </div>
         </div>
-
+ 
         <Testemunhos />
-
+ 
         <FAQ />
-
+ 
       </div>
-
+ 
       {isChatOpen && <Chat onClose={closeChat} />}
-    
+   
     </>
   );
 };
-
+ 
 export default Inicio;

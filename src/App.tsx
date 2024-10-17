@@ -6,14 +6,16 @@ import NovoVeiculo from './routes/NovoVeiculo';
 import VeiculosSalvos from './routes/VeiculoSalvo';
 import LoginCadastro from './routes/Login';
 import Rodape from './Components/Rodape';
-
+import Mecanico from './routes/Mecanico';
+ 
 function App() {
   return (
     <Router>
-    
-
-      <div className="app-container"> 
+   
+ 
+      <div className="app-container">
         <Routes>
+          <Route path="/Mecanico" element={<Mecanico />} />
           <Route path="/login" element={<LoginCadastro />} />
           <Route path="/" element={<Inicio />} />
           <Route path="/servicos" element={<Servicos />} />
@@ -24,8 +26,8 @@ function App() {
       </div>
       <Rodape/>
     </Router>
-    
+   
   );
 }
-
+ 
 export default App;

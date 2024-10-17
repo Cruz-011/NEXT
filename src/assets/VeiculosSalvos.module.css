@@ -1,13 +1,13 @@
 .vehiclesContainer {
   padding: 20px;
 }
-
+ 
 .vehicleCardsContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
 }
-
+ 
 .vehicleCard {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -17,16 +17,16 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   color: black;
 }
-
+ 
 .vehicleInfo {
   margin-bottom: 15px;
 }
-
+ 
 .cardActions {
   display: flex;
   justify-content: space-between;
 }
-
+ 
 .btnAjuda, .btnEditar, .btnExcluir, .btnSalvar, .btnFechar {
   padding: 10px 15px;
   border: none;
@@ -34,34 +34,34 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-
+ 
 .btnAjuda {
   background-color: #007bff;
   color: white;
 }
-
+ 
 .btnAjuda:hover {
   background-color: #0056b3;
 }
-
+ 
 .btnEditar {
   background-color: #ffc107;
   color: black;
 }
-
+ 
 .btnEditar:hover {
   background-color: #e0a800;
 }
-
+ 
 .btnExcluir {
   background-color: #dc3545;
   color: white;
 }
-
+ 
 .btnExcluir:hover {
   background-color: #c82333;
 }
-
+ 
 .modal {
   position: fixed;
   top: 0;
@@ -74,15 +74,32 @@
   align-items: center;
   z-index: 10;
 }
-
+ 
 .modalContent {
   background: white;
   padding: 20px;
   border-radius: 10px;
   width: 400px;
 }
-
+ 
 .modalActions {
   display: flex;
   justify-content: space-between;
+}
+ 
+/* Media Queries */
+@media (max-width: 1200px) {
+  .vehicleCard {
+    width: calc(50% - 10px); /* 2 cards por linha em telas menores */
+  }
+}
+ 
+@media (max-width: 768px) {
+  .vehicleCard {
+    width: 100%; /* 1 card por linha em telas pequenas */
+  }
+ 
+  .vehiclesContainer {
+    padding: 10px; /* Reduzir padding em telas pequenas */
+  }
 }
