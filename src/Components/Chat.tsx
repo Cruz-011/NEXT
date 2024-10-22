@@ -1,38 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa o hook de navegação
 import styles from '../assets/Chat.module.css';
 
 interface Message {
   text: string;
   sender: 'user' | 'bot';
-  options?: string[];
 }
-
-const predefinedOptions = [
-  'Suporte a Veículo Reparado',
-  'Status do Pedido de Reparo',
-  'Já sei qual o problema',
-  'Agendar Visita',
-  'Falar com um Atendente',
-];
 
 const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate(); // Hook para navegação
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
+    // Mensagens de boas-vindas e opções
     const welcomeMessage: Message = {
       text: 'Bem-Vindo ao ChatBot da CarCheck!',
       sender: 'bot',
-      options: [
-        'Estou tendo problemas técnicos com o meu veículo',
-        'Problemas com uma manutenção feita recentemente',
-        'Suporte da conta',
-      ],
     };
-    setMessages([welcomeMessage]);
+
+    const optionsMessage: Message = {
+      text: 'Digite a opção desejada:\n' + 
+            '0 - Estou tendo problemas técnicos com o meu veículo\n' + 
+            '1 - Suporte a Veículo Reparado\n' + 
+            '2 - Status do Pedido de Reparo\n' + 
+            '3 - Já sei qual o problema\n' + 
+            '4 - Agendar Visita\n' + 
+            '5 - Falar com um Atendente',
+      sender: 'bot',
+    };
+
+    setMessages([welcomeMessage, optionsMessage]);
 
     return () => {
       document.body.style.overflow = 'auto';
@@ -50,37 +51,30 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setMessages(prevMessages => [...prevMessages, userMessage]);
     setInput('');
 
-    try {
-      const response = await fetch(
-        'https://api.us-south.assistant.watson.cloud.ibm.com/v2/assistants/d6abeeb1-ba72-469f-9e13-0787de218737/sessions/{session_id}/message',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer pAXC5g3S9W1nbibiSeZvaVHEJfBzfe0749BKZG0SK-_V`,
-            'mode': 'no-cors'
+    // Verifica se o usuário escolheu a opção '4' para agendamento
+    if (message === '4') {
+      navigate('/realizar-agendamento'); // Redireciona para a página de agendamento
+      return;
+    }
 
-          },
-          body: JSON.stringify({
-            input: {
-              text: message,
-            },
-          }),
-        }
-      );
+    // Lógica para outras opções ou chamada à API
+    try {
+      const response = await fetch('http://localhost:5000/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: message,
+        }),
+      });
 
       const data = await response.json();
 
-      if (response.ok && data.output && data.output.generic) {
-        const botReply = data.output.generic[0].text || 'Desculpe, não entendi sua mensagem.';
-        const shouldProvideOptions = ['suporte', 'status', 'problema', 'agendar', 'atendente'].some(keyword =>
-          botReply.toLowerCase().includes(keyword)
-        );
-
+      if (response.ok) {
         const botMessage: Message = {
-          text: botReply,
+          text: data[0],  // Pega a primeira resposta do Watson
           sender: 'bot',
-          options: shouldProvideOptions ? predefinedOptions : undefined,
         };
         setMessages(prevMessages => [...prevMessages, botMessage]);
       } else {
@@ -106,10 +100,6 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }
   };
 
-  const handleOptionClick = (option: string) => {
-    sendMessage(option);
-  };
-
   return (
     <div className={styles.chatOverlay}>
       <div className={styles.chatContainer}>
@@ -129,13 +119,6 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   : styles.botMessageContainer
               }
             >
-              {msg.sender === 'bot' && (
-                <img
-                  src="/imagens/carro.png"
-                  alt="Bot Avatar"
-                  className={styles.avatar}
-                />
-              )}
               <div
                 className={
                   msg.sender === 'user'
@@ -143,15 +126,10 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     : styles.botMessage
                 }
               >
-                {msg.text}
+                {msg.text.split('\n').map((line, i) => (
+                  <div key={i}>{line}</div>
+                ))}
               </div>
-              {msg.sender === 'user' && (
-                <img
-                  src="/imagens/avatar.png"
-                  alt="User Avatar"
-                  className={styles.avatar}
-                />
-              )}
             </div>
           ))}
           <div ref={messagesEndRef} />
@@ -168,23 +146,6 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             Enviar
           </button>
         </div>
-        {messages.some(msg => msg.options) && (
-          <div className={styles.predefinedOptions}>
-            {messages
-              .filter(msg => msg.options)
-              .map((msg, msgIndex) =>
-                msg.options?.map((option, optionIndex) => (
-                  <button
-                    key={`${msgIndex}-${optionIndex}`}
-                    className={styles.optionButton}
-                    onClick={() => handleOptionClick(option)}
-                  >
-                    {option}
-                  </button>
-                ))
-              )}
-          </div>
-        )}
       </div>
     </div>
   );

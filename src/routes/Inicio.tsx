@@ -4,7 +4,6 @@ import Chat from '../Components/Chat';
 import Testemunhos from '../Components/Testemunhos';
 import FAQ from '../Components/FAQ';
 import styles from '../assets/Inicio.module.css';
-import WatsonAssistant from '../Components/WatsonAssistant';
  
 const Inicio: React.FC = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -20,7 +19,6 @@ const Inicio: React.FC = () => {
   return (
     <>
       <Cabecalho />
-      <WatsonAssistant />
      
       <div className={styles.mainContent}>
         <div className={styles.heroSection}>
@@ -65,7 +63,8 @@ const Inicio: React.FC = () => {
         <Testemunhos />
  
         <FAQ />
- 
+        
+
       </div>
  
       {isChatOpen && <Chat onClose={closeChat} />}

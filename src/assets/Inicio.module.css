@@ -23,6 +23,7 @@ body {
  
 /* Seção Hero */
 .heroSection {
+    
     background: linear-gradient(135deg, #0078ff, #00c6ff);
     width: 100%;
     padding: 60px 20px;
@@ -38,6 +39,7 @@ body {
 }
  
 .heroSection h1 {
+    color: white;
     font-size: 48px;
     margin-bottom: 20px;
 }
@@ -45,12 +47,15 @@ body {
 .heroSection p {
     font-size: 20px;
     margin-bottom: 30px;
+    color: #fff;
+
 }
  
 .primaryButton {
     background-color: #00c6ff;
     border: 2px solid #fff; /* Adiciona uma borda branca de 2px */
     padding: 15px 90px;
+    max-width: 700px;
     color: #fff;
     font-size: 18px;
     border-radius: 50px;
@@ -74,6 +79,7 @@ body {
     font-size: 36px;
     margin-bottom: 20px;
     position: relative;
+    color: #fff;
 }
  
 .benefitsSection h2::after {
@@ -100,6 +106,7 @@ body {
     width: 220px;
     text-align: center;
     transition: transform 0.3s ease, background-color 0.3s ease;
+    
 }
  
 .benefitCard:hover {

@@ -7,9 +7,11 @@
 }
 
 .testemunhosSection h2 {
+    color: #fff;
     font-size: 36px;
     margin-bottom: 20px;
     position: relative;
+    
 }
 
 .testemunhosSection h2::after {
@@ -20,6 +22,7 @@
     display: block;
     margin: 10px auto 0;
     border-radius: 2px;
+    color: #fff;
 }
 
 .carouselContainer {
@@ -71,7 +74,7 @@
 
 .depoimentoCard p {
     font-size: 16px;
-    color: #b0b0b0;
+    color: #fff;
     margin-bottom: 15px;
 }
 
