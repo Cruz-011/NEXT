@@ -1,206 +1,122 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Cabecalho from '../Components/Cabecalho';
 import Rodape from '../Components/Rodape';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const MainContainer = styled.div`
+  background-color: #1e1e1e;
+  min-height: 100vh;
   padding: 20px;
-  min-height: calc(100vh - 100px); /* Ajusta para o rodapé */
 `;
 
-const MecanicasContainer = styled.div`
+const Title = styled.h1`
+  color: #fff;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const CardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   gap: 20px;
-  justify-content: center;
 `;
 
-const MecanicaCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 250px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+const Card = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
   padding: 20px;
   text-align: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-  }
 `;
 
-const MecanicaImage = styled.img`
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
+const MechanicName = styled.h3`
+  margin: 0 0 10px 0;
+  color: #007bff;
 `;
 
-const FormularioContainer = styled.div`
-  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
-  margin-top: 20px;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin: 10px 0;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-`;
-
-const Select = styled.select`
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+const Info = styled.p`
+  margin: 5px 0;
+  color: #333;
 `;
 
 const Button = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
   cursor: pointer;
+  border-radius: 4px;
+  margin-top: 10px;
 
   &:hover {
     background-color: #0056b3;
   }
 `;
 
-const Titulo = styled.h2`
-  color: #000; /* Definindo a cor do texto como preto */
-`;
+const mechanics = [
+  {
+    id: 1,
+    name: 'Mecânica A',
+    address: 'Rua A, 123',
+    phone: '(11) 98765-4321',
+    hours: '08:00 - 18:00',
+  },
+  {
+    id: 2,
+    name: 'Mecânica B',
+    address: 'Av. B, 456',
+    phone: '(11) 91234-5678',
+    hours: '09:00 - 19:00',
+  },
+  {
+    id: 3,
+    name: 'Mecânica C',
+    address: 'Rua C, 789',
+    phone: '(11) 99876-5432',
+    hours: '07:00 - 17:00',
+  },
+];
 
-const RealizarAgendamento = () => {
-  const [selectedMecanica, setSelectedMecanica] = useState(null);
-  const [data, setData] = useState('');
-  const [hora, setHora] = useState('');
-  const [nome, setNome] = useState('');
-  const [veiculo, setVeiculo] = useState('');
-  const [selectedLaudo, setSelectedLaudo] = useState('');
-  const navigate = useNavigate();
+const AgendarServico = () => {
+  const [selectedMechanic, setSelectedMechanic] = useState<any>(null);
 
-  // Dados fictícios para as mecânicas e laudos
-  const mecanicas = [
-    {
-      id: 1,
-      nome: 'Mecânica Porto Seguro',
-      endereco: 'Rua Alfa, 123',
-      horario: '08:00 - 18:00',
-      imagem: '/imagens/mec.jfif',
-    },
-    {
-      id: 2,
-      nome: 'Centro Automotivo',
-      endereco: 'Rua Brasil, 456',
-      horario: '09:00 - 19:00',
-      imagem: '/imagens/mec2.jfif',
-    },
-  ];
-
-  const laudos = [
-    { id: 1, descricao: 'Laudo A' },
-    { id: 2, descricao: 'Laudo B' },
-  ];
-
-  const gerarCodigo = () => {
-    return Math.random().toString(36).substring(2, 10).toUpperCase();
-  };
-
-  const handleAgendar = () => {
-    if (!data || !hora || !nome || !veiculo || !selectedMecanica || !selectedLaudo) {
-      alert('Por favor, preencha todos os campos antes de confirmar o agendamento.');
-      return;
-    }
-
-    const codigo = gerarCodigo();
-    const agendamento = {
-      mecanica: selectedMecanica.nome,
-      data,
-      hora,
-      nome,
-      veiculo,
-      laudo: selectedLaudo,
-      codigo,
-    };
-
-    console.log(agendamento); // Para depuração
-
-    try {
-      const agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
-      agendamentos.push(agendamento);
-      localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
-
-      navigate('/agendamentos-realizados');
-    } catch (error) {
-      console.error('Erro ao acessar localStorage:', error);
-      alert('Ocorreu um erro ao salvar o agendamento. Tente novamente.');
-    }
+  const handleAgendar = (mechanic: any) => {
+    setSelectedMechanic(mechanic);
+    // Armazenar agendamento no localStorage ou fazer requisição para backend
+    const agendamentos = localStorage.getItem('agendamentos') || '[]';
+    const agendamentosArray = JSON.parse(agendamentos);
+    agendamentosArray.push({
+      codigo: new Date().getTime(),
+      mecanica: mechanic.name,
+      data: new Date().toLocaleDateString(),
+      hora: '10:00', // exemplo de hora
+      nome: 'Nome Cliente',
+      veiculo: 'Veículo Cliente',
+    });
+    localStorage.setItem('agendamentos', JSON.stringify(agendamentosArray));
+    alert('Agendamento realizado com sucesso!');
   };
 
   return (
-    <div>
+    <MainContainer>
       <Cabecalho />
-      <Container>
-        <h1>Realizar Agendamento</h1>
-        <Titulo>Selecione a mecânica desejada.</Titulo>
-
-        <MecanicasContainer>
-          {mecanicas.map((mecanica) => (
-            <MecanicaCard key={mecanica.id} onClick={() => setSelectedMecanica(mecanica)}>
-              <MecanicaImage src={mecanica.imagem} alt={`Imagem de ${mecanica.nome}`} />
-              <h3>{mecanica.nome}</h3>
-              <p>{mecanica.endereco}</p>
-              <p>Horário de Funcionamento: {mecanica.horario}</p>
-            </MecanicaCard>
-          ))}
-        </MecanicasContainer>
-
-        {console.log('Mecânica selecionada:', selectedMecanica)} {/* Para depuração */}
-
-        <FormularioContainer isVisible={!!selectedMecanica}>
-          <Titulo>Agendar com {selectedMecanica ? selectedMecanica.nome : ''}</Titulo>
-
-          <Label>Data:</Label>
-          <Input type="date" value={data} onChange={(e) => setData(e.target.value)} />
-
-          <Label>Hora:</Label>
-          <Input type="time" value={hora} onChange={(e) => setHora(e.target.value)} />
-
-          <Label>Nome:</Label>
-          <Input type="text" value={nome} onChange={(e) => setNome(e.target.value)} />
-
-          <Label>Veículo:</Label>
-          <Input type="text" value={veiculo} onChange={(e) => setVeiculo(e.target.value)} />
-
-          <Label>Laudo:</Label>
-          <Select value={selectedLaudo} onChange={(e) => setSelectedLaudo(e.target.value)}>
-            <option value="">Selecione</option>
-            {laudos.map((laudo) => (
-              <option key={laudo.id} value={laudo.descricao}>
-                {laudo.descricao}
-              </option>
-            ))}
-          </Select>
-
-          <Button onClick={handleAgendar}>Confirmar Agendamento</Button>
-        </FormularioContainer>
-      </Container>
+      <Title>Escolha uma Mecânica para Agendar</Title>
+      <CardsContainer>
+        {mechanics.map((mechanic) => (
+          <Card key={mechanic.id}>
+            <MechanicName>{mechanic.name}</MechanicName>
+            <Info>Endereço: {mechanic.address}</Info>
+            <Info>Telefone: {mechanic.phone}</Info>
+            <Info>Horário: {mechanic.hours}</Info>
+            <Button onClick={() => handleAgendar(mechanic)}>Agendar</Button>
+          </Card>
+        ))}
+      </CardsContainer>
       <Rodape />
-    </div>
+    </MainContainer>
   );
 };
 
-export default RealizarAgendamento;
+export default AgendarServico;

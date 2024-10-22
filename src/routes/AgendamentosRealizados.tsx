@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaEye, FaTrash } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 import Cabecalho from '../Components/Cabecalho';
 import Rodape from '../Components/Rodape';
 
 const MainContainer = styled.div`
   background-color: #1e1e1e;
+  min-height: 100vh; /* Garante que o fundo preencha toda a altura da tela */
 `;
 
 const Title = styled.h1`
@@ -84,13 +85,12 @@ const AgendamentosRealizados = () => {
       try {
         const parsedAgendamentos = JSON.parse(storedAgendamentos);
         setAgendamentos(parsedAgendamentos);
+        console.log(parsedAgendamentos); // Para verificar se os dados estão sendo carregados corretamente
       } catch (error) {
         console.error("Erro ao parsear agendamentos:", error);
       }
     }
   }, []);
-
-
 
   return (
     <MainContainer>
@@ -124,7 +124,7 @@ const AgendamentosRealizados = () => {
                   <StyledTd>{agendamento.veiculo}</StyledTd>
                   <StyledTd>
                     <ActionButtons>
-                      <IconButton>
+                      <IconButton onClick={() => console.log(agendamento)}>
                         <FaEye />
                       </IconButton>
                     </ActionButtons>
@@ -135,7 +135,7 @@ const AgendamentosRealizados = () => {
           </StyledTable>
         </TableContainer>
       )}
-
+      <Rodape />
     </MainContainer>
   );
 };

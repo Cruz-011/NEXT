@@ -28,7 +28,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             '1 - Suporte a Veículo Reparado\n' + 
             '2 - Status do Pedido de Reparo\n' + 
             '3 - Já sei qual o problema\n' + 
-            '4 - Agendar Visita\n' + 
+            '4 - Realizar Agendamento \n' + 
             '5 - Falar com um Atendente',
       sender: 'bot',
     };
@@ -53,7 +53,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
     // Verifica se o usuário escolheu a opção '4' para agendamento
     if (message === '4') {
-      navigate('/realizar-agendamento'); // Redireciona para a página de agendamento
+      navigate('/agendamento'); // Redireciona para a página de agendamento
       return;
     }
 

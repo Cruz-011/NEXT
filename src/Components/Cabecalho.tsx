@@ -280,7 +280,7 @@ const Cabecalho: React.FC = () => {
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/Agendamentosrealizados">
+            <Link to="/AgendamentosRealizados">
               <NavIcon src="/imagens/carro.png" alt="Veículos Salvos" />
               <NavText>Agendamentos</NavText>
             </Link>

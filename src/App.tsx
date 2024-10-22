@@ -8,7 +8,7 @@ import LoginCadastro from './routes/Login';
 import Rodape from './Components/Rodape';
 import Mecanico from './routes/Mecanico';
 import AgendamentosRealizados from './routes/AgendamentosRealizados';
-import RealizarAgendamento from './routes/realizaragendamento';
+import AgendarServico from './routes/realizaragendamento';
  
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
  
       <div className="app-container">
         <Routes>
-          <Route path='/realizaragendamento' element={<RealizarAgendamento/>} />
+          <Route path='/agendamento' element={<AgendarServico/>} />
           <Route path="/AgendamentosRealizados" element={<AgendamentosRealizados />} />
           <Route path="/Mecanico" element={<Mecanico />} />
           <Route path="/login" element={<LoginCadastro />} />
