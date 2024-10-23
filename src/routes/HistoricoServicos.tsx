@@ -285,7 +285,7 @@ const ModalOverlay = styled.div<{ isVisible: boolean }>`
 `;
 
 const ModalContent = styled.div`
-  background-color: #1e1e1e;;
+  background-color: #1e1e1e;
   padding: 30px;
   border-radius: 8px;
   width: 90%;
@@ -321,126 +321,82 @@ const HistoricoServicos: React.FC = () => {
   // Estados para o Modal de Ajuda
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
   const [helpName, setHelpName] = useState<string>('');
-  const [helpEmail, setHelpEmail] = useState<string>('');
-  const [helpDescription, setHelpDescription] = useState<string>('');
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 3; // Quantos itens por página
 
-  // Função para ordenar os serviços
-  const sortedServicos = useMemo(() => {
-    let sortableServicos = [...servicos];
-
-    if (sortConfig !== null) {
-      sortableServicos.sort((a, b) => {
-        let aKey = a[sortConfig.key];
-        let bKey = b[sortConfig.key];
-
-        // Converter datas para comparações corretas
-        if (sortConfig.key === 'data') {
-          // Garantir que aKey e bKey são strings antes de chamar .split
-          if (typeof aKey === 'string' && typeof bKey === 'string') {
-            const [dayA, monthA, yearA] = aKey.split('/').map(Number);
-            const [dayB, monthB, yearB] = bKey.split('/').map(Number);
-            const dateA = new Date(yearA, monthA - 1, dayA);
-            const dateB = new Date(yearB, monthB - 1, dayB);
-
-            if (dateA < dateB) {
-              return sortConfig.direction === 'ascending' ? -1 : 1;
-            }
-            if (dateA > dateB) {
-              return sortConfig.direction === 'ascending' ? 1 : -1;
-            }
-            return 0;
-          } else {
-            // Se não forem strings, tratar como iguais
-            return 0;
-          }
-        }
-
-        // Comparação padrão para outros campos (string)
-        if (typeof aKey === 'string' && typeof bKey === 'string') {
-          if (aKey.toLowerCase() < bKey.toLowerCase()) {
-            return sortConfig.direction === 'ascending' ? -1 : 1;
-          }
-          if (aKey.toLowerCase() > bKey.toLowerCase()) {
-            return sortConfig.direction === 'ascending' ? 1 : -1;
-          }
-        }
-
-        return 0;
-      });
-    }
-
-    return sortableServicos;
-  }, [servicos, sortConfig]);
-
-  // Função para filtrar os serviços
-  const filteredServicos = useMemo(() => {
-    return sortedServicos.filter(servico => {
-      const matchesSearch = servico.veiculo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        servico.descricao.toLowerCase().includes(searchTerm.toLowerCase());
-      
-      const matchesStatus = statusFilter === 'Todos' || servico.status === statusFilter;
-      
-      return matchesSearch && matchesStatus;
-    });
-  }, [sortedServicos, searchTerm, statusFilter]);
-
-  // Função para lidar com a ordenação
-  const requestSort = (key: keyof Servico) => {
-    let direction: 'ascending' | 'descending' = 'ascending';
-
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
-    }
-
-    setSortConfig({ key, direction });
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
   };
 
-  // Paginação
-  const pageCount = Math.ceil(filteredServicos.length / itemsPerPage);
-  const offset = currentPage * itemsPerPage;
-  const currentPageData = filteredServicos.slice(offset, offset + itemsPerPage);
+  const handleStatusFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatusFilter(e.target.value);
+  };
 
-  const handlePageClick = ({ selected }: { selected: number }) => {
+  const filteredServicos = useMemo(() => {
+    return servicos.filter((servico) => {
+      const matchesSearch = searchTerm === '' || servico.descricao.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = statusFilter === 'Todos' || servico.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }, [servicos, searchTerm, statusFilter]);
+
+  const sortedServicos = useMemo(() => {
+    if (sortConfig !== null) {
+      const sorted = [...filteredServicos].sort((a, b) => {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+      return sorted;
+    }
+    return filteredServicos;
+  }, [filteredServicos, sortConfig]);
+
+  const handleSort = (key: keyof Servico) => {
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
+      setSortConfig({ key, direction: 'descending' });
+    } else {
+      setSortConfig({ key, direction: 'ascending' });
+    }
+  };
+
+  const getSortIcon = (key: keyof Servico) => {
+    if (!sortConfig || sortConfig.key !== key) {
+      return <FaSort />;
+    }
+    if (sortConfig.direction === 'ascending') {
+      return <FaSortUp />;
+    }
+    return <FaSortDown />;
+  };
+
+  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
+  const paginatedServicos = sortedServicos.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+  const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected);
   };
 
-  // Ações por Linha
-  const handleView = (servico: Servico) => {
-    toast.info(`Visualizando serviço: ${servico.descricao}`);
-    // Implemente a lógica para visualizar detalhes
+  const openHelpModal = () => {
+    setIsHelpModalOpen(true);
   };
 
-  const handleEdit = (servico: Servico) => {
-    toast.info(`Editando serviço: ${servico.descricao}`);
-    // Implemente a lógica para editar serviço
-  };
-
-  const handleDelete = (id: number) => {
-    if (window.confirm('Tem certeza que deseja excluir este serviço?')) {
-      const updatedServicos = servicos.filter(servico => servico.id !== id);
-      setServicos(updatedServicos);
-      toast.success('Serviço excluído com sucesso!');
-    }
-  };
-
-  // Função para enviar a solicitação de ajuda
-  const handleHelpSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-    // Aqui você pode integrar com uma API ou serviço de backend para processar a solicitação de ajuda.
-    // Para este exemplo, vamos apenas exibir uma notificação de sucesso e fechar o modal.
-    
-    toast.success('Solicitação de ajuda enviada com sucesso!');
-    
-    // Resetar os campos do formulário
-    setHelpName('');
-    setHelpEmail('');
-    setHelpDescription('');
-    
-    // Fechar o modal
+  const closeHelpModal = () => {
     setIsHelpModalOpen(false);
+  };
+
+  // Funções para edição e exclusão
+  const handleDelete = (id: number) => {
+    setServicos((prevServicos) => prevServicos.filter((servico) => servico.id !== id));
+    toast.success('Serviço excluído com sucesso!');
+  };
+
+  const handleEdit = (id: number) => {
+    toast.info(`Editar serviço com ID: ${id}`);
   };
 
   return (
@@ -451,15 +407,12 @@ const HistoricoServicos: React.FC = () => {
         <SearchFilterContainer>
           <SearchInput
             type="text"
-            placeholder="Buscar por veículo ou serviço..."
+            placeholder="Buscar serviço..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
           />
-          <StatusFilter
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-          >
-            <option value="Todos">Todos os Status</option>
+          <StatusFilter value={statusFilter} onChange={handleStatusFilterChange}>
+            <option value="Todos">Todos os status</option>
             <option value="Concluído">Concluído</option>
             <option value="Cancelado">Cancelado</option>
             <option value="Em andamento">Em andamento</option>
@@ -469,179 +422,83 @@ const HistoricoServicos: React.FC = () => {
           <StyledTable>
             <StyledThead>
               <tr>
-                <StyledTh
-                  isSorted={sortConfig?.key === 'descricao' || false}
-                  sortDirection={sortConfig?.key === 'descricao' ? sortConfig.direction : ''}
-                  onClick={() => requestSort('descricao')}
-                >
-                  Serviço Realizado
-                  {sortConfig?.key === 'descricao' ? (
-                    sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />
-                  ) : (
-                    <FaSort />
-                  )}
+                <StyledTh isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction}>
+                  Descrição
+                  <span onClick={() => handleSort('descricao')}>{getSortIcon('descricao')}</span>
                 </StyledTh>
-                <StyledTh
-                  isSorted={sortConfig?.key === 'status' || false}
-                  sortDirection={sortConfig?.key === 'status' ? sortConfig.direction : ''}
-                  onClick={() => requestSort('status')}
-                >
-                  Status do Pedido
-                  {sortConfig?.key === 'status' ? (
-                    sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />
-                  ) : (
-                    <FaSort />
-                  )}
+                <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction}>
+                  Status
+                  <span onClick={() => handleSort('status')}>{getSortIcon('status')}</span>
                 </StyledTh>
-                <StyledTh
-                  isSorted={sortConfig?.key === 'veiculo' || false}
-                  sortDirection={sortConfig?.key === 'veiculo' ? sortConfig.direction : ''}
-                  onClick={() => requestSort('veiculo')}
-                >
+                <StyledTh isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction}>
                   Veículo
-                  {sortConfig?.key === 'veiculo' ? (
-                    sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />
-                  ) : (
-                    <FaSort />
-                  )}
+                  <span onClick={() => handleSort('veiculo')}>{getSortIcon('veiculo')}</span>
                 </StyledTh>
-                <StyledTh
-                  isSorted={sortConfig?.key === 'data' || false}
-                  sortDirection={sortConfig?.key === 'data' ? sortConfig.direction : ''}
-                  onClick={() => requestSort('data')}
-                >
-                  Data do Serviço
-                  {sortConfig?.key === 'data' ? (
-                    sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />
-                  ) : (
-                    <FaSort />
-                  )}
+                <StyledTh isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction}>
+                  Data
+                  <span onClick={() => handleSort('data')}>{getSortIcon('data')}</span>
                 </StyledTh>
-                <StyledTh>
+                <StyledTh isSorted={false} sortDirection="">
                   Ações
                 </StyledTh>
               </tr>
             </StyledThead>
             <StyledTbody>
-              {currentPageData.length === 0 ? (
-                <StyledTr isEven={false}>
-                  <StyledTd colSpan={5} style={{ textAlign: 'center' }}>
-                    Nenhum serviço encontrado.
+              {paginatedServicos.map((servico, index) => (
+                <StyledTr key={servico.id} isEven={index % 2 === 0}>
+                  <StyledTd>{servico.descricao}</StyledTd>
+                  <StyledTd>
+                    <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
+                  </StyledTd>
+                  <StyledTd>{servico.veiculo}</StyledTd>
+                  <StyledTd>{servico.data}</StyledTd>
+                  <StyledTd>
+                    <ActionButtons>
+                      <IconButton onClick={() => toast.info(`Visualizar serviço com ID: ${servico.id}`)}>
+                        <FaEye />
+                      </IconButton>
+                      <IconButton onClick={() => handleEdit(servico.id)}>
+                        <FaEdit />
+                      </IconButton>
+                      <IconButton onClick={() => handleDelete(servico.id)}>
+                        <FaTrash />
+                      </IconButton>
+                    </ActionButtons>
                   </StyledTd>
                 </StyledTr>
-              ) : (
-                currentPageData.map((servico, index) => (
-                  <StyledTr key={servico.id} isEven={index % 2 === 0}>
-                    <StyledTd>{servico.descricao}</StyledTd>
-                    <StyledTd>
-                      <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
-                    </StyledTd>
-                    <StyledTd>{servico.veiculo}</StyledTd>
-                    <StyledTd>{servico.data}</StyledTd>
-                    <StyledTd>
-                      <ActionButtons>
-                        <IconButton onClick={() => handleView(servico)} title="Visualizar">
-                          <FaEye />
-                        </IconButton>
-                        <IconButton onClick={() => handleEdit(servico)} title="Editar">
-                          <FaEdit />
-                        </IconButton>
-                        <IconButton onClick={() => handleDelete(servico.id)} title="Excluir">
-                          <FaTrash />
-                        </IconButton>
-                      </ActionButtons>
-                    </StyledTd>
-                  </StyledTr>
-                ))
-              )}
+              ))}
             </StyledTbody>
           </StyledTable>
         </TableContainer>
-        {/* Paginação */}
-        {pageCount > 1 && (
-          <PaginationContainer>
-            <ReactPaginate
-              previousLabel={'Anterior'}
-              nextLabel={'Próximo'}
-              breakLabel={'...'}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={'pagination'}
-              activeClassName={'selected'}
-              previousClassName={'page'}
-              nextClassName={'page'}
-              disabledClassName={'disabled'}
-              pageClassName={'page'}
-            />
-          </PaginationContainer>
-        )}
+        <PaginationContainer>
+          <ReactPaginate
+            previousLabel={'Anterior'}
+            nextLabel={'Próximo'}
+            breakLabel={'...'}
+            breakClassName={'page'}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageChange}
+            containerClassName={'pagination'}
+            activeClassName={'selected'}
+            pageClassName={'page'}
+            previousClassName={'page'}
+            nextClassName={'page'}
+            disabledClassName={'disabled'}
+          />
+        </PaginationContainer>
+        <HelpButton onClick={openHelpModal}>?</HelpButton>
+        <ModalOverlay isVisible={isHelpModalOpen}>
+          <ModalContent>
+            <CloseButton onClick={closeHelpModal}>&times;</CloseButton>
+            <h2>Ajuda</h2>
+            <p>Se você precisar de ajuda com o uso do sistema, entre em contato com nossa equipe de suporte técnico.</p>
+            <p>Nome: {helpName}</p>
+          </ModalContent>
+        </ModalOverlay>
       </MainContainer>
-      
-      {/* Modal de Ajuda */}
-      <ModalOverlay isVisible={isHelpModalOpen}>
-        <ModalContent>
-          <CloseButton onClick={() => setIsHelpModalOpen(false)}>&times;</CloseButton>
-          <h2>Precisa de Ajuda?</h2>
-          <form onSubmit={handleHelpSubmit}>
-            <div style={{ marginBottom: '15px' }}>
-              <label htmlFor="name">Nome:</label>
-              <input
-                type="text"
-                id="name"
-                value={helpName}
-                onChange={(e) => setHelpName(e.target.value)}
-                required
-                style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-              />
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <label htmlFor="email">E-mail:</label>
-              <input
-                type="email"
-                id="email"
-                value={helpEmail}
-                onChange={(e) => setHelpEmail(e.target.value)}
-                required
-                style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-              />
-            </div>
-            <div style={{ marginBottom: '15px' }}>
-              <label htmlFor="description">Descrição do Problema:</label>
-              <textarea
-                id="description"
-                value={helpDescription}
-                onChange={(e) => setHelpDescription(e.target.value)}
-                required
-                rows={4}
-                style={{ width: '100%', padding: '8px', marginTop: '5px' }}
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              style={{
-                backgroundColor: '#007bff',
-                color: '#ffffff',
-                padding: '10px 20px',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-              }}
-            >
-              Enviar Solicitação
-            </button>
-          </form>
-        </ModalContent>
-      </ModalOverlay>
-      
-      {/* Botão de Ajuda */}
-      <HelpButton onClick={() => setIsHelpModalOpen(true)} title="Ajuda">
-        &#x2753; {/* Símbolo de interrogação */}
-      </HelpButton>
-      
-      {/* Notificações */}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+      <ToastContainer />
     </>
   );
 };
