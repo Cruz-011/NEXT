@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import Cabecalho from '../Components/Cabecalho';
 import styled from 'styled-components';
-import { FaSort, FaSortUp, FaSortDown, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -27,9 +27,7 @@ const initialServicos: Servico[] = [
 
 // Styled Components
 const MainContainer = styled.main`
-  padding: 100px 20px 20px 20px;
   background-color: #1e1e1e;
-  min-height: 100vh;
 `;
 
 const Title = styled.h1`
@@ -42,7 +40,6 @@ const Title = styled.h1`
 const SearchFilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   margin-bottom: 20px;
 
   @media (max-width: 600px) {
@@ -80,7 +77,7 @@ const TableContainer = styled.div`
 const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  min-width: 700px;
+  min-width: 900px;
 `;
 
 const StyledThead = styled.thead`
@@ -182,7 +179,6 @@ const PaginationContainer = styled.div`
       cursor: not-allowed;
       opacity: 0.5;
     }
-  }
 `;
 
 // Help Button Styles
@@ -297,33 +293,40 @@ const HistoricoServicos: React.FC = () => {
     return sortableItems;
   }, [filteredServicos, sortConfig]);
 
-  const handleSort = useCallback((key: keyof Servico) => {
+  // Lógica de Paginação
+  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
+  const currentItems = useMemo(() => {
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    return sortedServicos.slice(start, end);
+  }, [currentPage, sortedServicos]);
+
+  const handlePageClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected);
+  };
+
+  // Função para Ordenação
+  const requestSort = (key: keyof Servico) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
-  }, [sortConfig]);
+  };
 
-  const handlePageClick = (data: { selected: number }) => setCurrentPage(data.selected);
-
-  // Lógica de Paginação
-  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
-  const displayedServicos = useMemo(() => {
-    const start = currentPage * itemsPerPage;
-    return sortedServicos.slice(start, start + itemsPerPage);
-  }, [sortedServicos, currentPage, itemsPerPage]);
-
-  // Função para abrir/fechar modal
-  const toggleHelpModal = () => setIsHelpModalOpen(prev => !prev);
+  // Função para Abrir Modal de Ajuda
+  const toggleHelpModal = () => {
+    setIsHelpModalOpen(prev => !prev);
+  };
 
   return (
     <MainContainer>
       <Cabecalho />
       <Title>Histórico de Serviços</Title>
+      
       <SearchFilterContainer>
 
-        <StatusFilter onChange={handleStatusFilterChange}>
+        <StatusFilter value={statusFilter} onChange={handleStatusFilterChange}>
           <option value="Todos">Todos</option>
           <option value="Concluído">Concluído</option>
           <option value="Cancelado">Cancelado</option>
@@ -335,35 +338,33 @@ const HistoricoServicos: React.FC = () => {
         <StyledTable>
           <StyledThead>
             <tr>
-              <StyledTh onClick={() => handleSort('descricao')} isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction || ''}>
-                Descrição {sortConfig?.key === 'descricao' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              <StyledTh isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('descricao')}>
+                Descrição {sortConfig?.key === 'descricao' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh onClick={() => handleSort('status')} isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''}>
-                Status {sortConfig?.key === 'status' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('status')}>
+                Status {sortConfig?.key === 'status' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh onClick={() => handleSort('veiculo')} isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction || ''}>
-                Veículo {sortConfig?.key === 'veiculo' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              <StyledTh isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('veiculo')}>
+                Veículo {sortConfig?.key === 'veiculo' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh onClick={() => handleSort('data')} isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction || ''}>
-                Data {sortConfig?.key === 'data' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              <StyledTh isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('data')}>
+                Data {sortConfig?.key === 'data' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
             </tr>
           </StyledThead>
           <StyledTbody>
-            {displayedServicos.map((servico, index) => (
+            {currentItems.map((servico, index) => (
               <StyledTr key={servico.id} isEven={index % 2 === 0}>
                 <StyledTd>{servico.descricao}</StyledTd>
-                <StyledTd><StatusBadge status={servico.status}>{servico.status}</StatusBadge></StyledTd>
+                <StyledTd>
+                  <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
+                </StyledTd>
                 <StyledTd>{servico.veiculo}</StyledTd>
                 <StyledTd>{servico.data}</StyledTd>
                 <StyledTd>
                   <ActionButtons>
-                    <IconButton><FaEye /></IconButton>
-                    <IconButton><FaEdit /></IconButton>
-                    <IconButton><FaTrash onClick={() => {
-                      setServicos(prev => prev.filter(s => s.id !== servico.id));
-                      toast.success('Serviço excluído com sucesso!');
-                    }} /></IconButton>
+                    <IconButton onClick={() => toast.info(`Editando serviço: ${servico.descricao}`)}>✏️</IconButton>
+                    <IconButton onClick={() => toast.error(`Excluindo serviço: ${servico.descricao}`)}>🗑️</IconButton>
                   </ActionButtons>
                 </StyledTd>
               </StyledTr>
@@ -374,32 +375,28 @@ const HistoricoServicos: React.FC = () => {
 
       <PaginationContainer>
         <ReactPaginate
-          previousLabel={"Anterior"}
-          nextLabel={"Próximo"}
-          breakLabel={"..."}
+          previousLabel={'←'}
+          nextLabel={'→'}
           pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          pageClassName={"page"}
-          previousClassName={"page"}
-          nextClassName={"page"}
-          disabledClassName={"disabled"}
-          activeClassName={"selected"}
+          containerClassName={'pagination'}
+          pageClassName={'page'}
+          previousClassName={'page'}
+          nextClassName={'page'}
+          activeClassName={'selected'}
+          disabledClassName={'disabled'}
         />
       </PaginationContainer>
 
-      <HelpButton onClick={toggleHelpModal}>
-        ?
-      </HelpButton>
+      <HelpButton onClick={toggleHelpModal}>?</HelpButton>
 
+      {/* Modal de Ajuda */}
       <ModalOverlay isVisible={isHelpModalOpen}>
         <ModalContent>
-          <CloseButton onClick={toggleHelpModal}>✖</CloseButton>
+          <CloseButton onClick={toggleHelpModal}>×</CloseButton>
           <h2>Ajuda</h2>
-          <p>Aqui você pode ver o histórico de serviços realizados no seu veículo.</p>
-          <p>Use a barra de busca para filtrar os serviços e os botões de ação para visualizar, editar ou excluir.</p>
+          <p>Este é o histórico de serviços realizados. Você pode buscar por descrição ou veículo e filtrar pelo status do serviço.</p>
+          <p>Clique nos ícones para editar ou excluir um serviço.</p>
         </ModalContent>
       </ModalOverlay>
 
