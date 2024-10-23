@@ -1,6 +1,6 @@
 // ../Pages/HistoricoServicos.tsx
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import Cabecalho from '../Components/Cabecalho';
 import styled from 'styled-components';
 import { FaSort, FaSortUp, FaSortDown, FaEye, FaEdit, FaTrash } from 'react-icons/fa';
@@ -19,63 +19,38 @@ interface Servico {
 
 // Dados Iniciais de Serviços (Mock)
 const initialServicos: Servico[] = [
-  {
-    id: 1,
-    descricao: 'Troca de óleo',
-    status: 'Concluído',
-    veiculo: 'Honda Civic 2020',
-    data: '15/09/2024',
-  },
-  {
-    id: 2,
-    descricao: 'Revisão de freios',
-    status: 'Em andamento',
-    veiculo: 'Toyota Corolla 2019',
-    data: '16/09/2024',
-  },
-  {
-    id: 3,
-    descricao: 'Alinhamento e balanceamento',
-    status: 'Concluído',
-    veiculo: 'Ford Ka 2018',
-    data: '17/09/2024',
-  },
-  {
-    id: 4,
-    descricao: 'Substituição de amortecedores',
-    status: 'Cancelado',
-    veiculo: 'Chevrolet Onix 2021',
-    data: '18/09/2024',
-  },
-  // Adicione mais serviços conforme necessário
+  { id: 1, descricao: 'Troca de óleo', status: 'Concluído', veiculo: 'Honda Civic 2020', data: '15/09/2024' },
+  { id: 2, descricao: 'Revisão de freios', status: 'Em andamento', veiculo: 'Toyota Corolla 2019', data: '16/09/2024' },
+  { id: 3, descricao: 'Alinhamento e balanceamento', status: 'Concluído', veiculo: 'Ford Ka 2018', data: '17/09/2024' },
+  { id: 4, descricao: 'Substituição de amortecedores', status: 'Cancelado', veiculo: 'Chevrolet Onix 2021', data: '18/09/2024' },
 ];
 
 // Styled Components
-
 const MainContainer = styled.main`
-  padding: 100px 20px 20px 20px; /* padding-top para evitar sobreposição com o cabeçalho fixo */
+  padding: 100px 20px 20px 20px;
   background-color: #1e1e1e;
   min-height: 100vh;
 `;
 
 const Title = styled.h1`
-  color: white; /* Azul escuro */
+  color: white;
   text-align: center;
   margin-bottom: 30px;
 `;
 
+// Input e Select estilos
 const SearchFilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 20px;
-  
+
   @media (max-width: 600px) {
     flex-direction: column;
   }
 `;
 
-const SearchInput = styled.input`
+const InputSelectStyle = styled.input`
   padding: 10px 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -86,7 +61,7 @@ const SearchInput = styled.input`
     outline: none;
     border-color: #007bff;
   }
-  
+
   @media (max-width: 600px) {
     width: 100%;
     margin-bottom: 10px;
@@ -94,30 +69,13 @@ const SearchInput = styled.input`
 `;
 
 const StatusFilter = styled.select`
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 48%;
-  
-  &:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  @media (max-width: 600px) {
-    width: 100%;
-  }
+  ${InputSelectStyle}
 `;
 
+// Tabela Estilizada
 const TableContainer = styled.div`
   overflow-x: auto;
 `;
-
-interface StyledThProps {
-  isSorted: boolean;
-  sortDirection: 'ascending' | 'descending' | '';
-}
 
 const StyledTable = styled.table`
   width: 100%;
@@ -130,19 +88,14 @@ const StyledThead = styled.thead`
   color: black;
 `;
 
-const StyledTh = styled.th<StyledThProps>`
+const StyledTh = styled.th<{ isSorted: boolean; sortDirection: 'ascending' | 'descending' | '' }>`
   padding: 12px 15px;
   text-align: left;
   cursor: pointer;
   position: relative;
-  
+
   &:hover {
     background-color: #0056b3;
-  }
-  
-  svg {
-    margin-left: 5px;
-    font-size: 12px;
   }
 `;
 
@@ -150,13 +103,9 @@ const StyledTbody = styled.tbody`
   background-color: #ffffff;
 `;
 
-interface StyledTrProps {
-  isEven: boolean;
-}
-
-const StyledTr = styled.tr<StyledTrProps>`
+const StyledTr = styled.tr<{ isEven: boolean }>`
   background-color: ${({ isEven }) => (isEven ? '#f9f9f9' : '#ffffff')};
-  
+
   &:hover {
     background-color: #f1f1f1;
   }
@@ -175,14 +124,10 @@ const StatusBadge = styled.span<{ status: string }>`
   font-size: 12px;
   background-color: ${({ status }) => {
     switch (status) {
-      case 'Concluído':
-        return '#28a745'; // Verde
-      case 'Cancelado':
-        return '#dc3545'; // Vermelho
-      case 'Em andamento':
-        return '#ffc107'; // Amarelo
-      default:
-        return '#6c757d'; // Cinza
+      case 'Concluído': return '#28a745'; // Verde
+      case 'Cancelado': return '#dc3545'; // Vermelho
+      case 'Em andamento': return '#ffc107'; // Amarelo
+      default: return '#6c757d'; // Cinza
     }
   }};
 `;
@@ -198,7 +143,7 @@ const IconButton = styled.button`
   color: #007bff;
   cursor: pointer;
   font-size: 16px;
-  
+
   &:hover {
     color: #0056b3;
   }
@@ -209,30 +154,30 @@ const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  
+
   .pagination {
     display: flex;
     list-style: none;
     gap: 10px;
     padding: 0;
   }
-  
+
   .page {
     cursor: pointer;
     padding: 8px 12px;
     border: 1px solid #007bff;
     border-radius: 5px;
     color: #007bff;
-    
+
     &.selected {
       background-color: #007bff;
       color: #ffffff;
     }
-    
+
     &:hover:not(.selected) {
       background-color: #e0e0e0;
     }
-    
+
     &.disabled {
       cursor: not-allowed;
       opacity: 0.5;
@@ -254,15 +199,15 @@ const HelpButton = styled.button`
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 24px;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   &:hover {
     background-color: #0056b3;
   }
-  
+
   @media (max-width: 600px) {
     width: 50px;
     height: 50px;
@@ -291,7 +236,7 @@ const ModalContent = styled.div`
   width: 90%;
   max-width: 500px;
   position: relative;
-  
+
   @media (max-width: 600px) {
     padding: 20px;
   }
@@ -305,44 +250,41 @@ const CloseButton = styled.button`
   border: none;
   font-size: 20px;
   cursor: pointer;
-  
+
   &:hover {
     color: #dc3545;
   }
 `;
 
+// Componente Principal
 const HistoricoServicos: React.FC = () => {
   const [servicos, setServicos] = useState<Servico[]>(initialServicos);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('Todos');
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Servico; direction: 'ascending' | 'descending' } | null>(null);
-
+  
   // Estados para o Modal de Ajuda
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
-  const [helpName, setHelpName] = useState<string>('');
 
-  const itemsPerPage = 3; // Quantos itens por página
+  const itemsPerPage = 3;
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
-
-  const handleStatusFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setStatusFilter(e.target.value);
-  };
-
+  // Funções de Manipulação de Estado
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);
+  const handleStatusFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value);
+  
+  // Lógica de Filtragem e Ordenação
   const filteredServicos = useMemo(() => {
-    return servicos.filter((servico) => {
-      const matchesSearch = searchTerm === '' || servico.descricao.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus = statusFilter === 'Todos' || servico.status === statusFilter;
-      return matchesSearch && matchesStatus;
-    });
+    return servicos.filter(servico => 
+      (statusFilter === 'Todos' || servico.status === statusFilter) &&
+      (servico.descricao.toLowerCase().includes(searchTerm.toLowerCase()) || servico.veiculo.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
   }, [servicos, searchTerm, statusFilter]);
 
   const sortedServicos = useMemo(() => {
+    let sortableItems = [...filteredServicos];
     if (sortConfig !== null) {
-      const sorted = [...filteredServicos].sort((a, b) => {
+      sortableItems.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
         }
@@ -351,155 +293,118 @@ const HistoricoServicos: React.FC = () => {
         }
         return 0;
       });
-      return sorted;
     }
-    return filteredServicos;
+    return sortableItems;
   }, [filteredServicos, sortConfig]);
 
-  const handleSort = (key: keyof Servico) => {
+  const handleSort = useCallback((key: keyof Servico) => {
+    let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      setSortConfig({ key, direction: 'descending' });
-    } else {
-      setSortConfig({ key, direction: 'ascending' });
+      direction = 'descending';
     }
-  };
+    setSortConfig({ key, direction });
+  }, [sortConfig]);
 
-  const getSortIcon = (key: keyof Servico) => {
-    if (!sortConfig || sortConfig.key !== key) {
-      return <FaSort />;
-    }
-    if (sortConfig.direction === 'ascending') {
-      return <FaSortUp />;
-    }
-    return <FaSortDown />;
-  };
+  const handlePageClick = (data: { selected: number }) => setCurrentPage(data.selected);
 
+  // Lógica de Paginação
   const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
-  const paginatedServicos = sortedServicos.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  const displayedServicos = useMemo(() => {
+    const start = currentPage * itemsPerPage;
+    return sortedServicos.slice(start, start + itemsPerPage);
+  }, [sortedServicos, currentPage, itemsPerPage]);
 
-  const handlePageChange = ({ selected }: { selected: number }) => {
-    setCurrentPage(selected);
-  };
-
-  const openHelpModal = () => {
-    setIsHelpModalOpen(true);
-  };
-
-  const closeHelpModal = () => {
-    setIsHelpModalOpen(false);
-  };
-
-  // Funções para edição e exclusão
-  const handleDelete = (id: number) => {
-    setServicos((prevServicos) => prevServicos.filter((servico) => servico.id !== id));
-    toast.success('Serviço excluído com sucesso!');
-  };
-
-  const handleEdit = (id: number) => {
-    toast.info(`Editar serviço com ID: ${id}`);
-  };
+  // Função para abrir/fechar modal
+  const toggleHelpModal = () => setIsHelpModalOpen(prev => !prev);
 
   return (
-    <>
+    <MainContainer>
       <Cabecalho />
-      <MainContainer>
-        <Title>Histórico de Serviços</Title>
-        <SearchFilterContainer>
-          <SearchInput
-            type="text"
-            placeholder="Buscar serviço..."
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <StatusFilter value={statusFilter} onChange={handleStatusFilterChange}>
-            <option value="Todos">Todos os status</option>
-            <option value="Concluído">Concluído</option>
-            <option value="Cancelado">Cancelado</option>
-            <option value="Em andamento">Em andamento</option>
-          </StatusFilter>
-        </SearchFilterContainer>
-        <TableContainer>
-          <StyledTable>
-            <StyledThead>
-              <tr>
-                <StyledTh isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction}>
-                  Descrição
-                  <span onClick={() => handleSort('descricao')}>{getSortIcon('descricao')}</span>
-                </StyledTh>
-                <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction}>
-                  Status
-                  <span onClick={() => handleSort('status')}>{getSortIcon('status')}</span>
-                </StyledTh>
-                <StyledTh isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction}>
-                  Veículo
-                  <span onClick={() => handleSort('veiculo')}>{getSortIcon('veiculo')}</span>
-                </StyledTh>
-                <StyledTh isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction}>
-                  Data
-                  <span onClick={() => handleSort('data')}>{getSortIcon('data')}</span>
-                </StyledTh>
-                <StyledTh isSorted={false} sortDirection="">
-                  Ações
-                </StyledTh>
-              </tr>
-            </StyledThead>
-            <StyledTbody>
-              {paginatedServicos.map((servico, index) => (
-                <StyledTr key={servico.id} isEven={index % 2 === 0}>
-                  <StyledTd>{servico.descricao}</StyledTd>
-                  <StyledTd>
-                    <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
-                  </StyledTd>
-                  <StyledTd>{servico.veiculo}</StyledTd>
-                  <StyledTd>{servico.data}</StyledTd>
-                  <StyledTd>
-                    <ActionButtons>
-                      <IconButton onClick={() => toast.info(`Visualizar serviço com ID: ${servico.id}`)}>
-                        <FaEye />
-                      </IconButton>
-                      <IconButton onClick={() => handleEdit(servico.id)}>
-                        <FaEdit />
-                      </IconButton>
-                      <IconButton onClick={() => handleDelete(servico.id)}>
-                        <FaTrash />
-                      </IconButton>
-                    </ActionButtons>
-                  </StyledTd>
-                </StyledTr>
-              ))}
-            </StyledTbody>
-          </StyledTable>
-        </TableContainer>
-        <PaginationContainer>
-          <ReactPaginate
-            previousLabel={'Anterior'}
-            nextLabel={'Próximo'}
-            breakLabel={'...'}
-            breakClassName={'page'}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageChange}
-            containerClassName={'pagination'}
-            activeClassName={'selected'}
-            pageClassName={'page'}
-            previousClassName={'page'}
-            nextClassName={'page'}
-            disabledClassName={'disabled'}
-          />
-        </PaginationContainer>
-        <HelpButton onClick={openHelpModal}>?</HelpButton>
-        <ModalOverlay isVisible={isHelpModalOpen}>
-          <ModalContent>
-            <CloseButton onClick={closeHelpModal}>&times;</CloseButton>
-            <h2>Ajuda</h2>
-            <p>Se você precisar de ajuda com o uso do sistema, entre em contato com nossa equipe de suporte técnico.</p>
-            <p>Nome: {helpName}</p>
-          </ModalContent>
-        </ModalOverlay>
-      </MainContainer>
+      <Title>Histórico de Serviços</Title>
+      <SearchFilterContainer>
+
+        <StatusFilter onChange={handleStatusFilterChange}>
+          <option value="Todos">Todos</option>
+          <option value="Concluído">Concluído</option>
+          <option value="Cancelado">Cancelado</option>
+          <option value="Em andamento">Em andamento</option>
+        </StatusFilter>
+      </SearchFilterContainer>
+
+      <TableContainer>
+        <StyledTable>
+          <StyledThead>
+            <tr>
+              <StyledTh onClick={() => handleSort('descricao')} isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction || ''}>
+                Descrição {sortConfig?.key === 'descricao' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              </StyledTh>
+              <StyledTh onClick={() => handleSort('status')} isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''}>
+                Status {sortConfig?.key === 'status' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              </StyledTh>
+              <StyledTh onClick={() => handleSort('veiculo')} isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction || ''}>
+                Veículo {sortConfig?.key === 'veiculo' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              </StyledTh>
+              <StyledTh onClick={() => handleSort('data')} isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction || ''}>
+                Data {sortConfig?.key === 'data' && (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />)}
+              </StyledTh>
+            </tr>
+          </StyledThead>
+          <StyledTbody>
+            {displayedServicos.map((servico, index) => (
+              <StyledTr key={servico.id} isEven={index % 2 === 0}>
+                <StyledTd>{servico.descricao}</StyledTd>
+                <StyledTd><StatusBadge status={servico.status}>{servico.status}</StatusBadge></StyledTd>
+                <StyledTd>{servico.veiculo}</StyledTd>
+                <StyledTd>{servico.data}</StyledTd>
+                <StyledTd>
+                  <ActionButtons>
+                    <IconButton><FaEye /></IconButton>
+                    <IconButton><FaEdit /></IconButton>
+                    <IconButton><FaTrash onClick={() => {
+                      setServicos(prev => prev.filter(s => s.id !== servico.id));
+                      toast.success('Serviço excluído com sucesso!');
+                    }} /></IconButton>
+                  </ActionButtons>
+                </StyledTd>
+              </StyledTr>
+            ))}
+          </StyledTbody>
+        </StyledTable>
+      </TableContainer>
+
+      <PaginationContainer>
+        <ReactPaginate
+          previousLabel={"Anterior"}
+          nextLabel={"Próximo"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          pageClassName={"page"}
+          previousClassName={"page"}
+          nextClassName={"page"}
+          disabledClassName={"disabled"}
+          activeClassName={"selected"}
+        />
+      </PaginationContainer>
+
+      <HelpButton onClick={toggleHelpModal}>
+        ?
+      </HelpButton>
+
+      <ModalOverlay isVisible={isHelpModalOpen}>
+        <ModalContent>
+          <CloseButton onClick={toggleHelpModal}>✖</CloseButton>
+          <h2>Ajuda</h2>
+          <p>Aqui você pode ver o histórico de serviços realizados no seu veículo.</p>
+          <p>Use a barra de busca para filtrar os serviços e os botões de ação para visualizar, editar ou excluir.</p>
+        </ModalContent>
+      </ModalOverlay>
+
       <ToastContainer />
-    </>
+    </MainContainer>
   );
 };
 
