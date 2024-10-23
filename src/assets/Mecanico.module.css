@@ -1,46 +1,75 @@
 .mecanicoContainer {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .mecanicoContainer h1, h2 {
-    color: #ffffff;
-    text-align: center;
-  }
-  
-  .mecanicoContainer form {
-    padding: 20px;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .mecanicoContainer input {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
 
+.mecanicoContainer h1, h2 {
+  color: #ffffff;
+  text-align: center;
+}
+
+.mecanicoContainer form {
+  padding: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mecanicoContainer input {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.mecanicoContainer button {
+  padding: 10px 20px; /* Ajuste o padding */
+  background-color: #00c6ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px; /* Diminua o tamanho da fonte */
+}
+
+/* Estilos da lista de serviços */
+.mecanicoContainer ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.mecanicoContainer li {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Media Queries para telas menores */
+@media (max-width: 768px) {
+  .mecanicoContainer {
+      padding: 10px; /* Reduza o padding */
   }
-  
+
+  .mecanicoContainer h1, h2 {
+      font-size: 24px; /* Ajuste o tamanho do texto */
+  }
+
   .mecanicoContainer button {
-    padding: 10px 50px;
-    background-color: #00c6ff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 20px;
+      padding: 10px; /* Ajuste o padding do botão */
+      width: 100%; /* Faça o botão ocupar 100% da largura */
   }
-  
-  .mecanicoContainer ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
+
   .mecanicoContainer li {
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
+      padding: 8px; /* Ajuste o padding dos itens da lista */
   }
-  
+}
+
+@media (max-width: 480px) {
+  .mecanicoContainer h1, h2 {
+      font-size: 20px; /* Menor tamanho do texto para telas pequenas */
+  }
+
+  .mecanicoContainer input {
+      padding: 8px; /* Ajuste o padding do input */
+  }
+}

@@ -9,16 +9,20 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box; 
 `;
 
 const ContentContainer = styled.div`
   max-width: 1000px;
   margin: 20px;
-  min-width: 800px;
+  min-width: 300px; /* Definindo um tamanho mínimo para telas pequenas */
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
   color: black;
+  width: 100%; /* Certificando-se que ocupa 100% da largura */
+  box-sizing: border-box; /* Para considerar padding na largura total */
 `;
 
 const Title = styled.h1`

@@ -17,6 +17,7 @@ const MainContainer = styled.div`
 const ContentContainer = styled.div`
   max-width: 1500px;
   margin: 20px;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -31,6 +32,11 @@ const SearchInput = styled.input`
   margin: 20px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+
+  @media (max-width: 480px) {
+    max-width: 100%; // ocupa toda a largura da tela em dispositivos menores
+    padding: 8px;
+  }
 `;
 
 const TableContainer = styled.div`
@@ -45,6 +51,10 @@ const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   min-width: 900px;
+
+  @media (max-width: 900px) {
+    min-width: 600px; // reduz a largura mínima em telas menores
+  }
 `;
 
 const StyledThead = styled.thead`
@@ -56,6 +66,10 @@ const StyledTh = styled.th`
   padding: 14px 16px;
   text-align: left;
   font-weight: bold;
+
+  @media (max-width: 480px) {
+    padding: 10px; // ajusta o padding em telas menores
+  }
 `;
 
 const StyledTbody = styled.tbody`
@@ -76,11 +90,21 @@ const StyledTd = styled.td`
   padding: 14px 16px;
   border-bottom: 1px solid #ddd;
   color: #333;
+
+  @media (max-width: 480px) {
+    padding: 10px; // ajusta o padding em telas menores
+    font-size: 14px; // reduz o tamanho da fonte em telas menores
+  }
 `;
 
 const ActionButtons = styled.div`
   display: flex;
   gap: 12px;
+
+  @media (max-width: 480px) {
+    flex-direction: column; // muda a direção dos botões para coluna em telas menores
+    align-items: flex-start; // alinha os botões à esquerda
+  }
 `;
 
 const IconButton = styled.button`
@@ -108,12 +132,20 @@ const DetailsContainer = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   position: relative;
+
+  @media (max-width: 480px) {
+    padding: 15px; // ajusta o padding em telas menores
+  }
 `;
 
 const DetailItem = styled.p`
   margin: 10px 0;
   color: #333;
   font-size: 16px;
+
+  @media (max-width: 480px) {
+    font-size: 14px; // reduz o tamanho da fonte em telas menores
+  }
 `;
 
 const CloseButton = styled.button`
@@ -252,8 +284,9 @@ const Pendentes = () => {
                         <IconButton onClick={() => handleViewDetails(pendente)}>
                           <FaEye />
                         </IconButton>
-                        <AcceptButton onClick={() => handleAccept(pendente.codigo)}>Aceitar</AcceptButton>
-                        <RejectButton onClick={() => handleReject(pendente.codigo)}>Recusar</RejectButton>
+                        <IconButton onClick={() => handleReject(pendente.codigo)}>
+                          <FaTimes />
+                        </IconButton>
                       </ActionButtons>
                     </StyledTd>
                   </StyledTr>
@@ -265,17 +298,20 @@ const Pendentes = () => {
 
         {selectedPendente && (
           <DetailsContainer>
-            <CloseButton onClick={handleCloseDetails}>
-              <FaTimes />
-            </CloseButton>
-            <DetailItem><strong>Código:</strong> {selectedPendente.codigo}</DetailItem>
-            <DetailItem><strong>Nome:</strong> {selectedPendente.nome}</DetailItem>
-            <DetailItem><strong>Data:</strong> {selectedPendente.data}</DetailItem>
-            <DetailItem><strong>Hora:</strong> {selectedPendente.hora}</DetailItem>
-            <DetailItem><strong>Veículo:</strong> {selectedPendente.veiculo}</DetailItem>
-            <DetailItem><strong>Mecânica:</strong> {selectedPendente.mecanica}</DetailItem>
-            <DetailItem><strong>Endereço:</strong> {selectedPendente.enderecoMecanica}</DetailItem>
-            <DetailItem><strong>Laudo:</strong> {selectedPendente.laudo}</DetailItem>
+            <CloseButton onClick={handleCloseDetails}>×</CloseButton>
+            <Title>Detalhes do Serviço</Title>
+            <DetailItem>Código: {selectedPendente.codigo}</DetailItem>
+            <DetailItem>Data: {selectedPendente.data}</DetailItem>
+            <DetailItem>Hora: {selectedPendente.hora}</DetailItem>
+            <DetailItem>Veículo: {selectedPendente.veiculo}</DetailItem>
+            <DetailItem>Nome: {selectedPendente.nome}</DetailItem>
+            <DetailItem>Mecânica: {selectedPendente.mecanica}</DetailItem>
+            <DetailItem>Endereço: {selectedPendente.enderecoMecanica}</DetailItem>
+            <DetailItem>Laudo: {selectedPendente.laudo}</DetailItem>
+            <ActionButtons>
+              <AcceptButton onClick={() => handleAccept(selectedPendente.codigo)}>Aceitar</AcceptButton>
+              <RejectButton onClick={() => handleReject(selectedPendente.codigo)}>Recusar</RejectButton>
+            </ActionButtons>
           </DetailsContainer>
         )}
       </ContentContainer>

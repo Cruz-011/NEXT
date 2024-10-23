@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CabecalhoMec from '../Components/CabecalhoMec';
 
+// Container principal
 const MainContainer = styled.div`
   background-color: #1a1a1d;
   padding: 20px;
@@ -10,6 +11,7 @@ const MainContainer = styled.div`
   align-items: center;
 `;
 
+// Container do conteúdo
 const ContentContainer = styled.div`
   max-width: 1000px;
   margin: 20px;
@@ -18,20 +20,28 @@ const ContentContainer = styled.div`
   border-radius: 8px;
   padding: 20px;
   color: black;
+
+  @media (max-width: 768px) {
+    min-width: 300px; /* Ajusta a largura mínima em telas menores */
+    margin: 10px; /* Reduz a margem em telas menores */
+  }
 `;
 
+// Título da página
 const Title = styled.h1`
   color: #0033a0;
   text-align: center;
   margin-bottom: 20px;
 `;
 
+// Lista de serviços
 const ServicesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
 `;
 
+// Item de serviço
 const ServiceItem = styled.li`
   background-color: #e9ecef;
   padding: 15px;
@@ -40,13 +50,20 @@ const ServiceItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #d1d1d1; /* Altera a cor ao passar o mouse */
+  }
 `;
 
+// Detalhes do serviço
 const ServiceDetails = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
+// Item de detalhe do serviço
 const DetailItem = styled.p`
   margin: 5px 0;
   font-size: 14px;
