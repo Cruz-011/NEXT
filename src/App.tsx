@@ -9,6 +9,9 @@ import Rodape from './Components/Rodape';
 import Mecanico from './routes/Mecanico';
 import AgendamentosRealizados from './routes/AgendamentosRealizados';
 import AgendarServico from './routes/realizaragendamento';
+import MecanicoHome from './routes/Mecanico';
+import Pendentes from './routes/servicos-pen';
+import ServicosConcluidos from './routes/servicos-concl';
  
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
  
       <div className="app-container">
         <Routes>
+          <Route path='/Mecanico' element={<MecanicoHome/>} />
+          <Route path='/servicos-pen' element={<Pendentes/>} />
+          <Route path='/servicos-concl' element={<ServicosConcluidos/>} />
           <Route path='/agendamento' element={<AgendarServico/>} />
           <Route path="/AgendamentosRealizados" element={<AgendamentosRealizados />} />
           <Route path="/Mecanico" element={<Mecanico />} />

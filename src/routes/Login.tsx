@@ -10,7 +10,23 @@ function LoginCadastro() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  // Função para salvar dados de usuário no localStorage
+  const saveUser = (username: string, email: string, password: string) => {
+    const userData = { username, email, password };
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  // Função para verificar o login
+  const verifyLogin = (email: string, password: string) => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+      return userData.email === email && userData.password === password;
+    }
+    return false;
+  };
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (isRegistering) {
@@ -18,11 +34,20 @@ function LoginCadastro() {
         alert('As senhas não coincidem');
         return;
       }
+
+      // Salva as informações no localStorage
+      saveUser(username, email, password);
       alert('Registro realizado com sucesso!');
+      setIsRegistering(false);
     } else {
-      alert('Login realizado com sucesso!');
+      // Verifica se o login é válido
+      if (verifyLogin(email, password)) {
+        alert('Login realizado com sucesso!');
+        navigate('/');
+      } else {
+        alert('E-mail ou senha inválidos');
+      }
     }
-    navigate('/');
   };
 
   return (
@@ -86,21 +111,23 @@ function LoginCadastro() {
               </div>
             )}
 
-            <button className="button-login" onClick={() => setIsRegistering(false)}>{isRegistering ? 'Registrar' : 'Entrar'}</button>
+            <button type="submit" className={styles.buttonLogin}>
+              {isRegistering ? 'Registrar' : 'Entrar'}
+            </button>
           </form>
 
           <p>
             {isRegistering ? (
               <>
                 Já tem uma conta?{' '}
-                <button className="button-login" onClick={() => setIsRegistering(false)}>
+                <button className={styles.toggleButton} onClick={() => setIsRegistering(false)}>
                   Entrar
                 </button>
               </>
             ) : (
               <>
                 Não tem uma conta?{' '}
-                <button className="button-login" onClick={() => setIsRegistering(true)}>
+                <button className={styles.toggleButton} onClick={() => setIsRegistering(true)}>
                   Registrar
                 </button>
               </>

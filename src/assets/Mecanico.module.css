@@ -4,10 +4,13 @@
   }
   
   .mecanicoContainer h1, h2 {
-    color: #333;
+    color: #ffffff;
+    text-align: center;
   }
   
   .mecanicoContainer form {
+    padding: 20px;
+    align-items: center;
     margin-bottom: 20px;
   }
   
@@ -16,15 +19,17 @@
     margin-bottom: 10px;
     padding: 10px;
     width: 100%;
+
   }
   
   .mecanicoContainer button {
-    padding: 10px;
+    padding: 10px 50px;
     background-color: #00c6ff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 20px;
   }
   
   .mecanicoContainer ul {

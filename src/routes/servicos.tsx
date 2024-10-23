@@ -118,7 +118,7 @@ const initialServicos: ServicoAndamento[] = [
     pecas: ['Disco de freio - R$ 300', 'Pastilhas de freio - R$ 150'],
     previsaoConclusao: '20/09/2024',
     telefoneContato: '(11) 99999-9999',
-    pdfOrcamento: '/ordem-de-servico.pdf',
+    pdfOrcamento: '/Ordem de serviço.pdf',
     status: 'Em Andamento',
     codigo: gerarCodigo(), // Gerando o código aleatório
   },
@@ -130,7 +130,7 @@ const initialServicos: ServicoAndamento[] = [
     pecas: ['Óleo - R$ 120', 'Filtro de óleo - R$ 40'],
     previsaoConclusao: '22/09/2024',
     telefoneContato: '(11) 98888-8888',
-    pdfOrcamento: '/ordem-de-servico-civic.pdf',
+    pdfOrcamento: '/Ordem de serviço.pdf',
     status: 'Pendente',
     codigo: gerarCodigo(), // Gerando o código aleatório
   },

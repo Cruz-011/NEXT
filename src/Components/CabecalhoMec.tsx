@@ -9,12 +9,10 @@ const Header = styled.header`
   border-bottom: 2px solid #007bff; /* Alterado para azul */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   top: 0;
-  z-index: 999;
 `;
 
 const Container = styled.div`
   width: 100%;
-  max-width: 1850px; /* Limita a largura máxima */
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -66,14 +64,19 @@ const NavItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center; /* Centraliza o texto */
   }
+`;
+
+const NavIcon = styled.img`
+  width: 60px; /* Ajuste o tamanho do ícone conforme necessário */
+  height: auto;
+  margin-bottom: 5px; /* Espaçamento entre o ícone e o texto */
 `;
 
 const NavText = styled.span`
   color: #f1f1f1;
   font-size: 12px; /* Tamanho do texto reduzido */
-  margin-top: 8px;
-  text-align: center;
   text-transform: uppercase; /* Estilo futurista */
   letter-spacing: 1px; /* Espaçamento entre letras */
 
@@ -223,13 +226,21 @@ const CabecalhoMec: React.FC = () => {
 
         <Menu>
           <NavItem>
-            <Link to="/servicos-andamento">
+            <Link to="/Mecanico">
+              <NavIcon src="/imagens/andamento.png" alt="Serviços em Andamento" />
               <NavText>Serviços em Andamento</NavText>
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/servicos-concluidos">
+            <Link to="/servicos-concl">
+              <NavIcon src="/imagens/concluido.png" alt="Serviços Concluídos" />
               <NavText>Serviços Concluídos</NavText>
+            </Link>
+          </NavItem>
+          <NavItem>
+            <Link to="/servicos-pen">
+              <NavIcon src="/imagens/pendente.png" alt="Serviços Pendentes" />
+              <NavText>Serviços Pendentes</NavText>
             </Link>
           </NavItem>
         </Menu>

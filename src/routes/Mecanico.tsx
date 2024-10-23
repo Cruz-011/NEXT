@@ -1,54 +1,216 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CabecalhoMec from '../Components/CabecalhoMec';
-import styles from '../assets/Mecanico.module.css';
+import styled from 'styled-components';
+import { FaTimes } from 'react-icons/fa';
+
+const MainContainer = styled.div`
+  background-color: #1a1a1d;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ContentContainer = styled.div`
+  max-width: 1000px;
+  margin: 20px;
+  min-width: 800px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  color: black;
+`;
+
+const Title = styled.h1`
+  color: #0033a0;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const ServicesList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ServiceItem = styled.li`
+  background-color: #e9ecef;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ServiceDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ViewDetailsButton = styled.button`
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin-right: 10px;
+  
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const CompleteButton = styled.button`
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
+const DetailsContainer = styled.div`
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  position: relative;
+`;
+
+const CloseButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #ff0000;
+  cursor: pointer;
+  font-size: 24px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  &:hover {
+    color: #b30000;
+  }
+`;
+
+const DetailItem = styled.p`
+  margin: 10px 0;
+  color: #333;
+  font-size: 16px;
+`;
 
 const MecanicoHome: React.FC = () => {
-  const [numeroPedido, setNumeroPedido] = useState('');
-  const [servicosPendentes, setServicosPendentes] = useState<{ id: string, nome: string }[]>([
-    { id: '1', nome: 'Troca de Óleo' },
-    { id: '2', nome: 'Troca de Pneu' },
-    { id: '3', nome: 'Alinhamento' },
-  ]);
+  const [servicosEmAndamento, setServicosEmAndamento] = useState<any[]>([]);
+  const [selectedService, setSelectedService] = useState<any | null>(null);
 
-  const handleAceitar = (pedidoId: string) => {
-    // Lógica para aceitar o serviço
-    alert(`Serviço ${pedidoId} aceito.`);
-    setServicosPendentes(prev => prev.filter(servico => servico.id !== pedidoId));
+  useEffect(() => {
+    const storedServicos = localStorage.getItem('servicosEmAndamento');
+    if (storedServicos) {
+      try {
+        const parsedServicos = JSON.parse(storedServicos);
+        setServicosEmAndamento(parsedServicos);
+      } catch (error) {
+        console.error("Erro ao parsear serviços em andamento:", error);
+      }
+    }
+  }, []);
+
+  const handleComplete = (codigo: string) => {
+    const updatedServicos = servicosEmAndamento.filter((servico) => servico.codigo !== codigo);
+    const servicoCompleto = servicosEmAndamento.find((servico) => servico.codigo === codigo);
+
+    // Adiciona o serviço completo à lista de serviços concluídos
+    const storedConcluidos = localStorage.getItem('servicosConcluidos') || '[]';
+    const servicosConcluidos = JSON.parse(storedConcluidos);
+    if (servicoCompleto) {
+      servicosConcluidos.push(servicoCompleto);
+    }
+
+    // Atualiza o localStorage para os serviços em andamento e concluídos
+    setServicosEmAndamento(updatedServicos);
+    localStorage.setItem('servicosEmAndamento', JSON.stringify(updatedServicos));
+    localStorage.setItem('servicosConcluidos', JSON.stringify(servicosConcluidos));
+
+    // Redireciona para a página de serviços concluídos
+    window.location.href = '/servicos-concl'; // ou utilize um Link do react-router se houver navegação baseada em rotas
   };
 
-  const handleRecusar = (pedidoId: string) => {
-    // Lógica para recusar o serviço
-    alert(`Serviço ${pedidoId} recusado.`);
-    setServicosPendentes(prev => prev.filter(servico => servico.id !== pedidoId));
+  const handleViewDetails = (servico: any) => {
+    setSelectedService(servico);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedService(null);
   };
 
   return (
-    <div className={styles.mecanicoContainer}>
+    <MainContainer>
       <CabecalhoMec />
-      <h1>Serviços em Andamento</h1>
-      
-      <input
-        type="text"
-        placeholder="Digite o número do pedido"
-        value={numeroPedido}
-        onChange={(e) => setNumeroPedido(e.target.value)}
-      />
+      <ContentContainer>
+        <Title>Serviços em Andamento</Title>
 
-      {servicosPendentes.length > 0 && (
-        <div>
-          <h2>Serviços Pendentes</h2>
-          <ul>
-            {servicosPendentes.map(servico => (
-              <li key={servico.id}>
-                {servico.nome} - ID: {servico.id}
-                <button onClick={() => handleAceitar(servico.id)}>Aceitar</button>
-                <button onClick={() => handleRecusar(servico.id)}>Recusar</button>
-              </li>
+        {servicosEmAndamento.length === 0 ? (
+          <p>Não há serviços em andamento.</p>
+        ) : (
+          <ServicesList>
+            {servicosEmAndamento.map((servico) => (
+              <ServiceItem key={servico.codigo}>
+                <ServiceDetails>
+                  <strong>{servico.nome}</strong>
+                  <span>{servico.veiculo}</span>
+                </ServiceDetails>
+                <div>
+                  <ViewDetailsButton onClick={() => handleViewDetails(servico)}>
+                    Ver Detalhes
+                  </ViewDetailsButton>
+                  <CompleteButton onClick={() => handleComplete(servico.codigo)}>
+                    Completar
+                  </CompleteButton>
+                </div>
+              </ServiceItem>
             ))}
-          </ul>
-        </div>
-      )}
-    </div>
+          </ServicesList>
+        )}
+
+        {selectedService && (
+          <DetailsContainer>
+            <CloseButton onClick={handleCloseDetails}>
+              <FaTimes />
+            </CloseButton>
+            <DetailItem>
+              <strong>Código:</strong> {selectedService.codigo}
+            </DetailItem>
+            <DetailItem>
+              <strong>Nome:</strong> {selectedService.nome}
+            </DetailItem>
+            <DetailItem>
+              <strong>Veículo:</strong> {selectedService.veiculo}
+            </DetailItem>
+            <DetailItem>
+              <strong>Data:</strong> {selectedService.data}
+            </DetailItem>
+            <DetailItem>
+              <strong>Hora:</strong> {selectedService.hora}
+            </DetailItem>
+            <DetailItem>
+              <strong>Status:</strong> Em andamento
+            </DetailItem>
+            <DetailItem>
+              <strong>Preço Estipulado:</strong> R$ {selectedService.preco?.toFixed(2) || 'N/A'}
+            </DetailItem>
+            <DetailItem>
+              <strong>O que será realizado:</strong> {selectedService.laudo}
+            </DetailItem>
+          </DetailsContainer>
+        )}
+      </ContentContainer>
+    </MainContainer>
   );
 };
 
