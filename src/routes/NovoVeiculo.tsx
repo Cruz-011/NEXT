@@ -28,12 +28,6 @@ const NovoVeiculo: React.FC = () => {
         {veiculoSalvo ? (
           <div className={styles.message}>
             <p>Veículo salvo com sucesso!</p>
-            <button
-              className={styles.messageButton}
-              onClick={() => (window.location.href = '/veiculossalvos')}
-            >
-              Ver Veículos Salvos
-            </button>
           </div>
         ) : (
           <form className={styles.form} onSubmit={handleSubmit}>
