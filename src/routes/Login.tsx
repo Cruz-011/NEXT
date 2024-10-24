@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../assets/LoginCadastro.module.css'; // Importa o CSS Module
+import styles from '../assets/LoginCadastro.module.css'; // CSS atualizado
 
 function LoginCadastro() {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -10,13 +10,11 @@ function LoginCadastro() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  // Função para salvar dados de usuário no localStorage
   const saveUser = (username: string, email: string, password: string) => {
     const userData = { username, email, password };
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  // Função para verificar o login
   const verifyLogin = (email: string, password: string) => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
@@ -35,12 +33,10 @@ function LoginCadastro() {
         return;
       }
 
-      // Salva as informações no localStorage
       saveUser(username, email, password);
       alert('Registro realizado com sucesso!');
       setIsRegistering(false);
     } else {
-      // Verifica se o login é válido
       if (verifyLogin(email, password)) {
         alert('Login realizado com sucesso!');
         navigate('/');
@@ -53,12 +49,13 @@ function LoginCadastro() {
   return (
     <div className={styles.container}>
       <div className={styles.leftSide}>
-        <img src="public/imagens/carchek sem fundo.png" alt="Carcheck login" className={styles.imgLoginCk}/>
+        <img src="/imagens/carchecknovo.png" alt="" className={styles.logo} />
+        <h1 className={styles.slogan}>Seja Bem-vindo ao Futuro!</h1>
       </div>
       <div className={styles.rightSide}>
         <div className={styles.loginContainer}>
-          <h2>{isRegistering ? 'Registrar' : 'Entrar'}</h2>
-          <form onSubmit={handleSubmit}>
+          <h2>{isRegistering ? 'Crie sua Conta' : 'Login'}</h2>
+          <form onSubmit={handleSubmit} className={styles.form}>
             {isRegistering && (
               <div className={styles.formGroup}>
                 <label htmlFor="username">Nome de Usuário</label>
@@ -99,7 +96,7 @@ function LoginCadastro() {
 
             {isRegistering && (
               <div className={styles.formGroup}>
-                <label htmlFor="confirmPassword">Confirmar Senha</label>
+                <label htmlFor="confirmPassword">Confirme a Senha</label>
                 <input
                   type="password"
                   id="confirmPassword"
@@ -116,19 +113,19 @@ function LoginCadastro() {
             </button>
           </form>
 
-          <p>
+          <p className={styles.toggleText}>
             {isRegistering ? (
               <>
                 Já tem uma conta?{' '}
                 <button className={styles.toggleButton} onClick={() => setIsRegistering(false)}>
-                  Entrar
+                  Faça login
                 </button>
               </>
             ) : (
               <>
                 Não tem uma conta?{' '}
                 <button className={styles.toggleButton} onClick={() => setIsRegistering(true)}>
-                  Registrar
+                  Registre-se
                 </button>
               </>
             )}

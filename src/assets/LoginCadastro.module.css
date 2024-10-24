@@ -1,75 +1,107 @@
+/* Estilos para telas maiores (padrão) */
 .container {
   display: flex;
-  height: 100vh; 
+  height: 100vh;
+  background: linear-gradient(135deg, #0a2a66 50%, #ffffff 50%);
+  font-family: 'Roboto', sans-serif;
 }
 
 .leftSide {
-  width: 50%; 
-  background-color: #07396e; 
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
 }
 
-.imgLoginCk {
-  padding-top: 32%;
-  padding-left: 10%;
+.logo {
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.slogan {
+  font-size: 28px;
+  color: #ffffff;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .rightSide {
-  width: 50%; 
+  width: 50%;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  background-color: #ffffff; 
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f9;
 }
 
 .loginContainer {
   width: 100%;
-  max-width: 400px; 
+  max-width: 450px;
   padding: 40px;
-  background-color: #07396e; 
-  box-shadow: 0 4px 10px #fff;
-  border-radius: 8px; 
-  text-align: center; 
-  color: #fff; 
+  background-color: rgba(0, 47, 105, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 h2 {
+  font-size: 32px;
+  color: #ffffff;
   margin-bottom: 20px;
-  font-size: 24px;
-  color: #fff; 
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
 }
 
 .formGroup {
   margin-bottom: 20px;
-  text-align: left; 
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #fff; 
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #ffffff;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 16px;
 }
 
-#button-login {
+input::placeholder {
+  color: #ffffff;
+}
+
+.buttonLogin {
   width: 100%;
-  padding: 10px;
-  background-color: #6f42c1;
-  color: white;
+  padding: 12px;
+  background-color: #1d72b8;
+  color: #ffffff;
   border: none;
-  border-radius: 100px;
+  border-radius: 50px;
   cursor: pointer;
-  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  font-size: 18px;
+  margin-top: 20px;
 }
 
-#button-login:hover {
-  background-color: #5a31a8;
+.buttonLogin:hover {
+  background-color: #135e96;
+}
+
+.toggleText {
+  color: #ffffff;
+  margin-top: 20px;
+  font-size: 14px;
 }
 
 .toggleButton {
@@ -77,13 +109,73 @@ input {
   border: none;
   cursor: pointer;
   font-size: 16px;
+  color: #1d72b8;
   text-decoration: underline;
 }
 
 .toggleButton:hover {
-  text-decoration: none;
+  color: #135e96;
 }
 
-p {
-  margin-top: 20px;
+/* Media Queries - Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .leftSide,
+  .rightSide {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+
+  .leftSide {
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+  }
+
+  .logo {
+    width: 120px; /* Reduz o tamanho da logo */
+  }
+
+  .slogan {
+    font-size: 22px; /* Reduz o tamanho da fonte */
+    margin-top: 10px;
+  }
+
+  .rightSide {
+    padding: 0;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .loginContainer {
+    padding: 20px;
+    max-width: 100%;
+    box-shadow: none; /* Remove a sombra no mobile */
+    border-radius: 0; /* Remove borda arredondada no mobile */
+  }
+
+  h2 {
+    font-size: 24px; /* Reduz o tamanho do título */
+  }
+
+  input {
+    padding: 10px; /* Reduz o padding do input */
+  }
+
+  .buttonLogin {
+    padding: 10px;
+    font-size: 16px; /* Ajusta o tamanho do botão */
+  }
+
+  .toggleText {
+    font-size: 12px; /* Ajusta o tamanho do texto */
+  }
+
+  .toggleButton {
+    font-size: 14px; /* Reduz o tamanho da fonte do botão de alternância */
+  }
 }
