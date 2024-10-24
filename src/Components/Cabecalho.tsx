@@ -276,7 +276,7 @@ const Cabecalho: React.FC = () => {
           </NavItem>
           {/* Item Agendamentos adicionado aqui */}
           <NavItem>
-            <Link to="/agendamentos">
+            <Link to="/AgendamentosRealizados">
               <NavIcon src="/imagens/agenda.png" alt="Agendamentos" />
               <NavText>Agendamentos</NavText>
             </Link>

@@ -13,7 +13,7 @@ const MainContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  color: #fff;
+  color: white;
   text-align: center;
   margin-bottom: 30px;
 `;
@@ -23,6 +23,7 @@ const CardsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  color: black;
 `;
 
 const Card = styled.div`
@@ -47,7 +48,7 @@ const MechanicName = styled.h3`
 
 const Info = styled.p`
   margin: 5px 0;
-  color: #333;
+  color: black;
 `;
 
 const Button = styled.button`
@@ -83,6 +84,7 @@ const Modal = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  color: black;
 `;
 
 const FormContainer = styled.div`
@@ -90,6 +92,7 @@ const FormContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   width: 400px;
+  color: black;
 `;
 
 const FormField = styled.div`
@@ -99,7 +102,7 @@ const FormField = styled.div`
 const Label = styled.label`
   display: block;
   margin-bottom: 5px;
-  color: #333;
+  color: black;
 `;
 
 const Input = styled.input`
@@ -107,6 +110,8 @@ const Input = styled.input`
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  color: black; /* Define a cor do texto */
+  background-color: #fff; /* Define a cor de fundo */
 `;
 
 const Select = styled.select`
@@ -114,6 +119,8 @@ const Select = styled.select`
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  color: black; /* Define a cor do texto */
+  background-color: #fff; /* Define a cor de fundo */
 `;
 
 const SubmitButton = styled(Button)`
@@ -257,7 +264,7 @@ const AgendarServico = () => {
                 </Select>
               </FormField>
               <FormField>
-                <Label htmlFor="vehicle">Nome do Veículo:</Label>
+                <Label htmlFor="vehicle">Modelo do Veículo:</Label>
                 <Input
                   type="text"
                   id="vehicle"
