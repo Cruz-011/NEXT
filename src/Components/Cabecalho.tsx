@@ -24,6 +24,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     flex-direction: column; /* Alinha os itens em coluna em telas menores */
     align-items: center; /* Centraliza os itens */
+    padding-top: 20px; /* Adiciona mais espaço no topo */
   }
 `;
 
@@ -44,7 +45,7 @@ const Menu = styled.nav`
 `;
 
 const NavItem = styled.div`
-  margin: 0 15px;
+  margin: 0 10px; /* Reduz a distância entre os ícones */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,11 +73,13 @@ const NavIcon = styled.img`
   @media (max-width: 768px) {
     width: 35px;
     height: 35px;
+     margin-top: 20px;
   }
 
   @media (max-width: 480px) {
     width: 30px;
     height: 30px;
+    margin-top: 20px;
   }
 `;
 
@@ -105,14 +108,10 @@ const ConfigContainer = styled.div`
   align-items: center;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  margin: 0 15px; /* Adiciona margem para separar do item anterior */
-
-  &:hover {
-    transform: scale(1.1);
-  }
-
+  margin: 0 10px; /* Reduz a distância entre o item anterior */
+  
   @media (max-width: 768px) {
-    margin-top: 10px;
+    margin-top: 20px; /* Adiciona mais espaço no topo em telas menores */
   }
 `;
 
@@ -283,15 +282,15 @@ const Cabecalho: React.FC = () => {
           </NavItem>
         </Menu>
 
-        {/* Configurações do Usuário */}
+        {/* Ícone de Configuração */}
         <ConfigContainer ref={configRef} onClick={toggleDropdown}>
-          <ConfigIcon src="/imagens/configuracoes.png" alt="Configurações" />
-          <ConfigText>{userName}</ConfigText>
+          <ConfigIcon src="/imagens/configuracoes.png" alt="Configuração" />
+          <ConfigText>Configurações</ConfigText>
           {isDropdownOpen && (
             <DropdownMenu>
-              <DropdownItem onClick={handleChangeName}>Alterar Nome</DropdownItem>
-              <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
+              <DropdownItem onClick={handleChangeName}>Alterar nome</DropdownItem>
               <DropdownItem onClick={handlemecanico}>Mecânico</DropdownItem>
+              <DropdownItem onClick={handleLogout}>Sair</DropdownItem>
             </DropdownMenu>
           )}
         </ConfigContainer>

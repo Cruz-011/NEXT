@@ -17,11 +17,17 @@ const MainContainer = styled.div`
 const ContentContainer = styled.div`
   max-width: 1500px;
   margin: 20px;
+  width: 100%; /* Adicionado para largura total */
 `;
 
 const Title = styled.h1`
   color: #0033a0;
   text-align: center;
+  font-size: 24px; /* Tamanho da fonte ajustado */
+  
+  @media (max-width: 600px) {
+    font-size: 20px; /* Tamanho da fonte em telas menores */
+  }
 `;
 
 const TableContainer = styled.div`
@@ -36,6 +42,10 @@ const StyledTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   min-width: 900px;
+
+  @media (max-width: 900px) {
+    min-width: 100%; /* Ajusta a largura mínima em telas menores */
+  }
 `;
 
 const StyledThead = styled.thead`
@@ -47,6 +57,11 @@ const StyledTh = styled.th`
   padding: 14px 16px;
   text-align: left;
   font-weight: bold;
+
+  @media (max-width: 600px) {
+    padding: 10px; /* Ajusta o padding em telas menores */
+    font-size: 14px; /* Tamanho da fonte em telas menores */
+  }
 `;
 
 const StyledTbody = styled.tbody`
@@ -67,6 +82,11 @@ const StyledTd = styled.td`
   padding: 14px 16px;
   border-bottom: 1px solid #ddd;
   color: #333;
+
+  @media (max-width: 600px) {
+    padding: 10px; /* Ajusta o padding em telas menores */
+    font-size: 14px; /* Tamanho da fonte em telas menores */
+  }
 `;
 
 const ActionButtons = styled.div`
@@ -90,6 +110,10 @@ const NoAgendamentos = styled.p`
   text-align: center;
   color: #333;
   font-size: 18px;
+
+  @media (max-width: 600px) {
+    font-size: 16px; /* Tamanho da fonte em telas menores */
+  }
 `;
 
 const DetailsContainer = styled.div`
@@ -99,12 +123,20 @@ const DetailsContainer = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
   position: relative;
+
+  @media (max-width: 600px) {
+    padding: 15px; /* Ajusta o padding em telas menores */
+  }
 `;
 
 const DetailItem = styled.p`
   margin: 10px 0;
   color: #333;
   font-size: 16px;
+
+  @media (max-width: 600px) {
+    font-size: 14px; /* Tamanho da fonte em telas menores */
+  }
 `;
 
 const CloseButton = styled.button`

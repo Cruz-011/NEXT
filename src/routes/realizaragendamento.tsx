@@ -279,7 +279,6 @@ const AgendarServico = () => {
           </FormContainer>
         </Modal>
       )}
-      <Rodape />
     </MainContainer>
   );
 };

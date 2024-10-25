@@ -1,5 +1,3 @@
-// ../Pages/HistoricoServicos.tsx
-
 import React, { useState, useMemo, useCallback } from 'react';
 import Cabecalho from '../Components/Cabecalho';
 import styled from 'styled-components';
@@ -53,7 +51,7 @@ const InputSelectStyle = styled.input`
   border-radius: 5px;
   font-size: 16px;
   width: 48%;
-  
+
   &:focus {
     outline: none;
     border-color: #007bff;
@@ -293,20 +291,12 @@ const HistoricoServicos: React.FC = () => {
     return sortableItems;
   }, [filteredServicos, sortConfig]);
 
-  // Lógica de Paginação
-  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
-  const currentItems = useMemo(() => {
-    const start = currentPage * itemsPerPage;
-    const end = start + itemsPerPage;
-    return sortedServicos.slice(start, end);
+  const paginatedServicos = useMemo(() => {
+    const startIndex = currentPage * itemsPerPage;
+    return sortedServicos.slice(startIndex, startIndex + itemsPerPage);
   }, [currentPage, sortedServicos]);
 
-  const handlePageClick = (data: { selected: number }) => {
-    setCurrentPage(data.selected);
-  };
-
-  // Função para Ordenação
-  const requestSort = (key: keyof Servico) => {
+  const handleSort = (key: keyof Servico) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
@@ -314,18 +304,29 @@ const HistoricoServicos: React.FC = () => {
     setSortConfig({ key, direction });
   };
 
-  // Função para Abrir Modal de Ajuda
-  const toggleHelpModal = () => {
-    setIsHelpModalOpen(prev => !prev);
+  // Lógica de Paginação
+  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
+
+  const handlePageClick = (data: { selected: number }) => {
+    setCurrentPage(data.selected);
   };
+
+  // Funções para o Modal de Ajuda
+  const openHelpModal = () => setIsHelpModalOpen(true);
+  const closeHelpModal = () => setIsHelpModalOpen(false);
 
   return (
     <MainContainer>
+      <ToastContainer />
       <Cabecalho />
       <Title>Histórico de Serviços</Title>
-      
       <SearchFilterContainer>
-
+        <InputSelectStyle
+          type="text"
+          placeholder="Pesquisar serviços ou veículos..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
         <StatusFilter value={statusFilter} onChange={handleStatusFilterChange}>
           <option value="Todos">Todos</option>
           <option value="Concluído">Concluído</option>
@@ -333,38 +334,38 @@ const HistoricoServicos: React.FC = () => {
           <option value="Em andamento">Em andamento</option>
         </StatusFilter>
       </SearchFilterContainer>
-
       <TableContainer>
         <StyledTable>
           <StyledThead>
             <tr>
-              <StyledTh isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('descricao')}>
-                Descrição {sortConfig?.key === 'descricao' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
-              </StyledTh>
-              <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('status')}>
-                Status {sortConfig?.key === 'status' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
-              </StyledTh>
-              <StyledTh isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('veiculo')}>
-                Veículo {sortConfig?.key === 'veiculo' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
-              </StyledTh>
-              <StyledTh isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction || ''} onClick={() => requestSort('data')}>
+              <StyledTh isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('data')}>
                 Data {sortConfig?.key === 'data' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
+              <StyledTh isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('descricao')}>
+                Descrição {sortConfig?.key === 'descricao' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
+              </StyledTh>
+              <StyledTh isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('veiculo')}>
+                Veículo {sortConfig?.key === 'veiculo' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
+              </StyledTh>
+              <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('status')}>
+                Status {sortConfig?.key === 'status' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
+              </StyledTh>
+              <StyledTh>Ações</StyledTh>
             </tr>
           </StyledThead>
           <StyledTbody>
-            {currentItems.map((servico, index) => (
+            {paginatedServicos.map((servico, index) => (
               <StyledTr key={servico.id} isEven={index % 2 === 0}>
+                <StyledTd>{servico.data}</StyledTd>
                 <StyledTd>{servico.descricao}</StyledTd>
+                <StyledTd>{servico.veiculo}</StyledTd>
                 <StyledTd>
                   <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
                 </StyledTd>
-                <StyledTd>{servico.veiculo}</StyledTd>
-                <StyledTd>{servico.data}</StyledTd>
                 <StyledTd>
                   <ActionButtons>
-                    <IconButton onClick={() => toast.info(`Editando serviço: ${servico.descricao}`)}>✏️</IconButton>
-                    <IconButton onClick={() => toast.error(`Excluindo serviço: ${servico.descricao}`)}>🗑️</IconButton>
+                    <IconButton onClick={() => toast.info(`Editando ${servico.descricao}`)}>✏️</IconButton>
+                    <IconButton onClick={() => toast.error(`Excluindo ${servico.descricao}`)}>🗑️</IconButton>
                   </ActionButtons>
                 </StyledTd>
               </StyledTr>
@@ -372,35 +373,34 @@ const HistoricoServicos: React.FC = () => {
           </StyledTbody>
         </StyledTable>
       </TableContainer>
-
       <PaginationContainer>
         <ReactPaginate
-          previousLabel={'←'}
-          nextLabel={'→'}
+          previousLabel={'← Anterior'}
+          nextLabel={'Próximo →'}
           pageCount={pageCount}
           onPageChange={handlePageClick}
           containerClassName={'pagination'}
+          activeClassName={'selected'}
           pageClassName={'page'}
           previousClassName={'page'}
           nextClassName={'page'}
-          activeClassName={'selected'}
           disabledClassName={'disabled'}
         />
       </PaginationContainer>
-
-      <HelpButton onClick={toggleHelpModal}>?</HelpButton>
-
-      {/* Modal de Ajuda */}
+      <HelpButton onClick={openHelpModal}>?</HelpButton>
       <ModalOverlay isVisible={isHelpModalOpen}>
         <ModalContent>
-          <CloseButton onClick={toggleHelpModal}>×</CloseButton>
+          <CloseButton onClick={closeHelpModal}>×</CloseButton>
           <h2>Ajuda</h2>
-          <p>Este é o histórico de serviços realizados. Você pode buscar por descrição ou veículo e filtrar pelo status do serviço.</p>
-          <p>Clique nos ícones para editar ou excluir um serviço.</p>
+          <p>Esta página mostra o histórico de serviços realizados. Você pode:</p>
+          <ul>
+            <li>Pesquisar serviços e veículos.</li>
+            <li>Filtrar por status dos serviços.</li>
+            <li>Ordenar a tabela por data, descrição, veículo e status.</li>
+            <li>Clicar nos ícones de edição ou exclusão para modificar ou remover um serviço.</li>
+          </ul>
         </ModalContent>
       </ModalOverlay>
-
-      <ToastContainer />
     </MainContainer>
   );
 };
