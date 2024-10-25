@@ -59,7 +59,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
     // Lógica para outras opções ou chamada à API
     try {
-      const response = await fetch('http://localhost:5000/message', {
+      const response = await fetch('https://NEXT.herokuapp.com/message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
