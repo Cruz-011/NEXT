@@ -350,7 +350,6 @@ const HistoricoServicos: React.FC = () => {
               <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('status')}>
                 Status {sortConfig?.key === 'status' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh>Ações</StyledTh>
             </tr>
           </StyledThead>
           <StyledTbody>
