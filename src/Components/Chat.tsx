@@ -18,18 +18,14 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
     // Mensagens de boas-vindas e opções
     const welcomeMessage: Message = {
-      text: 'Bem-Vindo ao ChatBot da CarCheck!',
+      text: 'Oi! Aqui é o ChatBot da CarCheck. Pronto para te ajudar com o que precisar. Digite o número da opção que melhor descreve o que você busca.',
       sender: 'bot',
     };
 
     const optionsMessage: Message = {
-      text: 'Digite a opção desejada:\n' + 
-            '0 - Estou tendo problemas técnicos com o meu veículo\n' + 
-            '1 - Suporte a Veículo Reparado\n' + 
-            '2 - Status do Pedido de Reparo\n' + 
-            '3 - Já sei qual o problema\n' + 
-            '4 - Realizar Agendamento \n' + 
-            '5 - Falar com um Atendente',
+      text: '0 - Estou tendo problemas com o meu veículo\n' + 
+            '1 - Problemas com uma manutenção feita recentemente\n' + 
+            '2 - Suporte da conta\n',
       sender: 'bot',
     };
 
