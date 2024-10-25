@@ -23,7 +23,6 @@ const CardsContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  color: black;
 `;
 
 const Card = styled.div`
@@ -43,7 +42,7 @@ const Card = styled.div`
 
 const MechanicName = styled.h3`
   margin: 0 0 10px 0;
-  color: #007bff;
+  color: black; /* Mudei para preto */
 `;
 
 const Info = styled.p`
@@ -92,7 +91,12 @@ const FormContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   width: 400px;
-  color: black;
+  color: black; /* Define a cor do texto */
+`;
+
+const FormTitle = styled.h2`
+  color: black; /* Cor do título do formulário */
+  text-align: center; /* Centralizar o título */
 `;
 
 const FormField = styled.div`
@@ -126,6 +130,15 @@ const Select = styled.select`
 const SubmitButton = styled(Button)`
   width: 100%;
   margin-top: 20px;
+`;
+
+const CloseButton = styled(Button)`
+  background-color: red;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: darkred;
+  }
 `;
 
 const mechanics = [
@@ -193,6 +206,10 @@ const AgendarServico = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <MainContainer>
       <Cabecalho />
@@ -213,7 +230,7 @@ const AgendarServico = () => {
       {showModal && (
         <Modal>
           <FormContainer>
-            <h2>Agendar Serviço - {selectedMechanic?.name}</h2>
+            <FormTitle>Agendar Serviço - {selectedMechanic?.name}</FormTitle>
             <form onSubmit={handleSubmit}>
               <FormField>
                 <Label htmlFor="name">Nome:</Label>
@@ -275,10 +292,13 @@ const AgendarServico = () => {
                 />
               </FormField>
               <SubmitButton type="submit">Confirmar Agendamento</SubmitButton>
+              <CloseButton type="button" onClick={handleCloseModal}>Fechar</CloseButton>
             </form>
           </FormContainer>
         </Modal>
       )}
+
+      <Rodape />
     </MainContainer>
   );
 };
