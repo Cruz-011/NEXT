@@ -4,7 +4,7 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 from flask_cors import CORS
 
 # Configurações do Watson Assistant
-API_KEY = 'pAXC5g3S9W1nbibiSeZvaVHEJfBzfe0749BKZG0SK-_V'  # Substitua pela sua API Key
+API_KEY = 'pAXC5g3S9W1nbibiSeZvaVHEJfBzfe0749BKZG0SK-_V'  # Sua API Key
 SERVICE_URL = 'https://api.us-south.assistant.watson.cloud.ibm.com/instances/a409e957-8698-4144-a7c0-ad9c4ae701ef'  # URL do serviço
 ASSISTANT_ID = 'd6abeeb1-ba72-469f-9e13-0787de218737'  # ID do assistente
 
@@ -53,4 +53,5 @@ def message():
     return jsonify(responses)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Usa a porta do ambiente, ou 5000 como padrão
+    app.run(host='0.0.0.0', port=port, debug=True)
