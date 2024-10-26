@@ -17,6 +17,16 @@ const FAQ: React.FC = () => {
       resposta:
         'Após o diagnóstico, você receberá um orçamento detalhado diretamente em seu aplicativo ou via chat ',
     },
+    {
+      pergunta: 'Sobre o Projeto',
+      resposta:
+        'Este projeto está na versão 1.0. Ainda há muitas implementações que queremos trazer ao site, criando uma plataforma mais interativa e com maior facilidade e precisão para oferecer um orçamento mais detalhado.',
+    },
+    {
+      pergunta: 'O que pretendemos alcancar com esse projeto ',
+      resposta:
+        ' Queremos proporcionar ao usuário da nossa plataforma uma experiência que realmente faça a diferença em sua vida automotiva, oferecendo mais facilidade, praticidade e precisão para quem a utilizar.',
+    },
   ];
 
   const [ativo, setAtivo] = useState<number | null>(null);
