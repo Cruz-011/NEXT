@@ -1,12 +1,11 @@
-// ../Pages/ServicosEmAndamento.tsx
+// pages/servicos-em-andamento.tsx
 
 import React, { useState } from 'react';
-import Cabecalho from '../Components/Cabecalho';
+import Cabecalho from '../Components/Cabecalho'; 
 import styled from 'styled-components';
 
 // Estilos
 const MainContainer = styled.div`
-
   padding: 20px;
   background-color: #3a3a3a;
 `;
@@ -25,8 +24,7 @@ const SearchBar = styled.input`
 `;
 
 const ServicoCard = styled.div`
-  
-  background-color:  #2c2c2c;
+  background-color: #2c2c2c;
   border: 1px solid #444;
   border-radius: 8px;
   padding: 15px;

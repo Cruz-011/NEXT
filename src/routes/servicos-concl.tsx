@@ -1,8 +1,8 @@
+// pages/servicosConcluidos.tsx
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CabecalhoMec from '../Components/CabecalhoMec';
 
-// Container principal
 const MainContainer = styled.div`
   background-color: #1a1a1d;
   padding: 20px;
@@ -11,7 +11,7 @@ const MainContainer = styled.div`
   align-items: center;
 `;
 
-// Container do conteúdo
+
 const ContentContainer = styled.div`
   max-width: 1000px;
   margin: 20px;
@@ -27,21 +27,18 @@ const ContentContainer = styled.div`
   }
 `;
 
-// Título da página
 const Title = styled.h1`
   color: #0033a0;
   text-align: center;
   margin-bottom: 20px;
 `;
 
-// Lista de serviços
 const ServicesList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
 `;
 
-// Item de serviço
 const ServiceItem = styled.li`
   background-color: #e9ecef;
   padding: 15px;
@@ -57,13 +54,11 @@ const ServiceItem = styled.li`
   }
 `;
 
-// Detalhes do serviço
 const ServiceDetails = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-// Item de detalhe do serviço
 const DetailItem = styled.p`
   margin: 5px 0;
   font-size: 14px;

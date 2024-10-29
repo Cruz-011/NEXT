@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaEye, FaTimes } from 'react-icons/fa';
 import Cabecalho from '../Components/Cabecalho';
@@ -17,23 +16,23 @@ const MainContainer = styled.div`
 const ContentContainer = styled.div`
   max-width: 1500px;
   margin: 20px;
-  width: 100%; /* Adicionado para largura total */
+  width: 100%;
 `;
 
 const Title = styled.h1`
   color: #0033a0;
   text-align: center;
-  font-size: 24px; /* Tamanho da fonte ajustado */
-  
+  font-size: 24px;
+
   @media (max-width: 600px) {
-    font-size: 20px; /* Tamanho da fonte em telas menores */
+    font-size: 20px;
   }
 `;
 
 const TableContainer = styled.div`
   overflow-x: auto;
   margin: 20px 0;
-  background-color: #black;
+  background-color: black; /* Corrigido para 'black' */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
@@ -44,7 +43,7 @@ const StyledTable = styled.table`
   min-width: 900px;
 
   @media (max-width: 900px) {
-    min-width: 100%; /* Ajusta a largura mínima em telas menores */
+    min-width: 100%;
   }
 `;
 
@@ -59,8 +58,8 @@ const StyledTh = styled.th`
   font-weight: bold;
 
   @media (max-width: 600px) {
-    padding: 10px; /* Ajusta o padding em telas menores */
-    font-size: 14px; /* Tamanho da fonte em telas menores */
+    padding: 10px;
+    font-size: 14px;
   }
 `;
 
@@ -84,8 +83,8 @@ const StyledTd = styled.td`
   color: #333;
 
   @media (max-width: 600px) {
-    padding: 10px; /* Ajusta o padding em telas menores */
-    font-size: 14px; /* Tamanho da fonte em telas menores */
+    padding: 10px;
+    font-size: 14px;
   }
 `;
 
@@ -112,7 +111,7 @@ const NoAgendamentos = styled.p`
   font-size: 18px;
 
   @media (max-width: 600px) {
-    font-size: 16px; /* Tamanho da fonte em telas menores */
+    font-size: 16px;
   }
 `;
 
@@ -125,7 +124,7 @@ const DetailsContainer = styled.div`
   position: relative;
 
   @media (max-width: 600px) {
-    padding: 15px; /* Ajusta o padding em telas menores */
+    padding: 15px;
   }
 `;
 
@@ -135,7 +134,7 @@ const DetailItem = styled.p`
   font-size: 16px;
 
   @media (max-width: 600px) {
-    font-size: 14px; /* Tamanho da fonte em telas menores */
+    font-size: 14px;
   }
 `;
 
@@ -167,7 +166,7 @@ const CancelButton = styled.button`
   }
 `;
 
-const AgendamentosRealizados = () => {
+const AgendamentosRealizados: React.FC = () => {
   const [agendamentos, setAgendamentos] = useState<any[]>([]);
   const [selectedAgendamento, setSelectedAgendamento] = useState<any | null>(null);
 

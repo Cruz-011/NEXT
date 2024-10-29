@@ -1,6 +1,5 @@
-// NovoVeiculo.tsx
 import React, { useState } from 'react';
-import Cabecalho from '../Components/Cabecalho';
+import Cabecalho from '../Components/Cabecalho'; 
 import styles from '../assets/NovoVeiculo.module.css';
 
 const NovoVeiculo: React.FC = () => {
@@ -12,6 +11,7 @@ const NovoVeiculo: React.FC = () => {
     const formData = new FormData(event.currentTarget);
     const vehicleData = Object.fromEntries(formData.entries());
 
+    // Salva os dados do veículo no localStorage
     let vehicles = JSON.parse(localStorage.getItem('vehicles') || '[]');
     vehicles.push(vehicleData);
     localStorage.setItem('vehicles', JSON.stringify(vehicles));

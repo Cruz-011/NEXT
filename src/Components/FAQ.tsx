@@ -15,7 +15,7 @@ const FAQ: React.FC = () => {
     {
       pergunta: 'Como obter o orçamento?',
       resposta:
-        'Após o diagnóstico, você receberá um orçamento detalhado diretamente em seu aplicativo ou via chat ',
+        'Após o diagnóstico, você receberá um orçamento detalhado diretamente em seu aplicativo ou via chat.',
     },
   ];
 

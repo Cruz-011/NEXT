@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../assets/LoginCadastro.module.css'; // CSS atualizado
+import styles from '../assets/LoginCadastro.module.css'; 
 
 function LoginCadastro() {
   const [isRegistering, setIsRegistering] = useState(false);

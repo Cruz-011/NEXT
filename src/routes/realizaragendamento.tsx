@@ -1,7 +1,8 @@
+// pages/agendarServico.tsx
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Cabecalho from '../Components/Cabecalho';
-import Rodape from '../Components/Rodape';
+import Cabecalho from '../components/Cabecalho';
+import Rodape from '../components/Rodape';
 
 const MainContainer = styled.div`
   background-color: #1e1e1e;
@@ -42,7 +43,7 @@ const Card = styled.div`
 
 const MechanicName = styled.h3`
   margin: 0 0 10px 0;
-  color: black; /* Mudei para preto */
+  color: black;
 `;
 
 const Info = styled.p`
@@ -83,7 +84,6 @@ const Modal = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  color: black;
 `;
 
 const FormContainer = styled.div`
@@ -91,12 +91,12 @@ const FormContainer = styled.div`
   padding: 30px;
   border-radius: 10px;
   width: 400px;
-  color: black; /* Define a cor do texto */
+  color: black;
 `;
 
 const FormTitle = styled.h2`
-  color: black; /* Cor do título do formulário */
-  text-align: center; /* Centralizar o título */
+  color: black;
+  text-align: center;
 `;
 
 const FormField = styled.div`
@@ -114,8 +114,8 @@ const Input = styled.input`
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  color: black; /* Define a cor do texto */
-  background-color: #fff; /* Define a cor de fundo */
+  color: black;
+  background-color: #fff;
 `;
 
 const Select = styled.select`
@@ -123,8 +123,8 @@ const Select = styled.select`
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ccc;
-  color: black; /* Define a cor do texto */
-  background-color: #fff; /* Define a cor de fundo */
+  color: black;
+  background-color: #fff;
 `;
 
 const SubmitButton = styled(Button)`
@@ -148,7 +148,7 @@ const mechanics = [
     address: 'Rua das Flores, 100',
     phone: '(11) 98765-4321',
     hours: '08:00 - 18:00',
-    imageUrl: '/imagens/mec.jfif', // Adicione sua URL de imagem
+    imageUrl: '/imagens/mec.jfif',
   },
   {
     id: 2,
@@ -156,7 +156,7 @@ const mechanics = [
     address: 'Av. Central, 456',
     phone: '(11) 91234-5678',
     hours: '09:00 - 19:00',
-    imageUrl: '/imagens/mec2.jfif', // Adicione sua URL de imagem
+    imageUrl: '/imagens/mec2.jfif',
   },
   {
     id: 3,
@@ -164,7 +164,7 @@ const mechanics = [
     address: 'Rua da Paz, 789',
     phone: '(11) 99876-5432',
     hours: '07:00 - 17:00',
-    imageUrl: '/imagens/mec3.jfif', // Adicione sua URL de imagem
+    imageUrl: '/imagens/mec3.jfif',
   },
 ];
 
@@ -297,7 +297,6 @@ const AgendarServico = () => {
           </FormContainer>
         </Modal>
       )}
-
       <Rodape />
     </MainContainer>
   );

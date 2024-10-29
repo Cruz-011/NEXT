@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import '../Components/Cabecalho';
 import styles from '../assets/VeiculosSalvos.module.css'; 
 import Cabecalho from '../Components/Cabecalho';
-import Chat from '../Components/Chat'; 
+import Chat from '../Components/Chat';
 
 interface Vehicle {
   marca: string;
@@ -19,7 +18,7 @@ const VeiculosSalvos: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
   const [showChat, setShowChat] = useState(false);
-  const [editIndex, setEditIndex] = useState<number | null>(null); // Adicione este estado
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const savedVehicles = JSON.parse(localStorage.getItem('vehicles') || '[]');
@@ -29,19 +28,19 @@ const VeiculosSalvos: React.FC = () => {
   const handleEdit = (index: number) => {
     const vehicle = vehicles[index];
     setVehicleToEdit(vehicle);
-    setEditIndex(index); // Armazene o índice do veículo a ser editado
+    setEditIndex(index);
     setShowModal(true);
   };
 
   const handleSave = () => {
     if (vehicleToEdit && editIndex !== null) {
-      const updatedVehicles = [...vehicles]; // Crie uma cópia da lista original
-      updatedVehicles[editIndex] = vehicleToEdit; // Atualize apenas o veículo específico
+      const updatedVehicles = [...vehicles];
+      updatedVehicles[editIndex] = vehicleToEdit;
       setVehicles(updatedVehicles);
       localStorage.setItem('vehicles', JSON.stringify(updatedVehicles));
       setShowModal(false);
       setVehicleToEdit(null);
-      setEditIndex(null); // Limpe o índice após a edição
+      setEditIndex(null);
     }
   };
 
@@ -57,9 +56,9 @@ const VeiculosSalvos: React.FC = () => {
   };
 
   const handleDelete = (index: number) => {
-    const updatedVehicles = vehicles.filter((_, i) => i !== index); // Lógica para excluir veículo
+    const updatedVehicles = vehicles.filter((_, i) => i !== index);
     setVehicles(updatedVehicles);
-    localStorage.setItem('vehicles', JSON.stringify(updatedVehicles)); // Atualiza o localStorage
+    localStorage.setItem('vehicles', JSON.stringify(updatedVehicles));
   };
 
   return (

@@ -16,13 +16,13 @@ const MainContainer = styled.div`
 const ContentContainer = styled.div`
   max-width: 1000px;
   margin: 20px;
-  min-width: 300px; /* Definindo um tamanho mínimo para telas pequenas */
+  min-width: 300px; 
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
   color: black;
-  width: 100%; /* Certificando-se que ocupa 100% da largura */
-  box-sizing: border-box; /* Para considerar padding na largura total */
+  width: 100%; 
+  box-sizing: border-box; 
 `;
 
 const Title = styled.h1`
@@ -129,20 +129,17 @@ const MecanicoHome: React.FC = () => {
     const updatedServicos = servicosEmAndamento.filter((servico) => servico.codigo !== codigo);
     const servicoCompleto = servicosEmAndamento.find((servico) => servico.codigo === codigo);
 
-    // Adiciona o serviço completo à lista de serviços concluídos
     const storedConcluidos = localStorage.getItem('servicosConcluidos') || '[]';
     const servicosConcluidos = JSON.parse(storedConcluidos);
     if (servicoCompleto) {
       servicosConcluidos.push(servicoCompleto);
     }
 
-    // Atualiza o localStorage para os serviços em andamento e concluídos
     setServicosEmAndamento(updatedServicos);
     localStorage.setItem('servicosEmAndamento', JSON.stringify(updatedServicos));
     localStorage.setItem('servicosConcluidos', JSON.stringify(servicosConcluidos));
 
-    // Redireciona para a página de serviços concluídos
-    window.location.href = '/servicos-concl'; // ou utilize um Link do react-router se houver navegação baseada em rotas
+    window.location.href = '/servicos-concl'; 
   };
 
   const handleViewDetails = (servico: any) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Styled Components
+
 const Header = styled.header`
   width: 100%;
   background-color: #1a1a1d;
@@ -100,7 +100,7 @@ const NavText = styled.span`
   }
 `;
 
-// Novo Styled Components para Configuração
+
 const ConfigContainer = styled.div`
   position: relative;
   display: flex;
@@ -185,19 +185,19 @@ const DropdownItem = styled.button`
   }
 `;
 
-// Componente Cabecalho
+
 const Cabecalho: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [userName, setUserName] = useState<string>('Usuário'); // Estado para o nome do usuário
+  const [userName, setUserName] = useState<string>('Usuário'); 
   const navigate = useNavigate();
   const configRef = useRef<HTMLDivElement>(null);
 
-  // Função para alternar o dropdown
+
   const toggleDropdown = () => {
     setIsDropdownOpen(prev => !prev);
   };
 
-  // Função para mudar o nome do usuário
+
   const handleChangeName = () => {
     const newName = prompt('Digite seu novo nome:', userName);
     if (newName) {
@@ -205,10 +205,8 @@ const Cabecalho: React.FC = () => {
     }
   };
 
-  // Função para sair e redirecionar para a página de login
   const handleLogout = () => {
-    // Aqui você pode adicionar lógica para limpar dados do usuário se necessário
-    navigate('/login'); // Redireciona para a página de login
+    navigate('/login'); 
   };
 
   const handlemecanico = () => {
@@ -241,7 +239,6 @@ const Cabecalho: React.FC = () => {
           <Logo src="/imagens/carchecknovo.png" alt="Logo" />
         </Link>
 
-        {/* Menu de Navegação */}
         <Menu>
           <NavItem>
             <Link to="/">
@@ -273,7 +270,6 @@ const Cabecalho: React.FC = () => {
               <NavText>Veículos Salvos</NavText>
             </Link>
           </NavItem>
-          {/* Item Agendamentos adicionado aqui */}
           <NavItem>
             <Link to="/AgendamentosRealizados">
               <NavIcon src="/imagens/agenda.png" alt="Agendamentos" />
@@ -282,7 +278,6 @@ const Cabecalho: React.FC = () => {
           </NavItem>
         </Menu>
 
-        {/* Ícone de Configuração */}
         <ConfigContainer ref={configRef} onClick={toggleDropdown}>
           <ConfigIcon src="/imagens/configuracoes.png" alt="Configuração" />
           <ConfigText>Configurações</ConfigText>

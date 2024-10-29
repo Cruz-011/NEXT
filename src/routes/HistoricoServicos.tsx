@@ -6,16 +6,14 @@ import ReactPaginate from 'react-paginate';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Interface para Serviço
 interface Servico {
   id: number;
   descricao: string;
   status: 'Concluído' | 'Cancelado' | 'Em andamento';
   veiculo: string;
-  data: string; // Formato: 'DD/MM/YYYY'
+  data: string; 
 }
 
-// Dados Iniciais de Serviços (Mock)
 const initialServicos: Servico[] = [
   { id: 1, descricao: 'Troca de óleo', status: 'Concluído', veiculo: 'Honda Civic 2020', data: '15/09/2024' },
   { id: 2, descricao: 'Revisão de freios', status: 'Em andamento', veiculo: 'Toyota Corolla 2019', data: '16/09/2024' },
@@ -23,7 +21,6 @@ const initialServicos: Servico[] = [
   { id: 4, descricao: 'Substituição de amortecedores', status: 'Cancelado', veiculo: 'Chevrolet Onix 2021', data: '18/09/2024' },
 ];
 
-// Styled Components
 const MainContainer = styled.main`
   background-color: #1e1e1e;
 `;
@@ -34,7 +31,6 @@ const Title = styled.h1`
   margin-bottom: 30px;
 `;
 
-// Input e Select estilos
 const SearchFilterContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -67,7 +63,6 @@ const StatusFilter = styled.select`
   ${InputSelectStyle}
 `;
 
-// Tabela Estilizada
 const TableContainer = styled.div`
   overflow-x: auto;
 `;
@@ -119,10 +114,10 @@ const StatusBadge = styled.span<{ status: string }>`
   font-size: 12px;
   background-color: ${({ status }) => {
     switch (status) {
-      case 'Concluído': return '#28a745'; // Verde
-      case 'Cancelado': return '#dc3545'; // Vermelho
-      case 'Em andamento': return '#ffc107'; // Amarelo
-      default: return '#6c757d'; // Cinza
+      case 'Concluído': return '#28a745'; 
+      case 'Cancelado': return '#dc3545'; 
+      case 'Em andamento': return '#ffc107';
+      default: return '#6c757d'; 
     }
   }};
 `;
@@ -144,7 +139,6 @@ const IconButton = styled.button`
   }
 `;
 
-// Pagination Styles
 const PaginationContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -179,7 +173,6 @@ const PaginationContainer = styled.div`
     }
 `;
 
-// Help Button Styles
 const HelpButton = styled.button`
   position: fixed;
   bottom: 30px;
@@ -209,7 +202,6 @@ const HelpButton = styled.button`
   }
 `;
 
-// Modal Styles
 const ModalOverlay = styled.div<{ isVisible: boolean }>`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   position: fixed;
@@ -250,7 +242,7 @@ const CloseButton = styled.button`
   }
 `;
 
-// Componente Principal
+
 const HistoricoServicos: React.FC = () => {
   const [servicos, setServicos] = useState<Servico[]>(initialServicos);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -258,16 +250,13 @@ const HistoricoServicos: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Servico; direction: 'ascending' | 'descending' } | null>(null);
   
-  // Estados para o Modal de Ajuda
   const [isHelpModalOpen, setIsHelpModalOpen] = useState<boolean>(false);
 
   const itemsPerPage = 3;
 
-  // Funções de Manipulação de Estado
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);
   const handleStatusFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => setStatusFilter(e.target.value);
   
-  // Lógica de Filtragem e Ordenação
   const filteredServicos = useMemo(() => {
     return servicos.filter(servico => 
       (statusFilter === 'Todos' || servico.status === statusFilter) &&
@@ -291,41 +280,34 @@ const HistoricoServicos: React.FC = () => {
     return sortableItems;
   }, [filteredServicos, sortConfig]);
 
-  const paginatedServicos = useMemo(() => {
-    const startIndex = currentPage * itemsPerPage;
-    return sortedServicos.slice(startIndex, startIndex + itemsPerPage);
+  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
+  const displayedServicos = useMemo(() => {
+    const start = currentPage * itemsPerPage;
+    const end = start + itemsPerPage;
+    return sortedServicos.slice(start, end);
   }, [currentPage, sortedServicos]);
 
-  const handleSort = (key: keyof Servico) => {
+  const requestSort = useCallback((key: keyof Servico) => {
     let direction: 'ascending' | 'descending' = 'ascending';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
       direction = 'descending';
     }
     setSortConfig({ key, direction });
-  };
+  }, [sortConfig]);
 
-  // Lógica de Paginação
-  const pageCount = Math.ceil(sortedServicos.length / itemsPerPage);
-
-  const handlePageClick = (data: { selected: number }) => {
-    setCurrentPage(data.selected);
-  };
-
-  // Funções para o Modal de Ajuda
-  const openHelpModal = () => setIsHelpModalOpen(true);
-  const closeHelpModal = () => setIsHelpModalOpen(false);
+  const toggleHelpModal = () => setIsHelpModalOpen(prev => !prev);
 
   return (
     <MainContainer>
-      <ToastContainer />
       <Cabecalho />
       <Title>Histórico de Serviços</Title>
+      
       <SearchFilterContainer>
-        <InputSelectStyle
-          type="text"
-          placeholder="Pesquisar serviços ou veículos..."
-          value={searchTerm}
-          onChange={handleSearchChange}
+        <InputSelectStyle 
+          type="text" 
+          placeholder="Buscar por descrição ou veículo" 
+          value={searchTerm} 
+          onChange={handleSearchChange} 
         />
         <StatusFilter value={statusFilter} onChange={handleStatusFilterChange}>
           <option value="Todos">Todos</option>
@@ -334,26 +316,27 @@ const HistoricoServicos: React.FC = () => {
           <option value="Em andamento">Em andamento</option>
         </StatusFilter>
       </SearchFilterContainer>
+
       <TableContainer>
         <StyledTable>
           <StyledThead>
             <tr>
-              <StyledTh isSorted={sortConfig?.key === 'data'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('data')}>
+              <StyledTh onClick={() => requestSort('data')} isSorted={!!sortConfig} sortDirection={sortConfig?.key === 'data' ? sortConfig.direction : ''}>
                 Data {sortConfig?.key === 'data' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh isSorted={sortConfig?.key === 'descricao'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('descricao')}>
+              <StyledTh onClick={() => requestSort('descricao')} isSorted={!!sortConfig} sortDirection={sortConfig?.key === 'descricao' ? sortConfig.direction : ''}>
                 Descrição {sortConfig?.key === 'descricao' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh isSorted={sortConfig?.key === 'veiculo'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('veiculo')}>
+              <StyledTh onClick={() => requestSort('veiculo')} isSorted={!!sortConfig} sortDirection={sortConfig?.key === 'veiculo' ? sortConfig.direction : ''}>
                 Veículo {sortConfig?.key === 'veiculo' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
-              <StyledTh isSorted={sortConfig?.key === 'status'} sortDirection={sortConfig?.direction || ''} onClick={() => handleSort('status')}>
+              <StyledTh onClick={() => requestSort('status')} isSorted={!!sortConfig} sortDirection={sortConfig?.key === 'status' ? sortConfig.direction : ''}>
                 Status {sortConfig?.key === 'status' ? (sortConfig.direction === 'ascending' ? <FaSortUp /> : <FaSortDown />) : <FaSort />}
               </StyledTh>
             </tr>
           </StyledThead>
           <StyledTbody>
-            {paginatedServicos.map((servico, index) => (
+            {displayedServicos.map((servico, index) => (
               <StyledTr key={servico.id} isEven={index % 2 === 0}>
                 <StyledTd>{servico.data}</StyledTd>
                 <StyledTd>{servico.descricao}</StyledTd>
@@ -361,45 +344,35 @@ const HistoricoServicos: React.FC = () => {
                 <StyledTd>
                   <StatusBadge status={servico.status}>{servico.status}</StatusBadge>
                 </StyledTd>
-                <StyledTd>
-                  <ActionButtons>
-                    <IconButton onClick={() => toast.info(`Editando ${servico.descricao}`)}>✏️</IconButton>
-                    <IconButton onClick={() => toast.error(`Excluindo ${servico.descricao}`)}>🗑️</IconButton>
-                  </ActionButtons>
-                </StyledTd>
               </StyledTr>
             ))}
           </StyledTbody>
         </StyledTable>
       </TableContainer>
+
       <PaginationContainer>
         <ReactPaginate
-          previousLabel={'← Anterior'}
-          nextLabel={'Próximo →'}
+          previousLabel={"← Anterior"}
+          nextLabel={"Próxima →"}
           pageCount={pageCount}
-          onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'selected'}
-          pageClassName={'page'}
-          previousClassName={'page'}
-          nextClassName={'page'}
-          disabledClassName={'disabled'}
+          onPageChange={({ selected }) => setCurrentPage(selected)}
+          containerClassName={"pagination"}
+          activeClassName={"selected"}
+          disabledClassName={"disabled"}
         />
       </PaginationContainer>
-      <HelpButton onClick={openHelpModal}>?</HelpButton>
+
+      <HelpButton onClick={toggleHelpModal}>?</HelpButton>
+
       <ModalOverlay isVisible={isHelpModalOpen}>
         <ModalContent>
-          <CloseButton onClick={closeHelpModal}>×</CloseButton>
+          <CloseButton onClick={toggleHelpModal}>&times;</CloseButton>
           <h2>Ajuda</h2>
-          <p>Esta página mostra o histórico de serviços realizados. Você pode:</p>
-          <ul>
-            <li>Pesquisar serviços e veículos.</li>
-            <li>Filtrar por status dos serviços.</li>
-            <li>Ordenar a tabela por data, descrição, veículo e status.</li>
-            <li>Clicar nos ícones de edição ou exclusão para modificar ou remover um serviço.</li>
-          </ul>
+          <p>Aqui você pode ver o histórico dos serviços realizados nos veículos. Use a barra de pesquisa para encontrar serviços específicos.</p>
         </ModalContent>
       </ModalOverlay>
+
+      <ToastContainer />
     </MainContainer>
   );
 };
