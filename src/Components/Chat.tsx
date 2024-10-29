@@ -23,11 +23,18 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     };
 
     const optionsMessage: Message = {
+<<<<<<< HEAD
       text: 'Digite a opção desejada:\n' + 
             '1 - Estou tendo problemas com o meu veículo\n' + 
             '2 - Problemas com uma manutenção feita recentemente\n'+
             '3 - Realizar Agendamento\n' + 
             '4 - Suporte da conta\n' ,
+=======
+      text: '1 - Estou tendo problemas com o meu veículo\n' + 
+            '2 - Problemas com uma manutenção feita recentemente\n' + 
+            '3 - Realizar Agendamento\n' + 
+            '4 - Suporte da conta\n',
+>>>>>>> 51ca5a2894735eb4c40fb6ec8ee20c5173ede0e6
       sender: 'bot',
     };
 
@@ -50,7 +57,7 @@ const Chat: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setInput('');
 
     // Verifica se o usuário escolheu a opção '4' para agendamento
-    if (message === '4') {
+    if (message === '3') {
       navigate('/agendamento'); // Redireciona para a página de agendamento
       return;
     }

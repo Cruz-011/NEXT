@@ -259,9 +259,9 @@ const Cabecalho: React.FC = () => {
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/novoveiculo">
-              <NavIcon src="/imagens/engarrafamento.png" alt="Novo Veículo" />
-              <NavText>Novo Veículo</NavText>
+            <Link to="/AgendamentosRealizados">
+              <NavIcon src="/imagens/agenda.png" alt="Agendamentos" />
+              <NavText>Agendamentos</NavText>
             </Link>
           </NavItem>
           <NavItem>
@@ -271,9 +271,9 @@ const Cabecalho: React.FC = () => {
             </Link>
           </NavItem>
           <NavItem>
-            <Link to="/AgendamentosRealizados">
-              <NavIcon src="/imagens/agenda.png" alt="Agendamentos" />
-              <NavText>Agendamentos</NavText>
+          <Link to="/novoveiculo">
+              <NavIcon src="/imagens/engarrafamento.png" alt="Novo Veículo" />
+              <NavText>Novo Veículo</NavText>
             </Link>
           </NavItem>
         </Menu>
